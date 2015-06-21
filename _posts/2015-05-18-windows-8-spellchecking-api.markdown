@@ -19,9 +19,9 @@ categories:
 //
 
 #include "stdafx.h"
-#include 
-#include 
-#include 
+#include <atlbase.h>
+#include <atlstr.h>
+#include <Spellcheck.h>
 class CCoInitialize {
 public:
 	CCoInitialize() {
