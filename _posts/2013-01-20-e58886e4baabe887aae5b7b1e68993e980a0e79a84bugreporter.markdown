@@ -1,0 +1,81 @@
+---
+author: admin
+comments: true
+date: 2013-01-20 12:18:44+00:00
+layout: post
+slug: '%e5%88%86%e4%ba%ab%e8%87%aa%e5%b7%b1%e6%89%93%e9%80%a0%e7%9a%84bugreporter'
+title: 分享自己打造的BugReporter
+wordpress_id: 137
+categories:
+- Debugging
+---
+
+这份代码应该是将近一年前写的吧，应该是去年年初了。不像ntfsstudy和dia_study，这个工具应该比较的实用吧，实用场合可以比较多。所以也把源代码发出来。看工具名称基本上已经知道了是报告bug用的。其实这种工具倒是挺多的。不过我个人感觉自己写一个用起来顺手，而且代码量小，容易修改自定义。
+
+工具代码有三个工程，分别是minidump_generator，dump_minidump，BugReporter。
+minidump_generator是一个dll，当然也可以编译成静态库，他需要加入到你想使用BugReporter的工程里面。
+dump_minidump是一个dump文件的解析库，他是BugReporter工程的依赖库。
+BugReporter是一个窗口程序，在你融合了minidump_generator的程序崩溃的时候会弹出窗口。就像图中那样。
+[![20130120193015](/uploads/2013/01/20130120193015.png)](/uploads/2013/01/20130120193015.png)
+
+勾选send bug report并且点击ok，窗口里的完整log和dump文件会打包为zip文件储存，储存的地方可以由程序指定，也可以写注册表键值，reporter会去都键值然后存储到相应的位置。具体什么键值，看源代码吧。不完整和遗憾的地方也有，就是还没有http上传到提交dump收集服务器的代码。因为确实不会写php啥的。另外这个工程也用了不少开源代码，这里也感谢一下，其中包括反汇编引擎和ZIP代码。
+
+下载源代码：[BugReporter](/uploads/2013/01/BugReporter.zip)
+
+以下是完整的dump log：
+
+SYSTEM INFORMATIONS
+---------------
+ProcessorArchitecture : x86
+Number Of Processors : 16
+OS Version : 6.1
+BuildNumber : 7600
+CSDVersion :
+Platform : Windows Server 2003, Windows XP, or Windows 2000
+
+EXCEPTION INFORMATIONS
+---------------
+Thread id : 5744
+ExceptionCode : c00000fd
+ExceptionFlags : 00000000
+ExceptionRecord : 0000000000000000
+ExceptionAddress : 0000000000dea637
+ExceptionInformation0 = 0000000000000000
+ExceptionInformation1 = 0000000000102000
+Thread Context :
+EAX = 00102000 ECX = 00102050 EDX = 5eea2408 EBX = 7efde000
+ESP = 00103120 EBP = 00103128 ESI = 001ff9c8 EDI = 00104210
+EFLAGS = 00010206
+
+MODULE INFORMATIONS
+---------------
+Base Size Name FileVersion ProductVersion
+0000000000de0000 0001a000 D:\crashme\Debug\crashme.exe 0 0
+00000000772b0000 00180000 C:\Windows\SysWOW64\ntdll.dll 600011db040af 600011db040af
+0000000075ef0000 00100000 C:\Windows\SysWOW64\kernel32.dll 600011db04001 600011db04001
+00000000750f0000 00046000 C:\Windows\SysWOW64\KERNELBASE.dll 600011db04001 600011db04001
+000000005ed90000 00124000 C:\Windows\winsxs\x86_microsoft.vc90.debugcrt_1fc8b3b9a1e18e3b_9.0.30729.4148_none_2a4cbfc25558bcd3\msvcr90d.dll 9000078091034 9000078091034
+0000000074330000 000eb000 C:\Windows\System32\dbghelp.dll 600011db04001 600011db04001
+0000000076e00000 000ac000 C:\Windows\SysWOW64\msvcrt.dll 700001db04001 6000121be4001
+0000000076d10000 000f0000 C:\Windows\SysWOW64\rpcrt4.dll 600011db04001 600011db04001
+0000000074e20000 00060000 C:\Windows\SysWOW64\sspicli.dll 600011db04064 600011db04064
+0000000074e10000 0000c000 C:\Windows\SysWOW64\CRYPTBASE.dll 600011db04001 600011db04001
+00000000761e0000 00019000 C:\Windows\SysWOW64\sechost.dll 600011db04001 600011db04001
+00000000763e0000 000a0000 C:\Windows\SysWOW64\advapi32.dll 600011db04001 600011db04001
+000000006e810000 00025000 C:\Windows\System32\powrprof.dll 600011db04001 600011db04001
+00000000768e0000 0019d000 C:\Windows\SysWOW64\setupapi.dll 600011db04001 600011db04001
+0000000074f70000 00027000 C:\Windows\SysWOW64\cfgmgr32.dll 600011db04001 600011db04001
+0000000076c80000 00090000 C:\Windows\SysWOW64\gdi32.dll 600011db04001 600011db04001
+0000000076a80000 00100000 C:\Windows\SysWOW64\user32.dll 600011db04001 600011db04001
+0000000077280000 0000a000 C:\Windows\SysWOW64\lpk.dll 600011db04001 600011db04001
+0000000075140000 0009d000 C:\Windows\SysWOW64\usp10.dll 102721db04001 102721db04001
+0000000076150000 0008f000 C:\Windows\SysWOW64\oleaut32.dll 600011db04001 600011db04001
+0000000075ff0000 0015c000 C:\Windows\SysWOW64\ole32.dll 600011db04001 600011db04001
+0000000074fa0000 00012000 C:\Windows\SysWOW64\devobj.dll 600011db04001 600011db04001
+0000000074f10000 00060000 C:\Windows\System32\imm32.dll 600011db04001 600011db04001
+0000000075020000 000cc000 C:\Windows\SysWOW64\msctf.dll 600011db04001 600011db04001
+000000006fa00000 0003e000 C:\Program Files (x86)\Sophos\Sophos Anti-Virus\sophos_detoured.dll 900000000235f 9000000000000
+00000000763d0000 00005000 C:\Windows\SysWOW64\psapi.dll 600011db04001 600011db04001
+
+Crash IP Disasm :
+test dword ptr [eax], eax

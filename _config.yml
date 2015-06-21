@@ -1,0 +1,13 @@
+# Site settings
+title: 0CCh
+email: nightxie@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  printf("I am programmer!");
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://0cch.com" # the base hostname & protocol for your site
+
+github_username:  0CCh
+
+# Build settings
+markdown: kramdown
+highlighter: rouge

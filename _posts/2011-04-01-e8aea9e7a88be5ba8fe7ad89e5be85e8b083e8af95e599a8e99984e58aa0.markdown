@@ -1,0 +1,55 @@
+---
+author: admin
+comments: true
+date: 2011-04-01 16:05:21+00:00
+layout: post
+slug: '%e8%ae%a9%e7%a8%8b%e5%ba%8f%e7%ad%89%e5%be%85%e8%b0%83%e8%af%95%e5%99%a8%e9%99%84%e5%8a%a0'
+title: 让程序等待调试器附加
+wordpress_id: 10
+categories:
+- Debugging
+---
+
+有的时候出于一些目的，我们会希望程序等待调试器Attach上去以后才开始继续往前跑。例如，我们写了一堆console程序，同时又有个shell去调用这些console，而这个时候我们却想去调试shell运行起来的这个console。当然Windbg本身就有调试debugee子进程的功能，但是身为懒人，这种方式太麻烦。我还是更愿意加入几行代码解决这个问题。
+
+要解决这个问题，原理上很简单。无非是程序运行初期不断的去检测本进程是否被调试，如果是就把自己断下来，如果不是继续等待。
+
+{% highlight cpp linenos %}
+void WaitDebuggerAttach(DWORD Second)
+{
+	DWORD CurSec = 0;
+	while((!IsDebuggerPresent()) && (CurSec < Second)) {
+		
+		CurSec++;
+		Sleep(1000);
+	}
+
+	if (IsDebuggerPresent()) {
+
+		__asm int 3
+	}
+}
+ {% endhighlight %}
+
+这个函数可以指定等待时间，如果Debugger Attach上去了，那么就断下来方便调试，否则会超时，正常执行。
+这里我是用的IsDebuggerPresent这个API来获得进程的调试状态。实际上检测自己调试状态的方法很多，只不过这个用起来最方便而已。比如可以用测试断点异常的方法来检测自己的调试状态。
+
+{% highlight cpp linenos %}
+BOOL CheckForDebugger()
+{
+    __try 
+    {
+        DebugBreak();
+    }
+    __except(GetExceptionCode() == EXCEPTION_BREAKPOINT ? 
+             EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) 
+    {
+        // No debugger is attached, so return FALSE 
+        // and continue.
+        return FALSE;
+    }
+    return TRUE;
+}
+ {% endhighlight %}
+
+本Blog的第一篇文章总算是出炉了~~~我太懒了哇~

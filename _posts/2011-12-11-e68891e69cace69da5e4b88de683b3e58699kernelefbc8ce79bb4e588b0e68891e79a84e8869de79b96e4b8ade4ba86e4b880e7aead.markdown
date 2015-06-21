@@ -1,0 +1,28 @@
+---
+author: admin
+comments: true
+date: 2011-12-11 10:32:55+00:00
+layout: post
+slug: '%e6%88%91%e6%9c%ac%e6%9d%a5%e4%b8%8d%e6%83%b3%e5%86%99kernel%ef%bc%8c%e7%9b%b4%e5%88%b0%e6%88%91%e7%9a%84%e8%86%9d%e7%9b%96%e4%b8%ad%e4%ba%86%e4%b8%80%e7%ae%ad'
+title: 我本来不想写kernel，直到我的膝盖中了一箭
+wordpress_id: 69
+categories:
+- MiniKernel
+tags:
+- grub
+- Kernel
+- Windows
+---
+
+最近中箭体很火，我也凑个热闹。话说自从delete那篇文章过后，又有一个多月没写了。其实不是不想写，是不知道些什么才好。简单的东西不想写，难的东西写不出来。
+
+正像标题写的，恩，我开始写kernel玩了。其实写一个简单，功能单一的kernel并不难。麻烦的只是搭建环境等等。kernel的编写资料也很多，但是可惜的是，绝大部分都是应用在linux环境。我是那种看到linux就头晕的人。所以还是坚持用windows和vc来开发kernel。令人惊喜的是grub能够帮助我们map kernel到内存中，所以boot loader这一步可以想放下。等kernel写了个大概再来写boot loader也不迟。
+
+环境和工具：
+环境正如我上面提到了windows xp 和 vs 2008。其他工具包括winimage，virtual pc，bochsdbg（+ IDA）。当然还有grub4dos。
+
+要高效的起步，先要了解mulitBoot的一些知识。还有就是写一套能够在text mode下打印信息的函数，例如printf。这样在不用调试的情况下，就能了解一些信息。说实在的bochsdbg的调试功能真心不好用，但是加上IDA可能是一个比较好的做法。具备以上条件后，就可以开始kernel之旅了。
+
+[![](/uploads/2011/12/20111211174748.png)](/uploads/2011/12/20111211174748.png)
+
+可以看出内存的基本状况已经可以从boot_info中获取了。接下来要做的事情也很明了。就是需要一个物理内存管理器，实现最基本的物理内存管理器也不算难，不过那就是下篇文章的事情了。现在的kernel大小为7168字节，慢慢玩，看我能坚持多久。

@@ -1,0 +1,50 @@
+---
+author: admin
+comments: true
+date: 2014-10-19 04:02:20+00:00
+layout: post
+slug: '%e7%94%a8windows-event%e7%9b%91%e6%8e%a7%e5%89%8d%e5%8f%b0%e7%aa%97%e5%8f%a3%e5%8f%98%e5%8c%96'
+title: 用Windows Event监控前台窗口变化
+wordpress_id: 472
+categories:
+- Tips
+---
+
+网络上有这样一种小工具，号称可以提高计算机响应速度。简单看了下其中的一款工具，实现原理很简单，就是监控前台窗口的变化，设置进程线程的优先级。设置进程线程的优先级无非就是SetPriorityClass和SetThreadPriority这两个函数，主要问题就是要获得前台窗口的情况。
+Windows提供了一种叫做Windows Event Hook的机制，来让我们获得多种不同的事件，其中一种就是前台窗口变化事件。所以要完成这个功能很简单，只需要注册一个针对EVENT_SYSTEM_FOREGROUND的HOOK就行了。注册和反注册Hook的函数分别是SetWinEventHook和UnhookWinEvent。
+比如注册EVENT_SYSTEM_FOREGROUND事件的Hook，我们只需要这样：
+
+{% highlight cpp linenos %}
+HWINEVENTHOOK hWinEventHook = SetWinEventHook(
+		EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND,
+		NULL, WinEventProc, 0, 0,
+		WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
+ {% endhighlight %}
+前两个参数设置我们感兴趣的事件范围，由于我们最后一个参数设置的WINEVENT_OUTOFCONTEXT，表示Hook函数并不在产生Event的进程内部，所以hmodWinEventProc设置为NULL。WinEventProc则是我们的Hook函数idProcess和idThread为0，表示我们关心所有桌面上的进程线程，最后的flags还有一个WINEVENT_SKIPOWNPROCESS表示我们对自己的进程不感兴趣。
+要反注册Hook只需要
+
+{% highlight cpp linenos %}
+UnhookWinEvent(hWinEventHook);
+ {% endhighlight %}
+WinEventProc的很简单
+
+{% highlight cpp linenos %}
+void CALLBACK WinEventProc(
+	HWINEVENTHOOK hWinEventHook,
+	DWORD event,
+	HWND hwnd,
+	LONG idObject,
+	LONG idChild,
+	DWORD dwEventThread,
+	DWORD dwmsEventTime
+	)
+{
+	if (hwnd &&
+		idObject == OBJID_WINDOW &&
+		idChild == CHILDID_SELF &&
+		event == EVENT_SYSTEM_FOREGROUND) {
+			...
+	}
+}
+ {% endhighlight %}
+其中只需要知道hwnd就是当前的前台窗口就行了。然后通过hwnd和函数GetWindowThreadProcessId，获得进程线程id，自然就能获得其句柄，最后调用调整进程线程优先级的函数即可。

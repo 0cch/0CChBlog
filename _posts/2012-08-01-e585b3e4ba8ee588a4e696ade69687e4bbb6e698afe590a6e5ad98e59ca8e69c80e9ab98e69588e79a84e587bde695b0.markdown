@@ -1,0 +1,52 @@
+---
+author: admin
+comments: true
+date: 2012-08-01 06:08:16+00:00
+layout: post
+slug: '%e5%85%b3%e4%ba%8e%e5%88%a4%e6%96%ad%e6%96%87%e4%bb%b6%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e6%9c%80%e9%ab%98%e6%95%88%e7%9a%84%e5%87%bd%e6%95%b0'
+title: 关于判断文件是否存在最高效的函数
+wordpress_id: 84
+categories:
+- NT Internals
+---
+
+判断文件存在方法有很多，例如CreateFile，FindFirstFile，GetFileAttributes，PathFileExists等等。但是哪一种更加高效呢？其实作为常识，可能都能判断出GetFileAttributes和PathFileExists会比较快（而实际上PathFileExists就是调用的GetFileAttributes）。
+
+下面是google一份开源代码中提到的统计结果
+
+
+<blockquote>// NOTE: This is the fastest implementation I found. The results were:
+// CreateFile 1783739 avg ticks/call
+// FindFirstFile 634148 avg ticks/call
+// GetFileAttributes 428714 avg ticks/call
+// GetFileAttributesEx 396324 avg ticks/call</blockquote>
+
+
+为什么会这样呢？大概了看了下，原因应该是这样的。
+
+1.CreateFile会创建句柄，需要一个完整IO流程，所以需要的时间比如非常长。
+2.FindFirstFile回去查询文件夹的文件，虽然不会真正的打开文件句柄，并且在文件已经被缓存的情况下，走的是fastio流程，所以查询时间大幅下降，但是操作略微繁琐，导致他不是最好的选择。
+3. GetFileAttributes 和GetFileAttributesEx 也设置了QueryOnly标志，不需要获得真正的句柄，并且能够走fastio流程，也没有文件夹查询等工作，所以速度最快。
+
+那么为什么GetFileAttributesEx 会快那么一点点呢？因为这个函数少了一个获取BasicInformation，也就是少了一个fastio流程。所以速度更快。这样看来，自己实现一个PathFileExistsEx效率可以高过PathFileExists了。（其实没多大实际意义）
+
+google就是这样做的：
+
+{% highlight cpp linenos %}
+
+bool File::Exists(const TCHAR* file_name) {
+ASSERT1(file_name && *file_name);
+ASSERT1(lstrlen(file_name) > 0);
+
+// NOTE: This is the fastest implementation I found. The results were:
+// CreateFile 1783739 avg ticks/call
+// FindFirstFile 634148 avg ticks/call
+// GetFileAttributes 428714 avg ticks/call
+// GetFileAttributesEx 396324 avg ticks/call
+WIN32_FILE_ATTRIBUTE_DATA attrs = {0};
+return 0 != ::GetFileAttributesEx(file_name, ::GetFileExInfoStandard, &attrs);
+}
+
+ {% endhighlight %}
+
+

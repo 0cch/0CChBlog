@@ -1,0 +1,340 @@
+---
+author: cradiator
+comments: true
+date: 2011-06-10 02:17:00+00:00
+layout: post
+slug: reactos-freeldr%e7%a3%81%e7%9b%98%e5%8f%8a%e6%96%87%e4%bb%b6%e7%ae%a1%e7%90%862
+title: ReactOS-Freeldr磁盘及文件管理2
+wordpress_id: 46
+---
+
+  
+
+ArcOpen的大体流程我们看过了。大致分为这几步
+
+   
+
+1. 函数会尝试找到文件所在分区的设备句柄，如果还没有对应的句柄。那么使用DEVICE.FuncTable中的Open函数打开设备，并为这个设备分配句柄。
+
+   
+
+2. 打开设备后条用XxxMount识别分区格式，识别成功返回另外的FuncTable，存储到设备的FileData.FileFuncTable域。
+
+   
+
+3. 为文件分配一个句柄，在对应的FileData.DeviceId为上面创建设备句柄，FileData.FuncTable为设备的FileData.FileFuncTable。
+
+   
+
+4. 最后调用文件的FileData.FuncTable.Open函数打开文件。
+
+   
+
+        
+
+
+   
+
+**挂载分区时做了什么**
+
+   
+
+之前我们忽略了XxxMount函数。现在来读读比较简单的FatMount (freeldr\freeldr\fs\fat.c)。
+
+   
+
+   
+
+    
+  1. _const_ DEVVTBL***** FatMount**(**ULONG DeviceId**)**
+     
+  2. **{**
+     
+  3. **.****.****.****.****.****.****.****.**
+     
+  4. // 生成一个FAT_VOLUME_INFO结构
+     
+  5. Volume **=** MmHeapAlloc**(**_sizeof_**(**FAT_VOLUME_INFO**)****)****;**
+     
+  6. _if_ **(****!**Volume**)**
+     
+  7. _return_ _NULL_**;**
+     
+  8. _RtlZeroMemory_**(**Volume, _sizeof_**(**FAT_VOLUME_INFO**)****)****;**
+     
+  9. // 读第一个扇区
+     
+  10. Position**.**HighPart **=** 0**;**
+     
+  11. Position**.**LowPart **=** 0**;**
+     
+  12. ret **=** ArcSeek**(**DeviceId, **&**Position, SeekAbsolute**)****;**
+     
+  13. _if_ **(**ret **!****=** ESUCCESS**)**
+     
+  14. **{**
+     
+  15. MmHeapFree**(**Volume**)****;**
+     
+  16. _return_ _NULL_**;**
+     
+  17. **}**
+     
+  18. ret **=** ArcRead**(**DeviceId, Buffer, _sizeof_**(**Buffer**)**, **&**Count**)****;**
+     
+  19. _if_ **(**ret **!****=** ESUCCESS **|****|** Count **!****=** _sizeof_**(**Buffer**)****)**
+     
+  20. **{**
+     
+  21. MmHeapFree**(**Volume**)****;**
+     
+  22. _return_ _NULL_**;**
+     
+  23. **}**
+     
+  24. // 判断是否有fat分区标志
+     
+  25. _if_ **(****!**RtlEqualMemory**(**BootSector**-****>**FileSystemType, "FAT12 ", 8**)** **&****&**
+     
+  26. **!**RtlEqualMemory**(**BootSector**-****>**FileSystemType, "FAT16 ", 8**)** **&****&**
+     
+  27. **!**RtlEqualMemory**(**BootSector32**-****>**FileSystemType, "FAT32 ", 8**)** **&****&**
+     
+  28. **!**RtlEqualMemory**(**BootSectorX**-****>**FileSystemType, "FATX", 4**)****)**
+     
+  29. **{**
+     
+  30. MmHeapFree**(**Volume**)****;**
+     
+  31. _return_ _NULL_**;**
+     
+  32. **}**
+     
+  33. // 获得分区大小等信息
+     
+  34. ret **=** ArcGetFileInformation**(**DeviceId, **&**FileInformation**)****;**
+     
+  35. _if_ **(**ret **!****=** ESUCCESS**)**
+     
+  36. **{**
+     
+  37. MmHeapFree**(**Volume**)****;**
+     
+  38. _return_ _NULL_**;**
+     
+  39. **}**
+     
+  40. SectorCount**.**HighPart **=** FileInformation**.**EndingAddress**.**HighPart**;**
+     
+  41. SectorCount**.**LowPart **=** FileInformation**.**EndingAddress**.**LowPart**;**
+     
+  42. SectorCount**.**QuadPart **/****=** SECTOR_SIZE**;**
+     
+  43. Volume**-****>**DeviceId **=** DeviceId**;**
+     
+  44. // 打开分区
+     
+  45. _if_ **(****!**FatOpenVolume**(**Volume, BootSector, SectorCount**.**QuadPart**)****)**
+     
+  46. **{**
+     
+  47. MmHeapFree**(**Volume**)****;**
+     
+  48. _return_ _NULL_**;**
+     
+  49. **}**
+     
+  50. // 存储FAT_VOLUME_INFO结构
+     
+  51. FatVolumes**[**DeviceId**]** **=** Volume**;**
+     
+  52. // 返回fat文件读写的FuncTable
+     
+  53. _return_ **&**FatFuncTable**;**
+     
+  54. **}**
+     
+  55. **           
+**
+      
+
+函数中的DeviceId是设备的句柄。
+
+   
+
+生成FAT_VOLUME_INFO结构。这个结构里面存储了FAT分区的基本信息。包括扇区大小，每个簇的扇区数等等。
+
+   
+
+    
+
+      
+  1. _typedef_ _struct_ _FAT_VOLUME_INFO 
+       
+  2. **{**
+       
+  3. ULONG BytesPerSector**;** /* Number of bytes per sector */
+       
+  4. ULONG SectorsPerCluster**;** /* Number of sectors per cluster */
+       
+  5. ULONG FatSectorStart**;** /* Starting sector of 1st FAT table */
+       
+  6. ULONG ActiveFatSectorStart**;** /* Starting sector of active FAT table */
+       
+  7. ULONG NumberOfFats**;** /* Number of FAT tables */
+       
+  8. ULONG SectorsPerFat**;** /* Sectors per FAT table */
+       
+  9. ULONG RootDirSectorStart**;** /* Starting sector of the root directory (non-fat32) */
+       
+  10. ULONG RootDirSectors**;** /* Number of sectors of the root directory (non-fat32) */
+       
+  11. ULONG RootDirStartCluster**;** /* Starting cluster number of the root directory (fat32 only) */
+       
+  12. ULONG DataSectorStart**;** /* Starting sector of the data area */
+       
+  13. ULONG FatType**;** /* FAT12, FAT16, FAT32, FATX16 or FATX32 */
+       
+  14. ULONG DeviceId**;**
+       
+  15. **}** FAT_VOLUME_INFO**;**
+       
+  16. **             
+**
+       
+
+  读取第一个山区，判断是否有fat标志。如果没有直接返回，挂载失败。之后使用ArcGetFileInformation获得分区大小。ArcGetFileInformation里面调用了FileData.FuncTable.GetFileInformation。因为当前DeviceId是设备句柄，所以他实际调用的是DiskGetFileInformation(freeldr\freeldr\arch\i386\hardware.c)。这个函数很简单，通过FileInformation返回分区开始和结束的地址，这里就不列出了。     
+
+   
+
+这里的代码用FileInformation**.**EndingAddress / SECTOR_SIZE计算出了该分区的扇区数SectorCount。这里应该BUG。因为EndingAddress是分区结束地址，真的扇区数应该是 (分区开始地址 - EndingAddress ) / SECTOR_SIZE。好在SectorCount只是判断fat分区的一个依据，而且一般C盘计算出的SectorCount误差不会很大，影响不大。
+
+   
+
+最后执行FatOpenVolume真正执行分区的挂载、初始化。初始化结束后将生成的Volume放到fat.c维护的全局数组FatVolumes里，之后对fat分区进行操作（读写）时，通过设备的DeviceId就可以找到对应的FAT_VOLUME_INFO结构。
+
+   
+
+最后函数返回FatFuncTable函数数组
+
+   
+
+   
+
+    
+  1. _const_ DEVVTBL FatFuncTable **=**
+     
+  2. **{**
+     
+  3. FatClose, 
+     
+  4. FatGetFileInformation, 
+     
+  5. FatOpen, 
+     
+  6. FatRead, 
+     
+  7. FatSeek, 
+     
+  8. L"fastfat", 
+     
+  9. **}****;**
+     
+  10.         
+
+      
+
+用户可以通过这些函数就读写改fat分区啦。
+
+   
+
+        
+
+
+   
+
+那么FatOpenVolume都干了什么呢。
+
+   
+
+这个函数简单来说就是根据分区内容填写了Volume结构，已经算是一个分区的具体实现细节了，和整体架构无关，不多说了。这个函数在freeldr\freeldr\fs\fat.c中。
+
+   
+
+        
+
+
+   
+
+****打开文件时做了什么****
+
+   
+
+上一篇文章中还有一个地方没说，就是打开设备并创建完文件的句柄后，ArcOpen调用了文件对应的FileData.FuncTable.Open。对于fat分区而言这个函数是FatOpen(freeldr\freeldr\fs\fat.c). 这个函数也是和分区结构有关的了，有一点比较重要就是函数最后调用了FsSetDeviceSpecific把一个和文件相关的内部结构与文件句柄相关联。以后使用FatRead对文件句柄进行读操作时直接就可以获得这个结构啦。
+
+   
+
+        
+
+
+   
+
+    
+
+      
+  1. LONG FatOpen**(**CHAR***** Path, OPENMODE OpenMode, ULONG***** FileId**)**
+       
+  2. **{**
+       
+  3. **.****.****.****.****.****.**
+       
+  4.        
+  5. // 根据文件的FileId获得文件所在的设备句柄FileData.DeviceId, 从而获得FatMount时生成的Volume结构。
+       
+  6. DeviceId **=** FsGetDeviceId**(*******FileId**)****;**
+       
+  7. FatVolume **=** FatVolumes**[**DeviceId**]****;**
+       
+  8. // 从DeviceId设备中读取并查询fat表，判断path表示的文件是否存在
+       
+  9. _RtlZeroMemory_**(****&**TempFileInfo, _sizeof_**(**TempFileInfo**)****)****;**
+       
+  10. ret **=** FatLookupFile**(**FatVolume, Path, DeviceId, **&**TempFileInfo**)****;**
+       
+  11. _if_ **(**ret **!****=** ESUCCESS**)**
+       
+  12. _return_ ENOENT**;**
+       
+  13. // 判断是否是目录
+       
+  14. IsDirectory **=** **(**TempFileInfo**.**Attributes **&** ATTR_DIRECTORY**)** **!****=** 0**;**
+       
+  15. _if_ **(**IsDirectory **&****&** OpenMode **!****=** OpenDirectory**)**
+       
+  16. _return_ EISDIR**;**
+       
+  17. _else_ _if_ **(****!**IsDirectory **&****&** OpenMode **!****=** OpenReadOnly**)**
+       
+  18. _return_ ENOTDIR**;**
+       
+  19. // 生成FAT_FILE_INFO结构，里面存放了文件的信息(开始的扇区等)
+       
+  20. FileHandle **=** MmHeapAlloc**(**_sizeof_**(**FAT_FILE_INFO**)****)****;**
+       
+  21. _if_ **(****!**FileHandle**)**
+       
+  22. _return_ ENOMEM**;**
+       
+  23. RtlCopyMemory**(**FileHandle, **&**TempFileInfo, _sizeof_**(**FAT_FILE_INFO**)****)****;**
+       
+  24. FileHandle**-****>**Volume **=** FatVolume**;**
+       
+  25. // 把这个结构和文件对应的FileData.Specific关联。之后进行FatRead等操作时可以直接获得这个结构了
+       
+  26. FsSetDeviceSpecific**(*******FileId, FileHandle**)****;**
+       
+  27. _return_ ESUCCESS**;**
+       
+  28. **}**
+            
+

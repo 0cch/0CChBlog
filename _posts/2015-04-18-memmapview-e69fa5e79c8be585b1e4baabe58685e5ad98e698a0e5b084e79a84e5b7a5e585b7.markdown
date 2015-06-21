@@ -1,0 +1,19 @@
+---
+author: admin
+comments: true
+date: 2015-04-18 15:56:03+00:00
+layout: post
+slug: memmapview-%e6%9f%a5%e7%9c%8b%e5%85%b1%e4%ba%ab%e5%86%85%e5%ad%98%e6%98%a0%e5%b0%84%e7%9a%84%e5%b7%a5%e5%85%b7
+title: MemMapView —— 查看共享内存映射的工具
+wordpress_id: 547
+categories:
+- Debugging
+- NT Internals
+- Tips
+---
+
+MemMapView是一个查看Named Shared Memory的工具，它能够枚举系统中的命名共享内存的名称，并且浏览其数据。
+
+[![20150418234836](/uploads/2015/04/20150418234836.png)](/uploads/2015/04/20150418234836.png)
+
+下载：[MemMapView](/uploads/2015/04/MemMapView.zip)

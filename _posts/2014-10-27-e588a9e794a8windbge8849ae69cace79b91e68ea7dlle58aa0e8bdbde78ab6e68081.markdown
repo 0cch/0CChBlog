@@ -1,0 +1,40 @@
+---
+author: admin
+comments: true
+date: 2014-10-27 15:29:27+00:00
+layout: post
+slug: '%e5%88%a9%e7%94%a8windbg%e8%84%9a%e6%9c%ac%e7%9b%91%e6%8e%a7dll%e5%8a%a0%e8%bd%bd%e7%8a%b6%e6%80%81'
+title: 利用Windbg脚本监控DLL加载状态
+wordpress_id: 475
+categories:
+- Tips
+---
+
+开发过大型程序的人都遇到过这样的问题，一个版本Release后，发现有的功能怎么也不对。但是每个模块在开发人员单独的环境下又是正常运行。那么遇到这样的问题，其中一个能想到的就是DLL模块没有加载正确。一般情况下，这种时候我们可以使用depends这样的工具查看模块的依赖情况，以判断出哪个模块是出问题的那个。但是如果如果真的遇上大型的程序，DLL模块很多，而且动态静态加载不一，这样光靠depends这样的工具是不能满足需求的。所以我这里写了个Windbg脚本来监控DLL加载状态，因为是动态调试，所以很轻松的就能找到加载问题，无论DLL是静态加载还是动态加载。
+
+以下脚本是Windows 7 32Bit，对于64bit，稍微修改下就行。不过如果是Windows 8，DLL的加载细节已经发生变化，所以这个脚本就不适用了。希望能抛砖引玉一下，期待更多系统的脚本分享出来。
+
+
+{% highlight cpp linenos %}
+bp ntdll!LdrpFindOrMapDll "
+.push /r /q
+r @$t0 = poi(@esp+4)
+r @$t1 = poi(@esp+8)
+
+g @$ra
+
+.printf \"name         = %msu\\n\", @$t0
+.printf \"path         = %msu\\n\", @$t1
+.printf \"Load status  = %08X\", @eax
+
+.if((@eax&0xffffffff) != 0) {.printf /D \" WARNNING\\n\"} .else {.printf \"\\n\"}
+
+.pop /r /q
+g
+"
+ {% endhighlight %}
+
+最后看看脚本的效果吧，如果加载失败了，那么返回的状态值就不是0。
+[![20141027164220](/uploads/2014/10/20141027164220.png)](/uploads/2014/10/20141027164220.png)
+[![20141027164424](/uploads/2014/10/20141027164424.png)](/uploads/2014/10/20141027164424.png)
+

@@ -1,0 +1,103 @@
+---
+author: admin
+comments: true
+date: 2013-10-07 14:00:26+00:00
+layout: post
+slug: windbg%e5%86%85%e6%a0%b8%e8%b0%83%e8%af%95%e6%9f%a5%e7%9c%8b%e7%aa%97%e5%8f%a3%e5%8f%a5%e6%9f%84%e4%bf%a1%e6%81%af%e7%9a%84%e8%84%9a%e6%9c%ac
+title: Windbg内核调试查看窗口句柄信息的脚本
+wordpress_id: 363
+categories:
+- Debugging
+- Tips
+---
+
+十一长假瞬间就结束了，整一周都在玩，也没有研究什么好玩的东西，这里就分享一个以前写的windbg脚本吧。通途是内核调试查看窗口句柄信息。用法很简单，例如 $$>a<hwnd.wds 000207B8。运行结果如下图：
+
+[![20131007195716](/uploads/2013/10/20131007195716.png)](/uploads/2013/10/20131007195716.png)
+
+
+{% highlight cpp linenos %}
+$$ Convert HWND to tagWnd
+$$ Author: nighxie 
+$$ Blog: 0cch.net
+
+.if (${/d:$arg1}) {
+
+    .if (${/d:$arg2}) {
+            .if (${$arg2} == 1) {
+                r $t0 = nt!PsActiveProcessHead
+                .for (r $t1 = poi(@$t0);(@$t1 != 0) & (@$t1 != @$t0);r $t1 = poi(@$t1)) {
+                r? $t2 = #CONTAINING_RECORD(@$t1, nt!_EPROCESS, ActiveProcessLinks);
+                as /x ${/v:$ProcAddr} @$t2;
+                as /ma ${/v:$ImageName} @@c++(&@$t2->ImageFileName[0]);
+
+                .block {
+                    $$ .echo ${$ImageName}
+                    .if ($sicmp("${$ImageName}", "explorer.exe") == 0) {
+                        .echo Found the process at ${$ProcAddr};
+                        .process /p /r ${$ProcAddr};
+                        ad ${/v:$ImageName};
+                        ad ${/v:$ProcAddr};
+                        .break;
+                    }
+                }
+
+                ad ${/v:$ImageName};
+                ad ${/v:$ProcAddr};
+            }
+        }
+    }
+    
+
+    r @$t1 = ${$arg1};
+    r @$t0 = win32k!gSharedInfo;
+    .if ((@$t1&0xffff) < @@C++(((win32k!tagSHAREDINFO *)@$t0)->psi->cHandleEntries)) {
+        r @$t0 = @@C++(((win32k!tagSHAREDINFO *)@$t0)->aheList);
+        r @$t0 = @@C++(@$t0+(@$t1&0xffff)*sizeof(win32k!_HANDLEENTRY));
+        r @$t0 = poi(@$t0);
+        .printf "HWND: %p\n", @@C++(((win32k!tagWnd *)@$t0)->head.h);
+        .printf /D "tagWnd * @ %p\n", @$t0;
+        .if (@@C++(((win32k!tagWnd *)@$t0)->strName.Buffer) != 0) {
+            .printf "Window Name: %mu\n", @@C++(((win32k!tagWnd *)@$t0)->strName.Buffer);
+        }
+        .printf /D "tagCLS * @ pcls) win32k!tagCLS\">%p\n", @@C++(((win32k!tagWnd *)@$t0)->pcls);
+        .if (@@C++(((win32k!tagWnd *)@$t0)->pcls->lpszAnsiClassName) != 0) {
+            .printf "Window Class Name: %ma\n", @@C++(((win32k!tagWnd *)@$t0)->pcls->lpszAnsiClassName);
+        }
+        .if (@@C++(((win32k!tagWnd *)@$t0)->spwndNext) != 0) {
+            .printf "Next Wnd:     %p\n", @@C++(((win32k!tagWnd *)@$t0)->spwndNext->head.h);
+        }
+        .if (@@C++(((win32k!tagWnd *)@$t0)->spwndPrev) != 0) {
+            .printf "Previous Wnd: %p\n", @@C++(((win32k!tagWnd *)@$t0)->spwndPrev->head.h);
+        }
+        .if (@@C++(((win32k!tagWnd *)@$t0)->spwndParent) != 0) {
+            .printf "Parent Wnd:   %p\n", @@C++(((win32k!tagWnd *)@$t0)->spwndParent->head.h);
+        }
+        .if (@@C++(((win32k!tagWnd *)@$t0)->spwndChild) != 0) {
+            .printf "Child Wnd:    %p\n", @@C++(((win32k!tagWnd *)@$t0)->spwndChild->head.h);
+        }
+        .if (@@C++(((win32k!tagWnd *)@$t0)->spwndOwner) != 0) {
+            .printf "Own Wnd:      %p\n", @@C++(((win32k!tagWnd *)@$t0)->spwndOwner->head.h);
+        }
+        .if (@@C++(((win32k!tagWnd *)@$t0)->lpfnWndProc) != 0) {
+            .printf /D "pfnWndProc:   head.pti->pEThread)->Tcb.Process);u @@C++(((win32k!tagWnd *)@$t0)->lpfnWndProc)\">%p\n", @@C++(((win32k!tagWnd *)@$t0)->lpfnWndProc);
+        }
+        .printf "Visiable: %d\n", @@C++((((win32k!tagWnd *)@$t0)->style & (1<<28)) != 0);
+        .printf "Child:    %d\n", @@C++((((win32k!tagWnd *)@$t0)->style & (1<<30)) != 0);
+        .printf "Minimized:%d\n", @@C++((((win32k!tagWnd *)@$t0)->style & (1<<29)) != 0);
+        .printf "Disabled: %d\n", @@C++((((win32k!tagWnd *)@$t0)->style & (1<<27)) != 0);
+        .printf "Window Rect { %d, %d, %d, %d}\n", @@C++(((win32k!tagWnd *)@$t0)->rcWindow.left), @@C++(((win32k!tagWnd *)@$t0)->rcWindow.top), @@C++(((win32k!tagWnd *)@$t0)->rcWindow.right), @@C++(((win32k!tagWnd *)@$t0)->rcWindow.bottom);
+        .printf "Clent Rect  { %d, %d, %d, %d}\n", @@C++(((win32k!tagWnd *)@$t0)->rcClient.left), @@C++(((win32k!tagWnd *)@$t0)->rcClient.top), @@C++(((win32k!tagWnd *)@$t0)->rcClient.right), @@C++(((win32k!tagWnd *)@$t0)->rcClient.bottom);
+    
+    }
+    .else {
+        .printf "HWND is out of range.\n";
+    }
+    
+}
+.else {
+    .echo "Usage $$>a<${$arg0} HWND(HEX)"
+    .echo "e.g. $$>a<${$arg0} 0x60962"
+}
+
+ {% endhighlight %}

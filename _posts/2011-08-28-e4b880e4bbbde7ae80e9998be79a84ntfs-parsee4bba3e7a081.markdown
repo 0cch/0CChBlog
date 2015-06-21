@@ -1,0 +1,27 @@
+---
+author: admin
+comments: true
+date: 2011-08-28 09:20:09+00:00
+layout: post
+slug: '%e4%b8%80%e4%bb%bd%e7%ae%80%e9%99%8b%e7%9a%84ntfs-parse%e4%bb%a3%e7%a0%81'
+title: 一份简陋的NTFS Parse代码
+wordpress_id: 47
+categories:
+- NT Internals
+tags:
+- Kernel
+- NTFS
+- System
+- Windows
+---
+
+研究了近两周的NTFS文件格式，初步了解了一些NTFS基本属性的解析方法。
+为了自己研究方便，写了点简单的解析代码。发出来以方便需要的人。
+话说这份代码的解析类只是属于demo阶段，而且没有注释。不过代码写的还算清晰。
+
+参考资料方面，我是转了一份NTFS 3G的文档，这份文档把NTFS的基本特点写的比较清晰了。值得一看
+[http://0cch.net/ntfsdoc/](http://0cch.net/ntfsdoc/)
+
+
+
+代码：[NtfsParse](/uploads/2011/08/NtfsParse.zip)

@@ -1,0 +1,15 @@
+---
+author: admin
+comments: true
+date: 2013-12-07 18:05:03+00:00
+layout: post
+slug: showiedevtool-%e6%89%93%e5%bc%80ie%e6%8e%a7%e4%bb%b6%e7%9a%84%e5%bc%80%e5%8f%91%e4%ba%ba%e5%91%98%e5%b7%a5%e5%85%b7
+title: ShowIEDevTool —— 打开IE控件的开发人员工具
+wordpress_id: 390
+categories:
+- Tips
+---
+
+最近在网上看到一大牛blog（[http://blog.titilima.com/launch-f12-tools.html](http://blog.titilima.com/launch-f12-tools.html)），讨论的是在内嵌的IE窗口中，打开开发人员工具。文章写的很好，而且还提供了开源的工具，实在是业界良心。于是我臭不要脸的A了部分关键代码，弄了个命令行版工具。有兴趣的强烈推荐阅读上面的blog，以及其提供的开源工具的代码。
+
+下载[ShowIEDevTool](/uploads/2013/12/ShowIEDevTool.zip)

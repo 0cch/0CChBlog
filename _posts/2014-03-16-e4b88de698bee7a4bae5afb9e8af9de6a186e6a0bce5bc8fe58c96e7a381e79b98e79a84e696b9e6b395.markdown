@@ -1,0 +1,61 @@
+---
+author: admin
+comments: true
+date: 2014-03-16 13:40:51+00:00
+layout: post
+slug: '%e4%b8%8d%e6%98%be%e7%a4%ba%e5%af%b9%e8%af%9d%e6%a1%86%e6%a0%bc%e5%bc%8f%e5%8c%96%e7%a3%81%e7%9b%98%e7%9a%84%e6%96%b9%e6%b3%95'
+title: 不显示对话框格式化磁盘的方法
+wordpress_id: 417
+categories:
+- Tips
+---
+
+我们都知道格式化磁盘会弹出如下图所示的这样的一个对话框。
+[![20140316210304](/uploads/2014/03/20140316210304-177x300.png)](/uploads/2014/03/20140316210304.png)
+编写格式化磁盘的程序的时候，我们需要用到SHFormatDrive这个API，同样的，他也会弹出一个对话框。出现对话框当然是为了安全考虑，防止磁盘被用户不知情的情况下格式化，导致数据丢失。但是，某些情况下，确实希望静默的去格式化，而不去打扰用户，例如格式化Ramdisk。那么就需要找点一个办法要求不弹出对话框的格式化磁盘。既然Windows并没有提供这样的API，那我们只能深入分析下调用过程，找出可以使用的API。
+
+怎么找的就不想说了，无非用ProcMon看一下堆栈就清楚明白了。在fmifs.dll中有一些导出的API可以帮助完成这一的任务，比如FormatEx，FormatEx2。
+
+这里简单的描述下FormatEx的用法：
+函数原型是
+
+{% highlight cpp linenos %}
+VOID WINAPI FormatEx(
+	LPCWSTR DriveRoot,
+	MEDIA_TYPE MediaType,
+	LPCWSTR FileSystemTypeName,
+	LPCWSTR Label,
+	BOOL QuickFormat,
+	ULONG ClusterSize,
+	FILE_SYSTEM_CALLBACK Callback
+);
+ {% endhighlight %}
+
+参数
+DriveRoot —— 盘符，如"K:\"
+MediaType —— 磁盘类型，如FixedMedia
+FileSystemTypeName —— 要格式化的文件系统，如"NTFS"
+Label —— 标签，随便写吧
+QuickFormat —— 快速格式化
+ClusterSize —— 簇大小
+Callback —— 状态回调函数
+
+回调函数原型
+
+{% highlight cpp linenos %}
+typedef BOOLEAN (__stdcall *FILE_SYSTEM_CALLBACK)(
+	ULONG                        Command,
+	ULONG                        Action,
+	PVOID                        pData
+);
+ {% endhighlight %}
+
+Command 表示Action和pData的意义，比如Command = 0表示pData是进度，Command = 11表示完成。还有其他的状态，例如错误等等，这些google一下就知道了。这个函数返回TRUE表示函数继续运行，FALSE表示停止格式化。
+
+比如，下面是格式化K盘：
+
+{% highlight cpp linenos %}
+FormatEx(L"K:\", FixedMedia, L"NTFS", L"0CCh", TRUE, 4096, FormatExCallback);
+ {% endhighlight %}
+
+

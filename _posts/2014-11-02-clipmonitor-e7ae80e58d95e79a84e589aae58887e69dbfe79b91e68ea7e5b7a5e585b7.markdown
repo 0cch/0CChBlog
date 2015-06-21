@@ -1,0 +1,22 @@
+---
+author: admin
+comments: true
+date: 2014-11-02 12:55:57+00:00
+layout: post
+slug: clipmonitor-%e7%ae%80%e5%8d%95%e7%9a%84%e5%89%aa%e5%88%87%e6%9d%bf%e7%9b%91%e6%8e%a7%e5%b7%a5%e5%85%b7
+title: ClipMonitor 简单的剪切板监控工具
+wordpress_id: 479
+categories:
+- Tips
+---
+
+周末花了点时间写了个剪切板监控工具，他会记录剪切板里面的数据，并且支持用HEX和TEXT对数据进行分析。
+涉及到的技术很简单，网上已经有一堆了，没什么可说的，我这里主要是加入了HEX的模块，方便对未知的剪切板数据进行分析而已。
+
+[![20141102204618](/uploads/2014/11/20141102204618.png)](/uploads/2014/11/20141102204618.png)
+
+[![20141102204638](/uploads/2014/11/20141102204638.png)](/uploads/2014/11/20141102204638.png)
+
+[![20141102204651](/uploads/2014/11/20141102204651.png)](/uploads/2014/11/20141102204651.png)
+
+下载：[ClipMonitor](/uploads/2014/11/ClipMonitor.zip)
