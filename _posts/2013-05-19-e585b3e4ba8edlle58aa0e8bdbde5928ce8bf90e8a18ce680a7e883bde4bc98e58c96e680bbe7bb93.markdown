@@ -8,7 +8,7 @@ title: 关于DLL加载和运行的性能优化总结
 wordpress_id: 246
 categories:
 - Debugging
-- NT Internals
+- NTInternals
 ---
 
 本文从三个方面总结了加快DLL加载和运行速度的方法，他们分别是：

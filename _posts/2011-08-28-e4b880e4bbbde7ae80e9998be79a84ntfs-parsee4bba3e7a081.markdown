@@ -7,7 +7,7 @@ slug: '%e4%b8%80%e4%bb%bd%e7%ae%80%e9%99%8b%e7%9a%84ntfs-parse%e4%bb%a3%e7%a0%81
 title: 一份简陋的NTFS Parse代码
 wordpress_id: 47
 categories:
-- NT Internals
+- NTInternals
 tags:
 - Kernel
 - NTFS

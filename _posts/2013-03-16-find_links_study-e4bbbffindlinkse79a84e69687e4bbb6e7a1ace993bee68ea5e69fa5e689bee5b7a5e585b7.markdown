@@ -7,7 +7,7 @@ slug: find_links_study-%e4%bb%bffindlinks%e7%9a%84%e6%96%87%e4%bb%b6%e7%a1%ac%e9
 title: find_links_study —— 仿FindLinks的文件硬链接查找工具
 wordpress_id: 191
 categories:
-- NT Internals
+- NTInternals
 ---
 
 在上一篇讨论[hardlink](http://0cch.net/wordpress/?p=179)的文章中，我在最后提到要写一个查找hardlinks的工具。正如上一篇文章中介绍这种工具的工作原理一样，他的代码比较简单。所以前几天find_links_study就已经写完了，只是一直没空发出来。这个工具的使用和FindLinks一模一样，这里也不多做介绍了。下图是工具的工作效果：

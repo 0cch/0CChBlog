@@ -7,7 +7,7 @@ slug: '%e9%98%b2%e6%ad%a2global-windows-hooks%e6%b3%a8%e5%85%a5%e7%9a%84%e4%b8%8
 title: 防止Global Windows Hooks注入的一个方法
 wordpress_id: 543
 categories:
-- NT Internals
+- NTInternals
 - Tips
 ---
 

@@ -7,7 +7,7 @@ slug: volume-snapshot
 title: Volume snapshot
 wordpress_id: 64
 categories:
-- NT Internals
+- NTInternals
 tags:
 - snapshot
 - Volume

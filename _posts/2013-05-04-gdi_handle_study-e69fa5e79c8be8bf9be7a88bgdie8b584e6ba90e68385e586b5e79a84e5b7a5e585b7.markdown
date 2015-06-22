@@ -7,7 +7,7 @@ slug: gdi_handle_study-%e6%9f%a5%e7%9c%8b%e8%bf%9b%e7%a8%8bgdi%e8%b5%84%e6%ba%90
 title: gdi_handle_study —— 查看进程GDI资源情况的工具
 wordpress_id: 238
 categories:
-- NT Internals
+- NTInternals
 ---
 
 gdi_handle_study 是一个用于查看进程中gdi句柄资源的工具。可以用于监控gdi资源是否泄露，已经对gdi资源的使用情况。使用方法非常简单：

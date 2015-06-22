@@ -7,7 +7,7 @@ slug: hive_study-%e6%b3%a8%e5%86%8c%e8%a1%a8%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f
 title: hive_study —— 注册表文件格式解析工具
 wordpress_id: 142
 categories:
-- NT Internals
+- NTInternals
 ---
 
 这几天又写了个小工具，刚下班就在这发了算了。

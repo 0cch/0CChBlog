@@ -7,7 +7,7 @@ slug: '%e5%85%b3%e4%ba%8ezone-identifier%e7%9a%84%e4%b8%80%e7%82%b9%e8%ae%b0%e5%
 title: 关于Zone.Identifier的一点记录
 wordpress_id: 562
 categories:
-- NT Internals
+- NTInternals
 - Tips
 ---
 

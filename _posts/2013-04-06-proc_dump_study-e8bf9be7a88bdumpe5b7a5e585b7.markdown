@@ -8,7 +8,7 @@ title: proc_dump_study —— 进程dump工具
 wordpress_id: 208
 categories:
 - Debugging
-- NT Internals
+- NTInternals
 ---
 
 proc_dump_study是逆向sysinternals的Procdump的一个工具。在功能上几乎和procdump一模一样。有一点差距就是目前没有支持clr的异常，也就是procdump的-g参数。其他的usage基本上相同，这里也不细说了。想说的一点是，proc_dump_study和procdump一样，功能比较强大，参数也比较多。所以为了方便使用，我把用的比较多的功能总结了一下，写了一个带UI shell程序。这样就方便测试人员或者不想深入理解命令行程序的人员使用。

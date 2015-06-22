@@ -7,7 +7,7 @@ slug: '%e6%96%87%e4%bb%b6%e6%90%9c%e7%b4%a2%e5%b7%a5%e5%85%b7everythings%e5%b7%a
 title: 文件搜索工具everythings工作原理简介
 wordpress_id: 214
 categories:
-- NT Internals
+- NTInternals
 ---
 
 everythings是一个非常强大而且好用的文件搜索工具。他搜索文件的速度非常之快，基本上刚刚输入要查找的文件名，文件已经搜索了出来。这里就简单介绍一下他的工作原理。

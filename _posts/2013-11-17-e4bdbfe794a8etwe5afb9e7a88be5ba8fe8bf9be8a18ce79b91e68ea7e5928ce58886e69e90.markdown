@@ -8,7 +8,7 @@ title: 使用ETW对程序进行监控和分析
 wordpress_id: 376
 categories:
 - Debugging
-- NT Internals
+- NTInternals
 ---
 
 ETW（Event Tracing for Windows）是Windows提供的对程序进行事件记录，跟踪，使用的机制。我们可以利用这个机制对程序进行调试和性能分析。从Windows Vista开始，ETW已经非常好的融合在Windows内核之中了，在Windows 7开始，这一个机制更加完善，几乎记录了Windows运行的每一个细节。我个人猜测，从Windows Vista开始到Windows 7直到现在的Windows 8，性能都在不断提高，ETW机制应该是功不可没的。

@@ -7,7 +7,7 @@ slug: '%e4%bd%bf%e7%94%a8windows%e6%9c%aa%e4%bd%bf%e7%94%a8%e5%86%85%e5%ad%98%e5
 title: 使用Windows未使用内存原理和应用
 wordpress_id: 520
 categories:
-- NT Internals
+- NTInternals
 ---
 
 [![20150202104522](/uploads/2015/02/20150202104522.png)](/uploads/2015/02/20150202104522.png)

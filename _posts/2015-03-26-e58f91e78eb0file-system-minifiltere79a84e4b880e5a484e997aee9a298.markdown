@@ -7,7 +7,7 @@ slug: '%e5%8f%91%e7%8e%b0file-system-minifilter%e7%9a%84%e4%b8%80%e5%a4%84%e9%97
 title: 发现File System Minifilter的一处问题
 wordpress_id: 538
 categories:
-- NT Internals
+- NTInternals
 - Tips
 ---
 

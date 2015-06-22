@@ -8,7 +8,7 @@ title: ProcMem —— 进程内存查看工具
 wordpress_id: 226
 categories:
 - Debugging
-- NT Internals
+- NTInternals
 ---
 
 ProcMem是一个进程内存的查看工具，他可以显示进程中的内存分配情况，以及内存大概的用途，并且Dump指定的内存模块。工具界面如下图

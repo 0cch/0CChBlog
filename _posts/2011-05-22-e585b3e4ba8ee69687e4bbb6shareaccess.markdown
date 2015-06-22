@@ -7,10 +7,10 @@ slug: '%e5%85%b3%e4%ba%8e%e6%96%87%e4%bb%b6shareaccess'
 title: 关于文件ShareAccess
 wordpress_id: 15
 categories:
-- NT Internals
+- NTInternals
 tags:
 - File System
-- NT Internals
+- NTInternals
 - NTFS
 ---
 

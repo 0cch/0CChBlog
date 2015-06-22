@@ -7,7 +7,7 @@ slug: r3%e5%8d%b8%e8%bd%bd%e4%bb%bb%e6%84%8f%e6%b6%88%e6%81%af%e9%92%a9%e5%ad%90
 title: R3卸载任意消息钩子
 wordpress_id: 103
 categories:
-- NT Internals
+- NTInternals
 ---
 
 这是工作中遇到的一个问题。一个程序每次起来后会去挂鼠标键盘低级钩子，这类钩子恶心的地方是如果你用调试工具attach上去，鼠标键盘就会急剧的延时，就跟挂起差不多了，根本无法使用键盘鼠标。MSDN上面指明，设置LowLevelHooksTimeout可以帮助解决这个问题。但是无奈的是，似乎没起什么作用，渣英语，不知道是不是我的理解有误。

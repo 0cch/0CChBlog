@@ -8,7 +8,7 @@ title: MemMapView —— 查看共享内存映射的工具
 wordpress_id: 547
 categories:
 - Debugging
-- NT Internals
+- NTInternals
 - Tips
 ---
 

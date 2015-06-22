@@ -7,7 +7,7 @@ slug: proc_study-%e4%bb%bfpslist%e7%9a%84%e8%bf%9b%e7%a8%8b%e6%9f%a5%e7%9c%8b%e5
 title: proc_study —— 仿PsList的进程查看工具
 wordpress_id: 147
 categories:
-- NT Internals
+- NTInternals
 ---
 
 proc_study 是我通过逆向PsList而写出来的小工具，如果在本地查看进程，这个工具和pslist没有任何区别。因为实现查看进程的方式也是和pslist一模一样的。另一方面，他缺乏pslist的查看远程计算机的进程的功能。没有实现这个并不是不知道怎么实现，是我半天也没搭建出这样的一个远程环境，真够郁闷的。这个应该是年前的最后一个study系列的工具了。期待蛇年有时间山寨更多工具，嘿嘿~~~
