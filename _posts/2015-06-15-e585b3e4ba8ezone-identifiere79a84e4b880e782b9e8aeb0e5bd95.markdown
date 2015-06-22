@@ -20,7 +20,8 @@ ZoneId=3
 
 这个ZoneId=3，就是指明这个文件是由Internet上下载的。根据MSDN，这个id有以下几种：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
+
 typedef enum tagURLZONE { 
   URLZONE_INVALID         = -1,
   URLZONE_PREDEFINED_MIN  = 0,
@@ -32,8 +33,9 @@ typedef enum tagURLZONE {
   URLZONE_PREDEFINED_MAX  = 999,
   URLZONE_USER_MIN        = 1000,
   URLZONE_USER_MAX        = 10000
-} URLZONE;
- {% endhighlight %}
+} URLZONE; 
+{% endhighlight %}
+
 查看这个数据流的方法也很简单，用notepad就行了。
 [![20150615153805](/uploads/2015/06/20150615153805.png)](/uploads/2015/06/20150615153805.png)
 另外如果想给添加或者去除这个数据流，我们这里有两种方法：
