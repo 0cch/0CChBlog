@@ -1,6 +1,6 @@
 # Site settings
 title: 0CCh
-email: nightxie@gmail.com
+# email: nightxie@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   printf("I am programmer!");
 baseurl: "" # the subpath of your site, e.g. /blog/
