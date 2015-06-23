@@ -44,10 +44,10 @@ AtlTraceLoadSettings
 为了更方便使用，我这写了几个宏代码如下：
 
 {% highlight cpp linenos %}
-#include 
-#include 
-#include 
-#include 
+#include <atlbase.h>
+#include <atltrace.h>
+#include <atldebugapi.h>
+#include <atlpath.h>
 
 #define TRACEHELPA(fmt, ...)	\
 do								\
