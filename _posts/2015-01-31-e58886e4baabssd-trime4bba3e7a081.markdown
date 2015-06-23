@@ -10,6 +10,6 @@ categories:
 - Tips
 ---
 
-14年的早些时候发布过[SSD TRIM技术的文章](http://0cch.net/wordpress/?p=404)，文章里面记录了关于TRIM技术的一些东西，其中就包括在Windows上如何使用TRIM。当然Windows 7及其更高版本的系统都是自带TRIM功能的，只有XP没有这个功能，当时我就写了个工具，在XP下进行TRIM。现在想想确实也没啥意思，就把代码分享说来吧。
+14年的早些时候发布过[SSD TRIM技术的文章]("/tips/2014/02/11/ssd-trime58a9fe883bde79a84e4b880e4ba9be8aeb0e5bd95.html")，文章里面记录了关于TRIM技术的一些东西，其中就包括在Windows上如何使用TRIM。当然Windows 7及其更高版本的系统都是自带TRIM功能的，只有XP没有这个功能，当时我就写了个工具，在XP下进行TRIM。现在想想确实也没啥意思，就把代码分享说来吧。
 
 [https://github.com/0cch/SSDTrim.git](https://github.com/0cch/SSDTrim.git)

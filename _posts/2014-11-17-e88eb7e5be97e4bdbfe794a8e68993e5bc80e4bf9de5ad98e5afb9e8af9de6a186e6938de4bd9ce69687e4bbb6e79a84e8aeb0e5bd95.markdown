@@ -11,6 +11,7 @@ categories:
 ---
 
 今天无意中看到了HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU这个键值的用途，虽然感觉没啥实际用途，但是也挺有趣的，于是写了个小程序读取它。这个键值的意义非常明确，就是记录打开保存对话框的最近操作的文件的PIDL。所以我们可以通过PIDL来获得文件路径，就这么简单，确实没啥特别的实际用途吧，就当娱乐了。枚举的效果如下：
+
 [![20141117231005](/uploads/2014/11/20141117231005.png)](/uploads/2014/11/20141117231005.png)
 
 代码也很简单：
@@ -18,11 +19,11 @@ categories:
 {% highlight cpp linenos %}
 
 #include "stdafx.h"
-#include 
-#include 
-#include 
-#include 
-#include 
+#include <atlbase.h>
+#include <atlstr.h>
+#include <Shlobj.h>
+#include <locale.h>
+#include <vector>
 
 #pragma comment(lib, "shell32.lib")
 

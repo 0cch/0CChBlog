@@ -17,10 +17,10 @@ categories:
 #ifndef __PARSE_INI_H__
 #define __PARSE_INI_H__
 
-#include 
-#include 
-#include 
-#include 
+#include <vector>
+#include <string>
+#include <fstream>
+#include <windows.h>
 
 #define INI_KEY_LINE			1
 #define INI_SECTION_LINE		2
