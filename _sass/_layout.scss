@@ -11,12 +11,17 @@
 }
 
 .site-title {
-    font-size: 26px;
+	font-family: 'Titillium Web', sans-serif;
+    font-size: 40px;
     line-height: 56px;
     letter-spacing: -1px;
     margin-bottom: 0;
     float: left;
-
+	text-shadow: 1px 1px 1px #999;
+	font-style: normal;
+	font-weight: 600;
+	outline-color: #111;
+	
     &,
     &:visited {
         color: $grey-color-dark;
