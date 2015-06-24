@@ -8,7 +8,25 @@
   <ul>
    {% for page in site.pages %}
     {% if page.title and page.title != 'About' %}
+	  {% if page.title contains 'month' %}
+	  {% else %}
       <li><a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a></li>
+	  {% endif %}
+    {% endif %}
+   {% endfor %}
+  </ul>
+ </div>
+ <div class="categories">
+  <h3>Archives:</h3>
+  <ul>
+   {% assign archives = site.pages | sort: 'title' %}
+   {% for page in archives reversed%}
+    {% if page.title and page.title != 'About' %}
+	  {% if page.title contains 'month' %}
+	  {% assign words = page.title | split: ' ' %}
+	  <li><a class="page-link" href="{{ page.url | prepend: site.baseurl }}">{{ words[1] }}</a></li>
+	  {% else %}
+	  {% endif %}
     {% endif %}
    {% endfor %}
   </ul>
