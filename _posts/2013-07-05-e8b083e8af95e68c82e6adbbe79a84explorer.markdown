@@ -18,15 +18,18 @@ categories:
 
 第二天，同事把explorer.exe挂死的Dump传给了我，200多MB。用Windbg打开Dump文件，第一反应就是看看有多少线程再说吧。
 
+{% highlight windbg %}
 0:000> ~
 . 0 Id: b14.b18 Suspend: 0 Teb: 7ffde000 Unfrozen
 1 Id: b14.b1c Suspend: 0 Teb: 7ffdd000 Unfrozen
 ...
 54 Id: b14.1a94 Suspend: 0 Teb: 7ff75000 Unfrozen
 55 Id: b14.18c8 Suspend: 0 Teb: 7ff74000 Unfrozen
+{% endhighlight %}
 
 56个线程，肯定不能依次看栈回溯。按照尝试判断，explorer界面挂死，肯定是刷新界面的线程挂死了。所以栈回溯里肯定有explorer的身影。于是找找哪个线程有explorer模块。
 
+{% highlight windbg %}
 0:000> !findstack explorer!
 Thread 000, 2 frame(s) match
 * 04 001bf924 0087aa50 explorer!wWinMain+0x54a
@@ -38,9 +41,11 @@ Thread 003, 2 frame(s) match
 
 Thread 008, 1 frame(s) match
 * 03 04a1fc0c 75b346bc explorer!CSoundWnd::s_ThreadProc+0x3a
+{% endhighlight %}
 
 从上面的结果看来，3号线程最可疑，于是看看完整的堆栈情况。
 
+{% highlight windbg %}
 0:003> kv
 # ChildEBP RetAddr Args to Child
 00 0324f508 76eb5aec 75236924 00000002 0324f55c ntdll!KiFastSystemCallRet (FPO: [0,0,0])
@@ -60,9 +65,11 @@ Thread 008, 1 frame(s) match
 0e 0324f7b8 76ecb299 001bf810 75d00467 00000000 kernel32!BaseThreadInitThunk+0xe (FPO: [Non-Fpo])
 0f 0324f7f8 76ecb26c 75b345e9 001bf810 00000000 ntdll!__RtlUserThreadStart+0x70 (FPO: [Non-Fpo])
 10 0324f810 00000000 75b345e9 001bf810 00000000 ntdll!_RtlUserThreadStart+0x1b (FPO: [Non-Fpo])
+{% endhighlight %}
 
 可以看出线程正在调用WaitForMultipleObjectsEx等待两个内核对象。那么看看这两个内核对象是什么吧。
 
+{% highlight windbg %}
 0:003> dp 0324f55c L2
 0324f55c 00000318 000002fc
 0:003> !handle 00000318
@@ -71,9 +78,11 @@ Type Event
 0:003> !handle 000002fc
 Handle 000002fc
 Type Event
+{% endhighlight %}
 
 很不幸，两个内核对象都是Event，这样就没有什么可参考的价值了，因为我们没办法知道谁应该去设置两个event。那么好吧，从其他方面下手，看能不能发现问题。看看关键区的情况。
 
+{% highlight windbg %}
 0:003> !cs -l
 -----------------------------------------
 DebugInfo = 0x76f47540
@@ -95,9 +104,11 @@ OwningThread = 0x000013e0
 RecursionCount = 0x1
 LockSemaphore = 0xA50
 SpinCount = 0x00000000
+{% endhighlight %}
 
 看到一个很可疑的情况了，两个cs都被一个线程占用，更可疑的是这个线程居然还占用了LdrpLoaderLock。这就很有可能是引起死锁的原因了。来看看这个线程的完整堆栈。
 
+{% highlight windbg %}
 0:053> ~~[13e0]s
 eax=06d02f00 ebx=00000000 ecx=03920000 edx=06ce0000 esi=000015ac edi=00000000
 eip=76eb6194 esp=0b1ad1cc ebp=0b1ad238 iopl=0 nv up ei pl zr na pe nc
@@ -132,9 +143,11 @@ WARNING: Stack unwind information not available. Following frames may be wrong.
 3c 0b1afc54 76ecb299 kernel32!BaseThreadInitThunk+0xe
 3d 0b1afc94 76ecb26c ntdll!__RtlUserThreadStart+0x70
 3e 0b1afcac 00000000 ntdll!_RtlUserThreadStart+0x1b
+{% endhighlight %}
 
 首先一眼就看到了一个非系统模块HaoZipExt。再扫一眼，发现他在LdrpLoaderLock的时候又去等待了某个内核对象。那么再来看看这个内核对象是什么吧。
 
+{% highlight windbg %}
 0:053> kv L5
 # ChildEBP RetAddr Args to Child
 00 0b1ad1c8 76eb5b0c 7523179c 000015ac 00000000 ntdll!KiFastSystemCallRet (FPO: [0,0,0])
@@ -156,9 +169,11 @@ Object specific information
 Thread Id b14.1a94
 Priority 10
 Base Priority 0
+{% endhighlight %}
 
 原来他在等待1a94这个线程结束啊，那么这个1a94线程又在干嘛呢？
 
+{% highlight windbg %}
 0:054> ~~[1a94]s
 eax=0bbdfbb4 ebx=00000000 ecx=00000000 edx=00000000 esi=76f47340 edi=00000000
 eip=76eb6194 esp=0bbdfa24 ebp=0bbdfa88 iopl=0 nv up ei pl nz ac pe cy
@@ -174,11 +189,13 @@ ntdll!KiFastSystemCallRet:
 04 0bbdfb44 76ecb13c 0bbdfbb4 7d49080f 00000000 ntdll!LdrpInitializeThread+0xc6 (FPO: [Non-Fpo])
 05 0bbdfb90 76ecb169 0bbdfbb4 76e70000 00000000 ntdll!_LdrpInitialize+0x1ad (FPO: [Non-Fpo])
 06 0bbdfba0 00000000 0bbdfbb4 76e70000 00000000 ntdll!LdrInitializeThunk+0x10 (FPO: [Non-Fpo])
+{% endhighlight %}
 
 原来这个线程在等待LdrpLoaderLock这个锁啊，真相大白了。这里理一下思路，线程13e0，创建后，调用Loadlibrary，装载HaoZipExt。这个时候HaoZipExt获得LdrpLoaderLock，但是HaoZipExt犯了编写DLL的大忌。在DLLMain里面做了一些不能预期的事情。HaoZipExt调用了SHGetSpecialFolderLocation，这个函数在内部会创建一个线程，运行一个叫做FirstHardwareEnumThreadProc 的子过程。这个线程起来之后，就会通知所用的DllMain，告诉他们DLL_THREAD_ATTACH的消息。但是告诉他们这个消息之前，首先要获得LdrpLoaderLock这个锁。但是LdrpLoaderLock这个锁正在被创建他的线程使用，而且还在等自己结束，就这样死锁了。这也是MSDN特别强调告诉我们，不要在DllMain里有过多自己不能预期的操作的原因。
 
 那么看看这个罪魁祸首是什么模块吧。
 
+{% highlight windbg %}
 0:054> lmvm HaoZipExt
 Browse full module list
 start end module name
@@ -206,6 +223,7 @@ FileVersion: 3.0.1.9002
 FileDescription: 2345好压-Windows扩展模块
 LegalCopyright: 版权所有(c) 2012 瑞创网络
 Comments: www.haozip.com
+{% endhighlight %}
 
 知道问题后，我感觉这应该就是explorer挂死的原因，虽然没有100%的证据，但是至少也是一个造成死锁的程序，早卸载为妙，于是我告诉了同事，卸载了这个叫做好压的软件。之后几天，explorer运行正常，再也没有出现过挂死现象了。
 

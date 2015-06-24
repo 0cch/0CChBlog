@@ -12,10 +12,11 @@ categories:
 
 这份代码应该是将近一年前写的吧，应该是去年年初了。不像ntfsstudy和dia_study，这个工具应该比较的实用吧，实用场合可以比较多。所以也把源代码发出来。看工具名称基本上已经知道了是报告bug用的。其实这种工具倒是挺多的。不过我个人感觉自己写一个用起来顺手，而且代码量小，容易修改自定义。
 
-工具代码有三个工程，分别是minidump_generator，dump_minidump，BugReporter。
-minidump_generator是一个dll，当然也可以编译成静态库，他需要加入到你想使用BugReporter的工程里面。
-dump_minidump是一个dump文件的解析库，他是BugReporter工程的依赖库。
-BugReporter是一个窗口程序，在你融合了minidump_generator的程序崩溃的时候会弹出窗口。就像图中那样。
+工具代码有三个工程，分别是minidump_generator，dump_minidump，BugReporter。  
+minidump_generator是一个dll，当然也可以编译成静态库，他需要加入到你想使用BugReporter的工程里面。  
+dump_minidump是一个dump文件的解析库，他是BugReporter工程的依赖库。  
+BugReporter是一个窗口程序，在你融合了minidump_generator的程序崩溃的时候会弹出窗口。就像图中那样。  
+
 [![20130120193015](/uploads/2013/01/20130120193015.png)](/uploads/2013/01/20130120193015.png)
 
 勾选send bug report并且点击ok，窗口里的完整log和dump文件会打包为zip文件储存，储存的地方可以由程序指定，也可以写注册表键值，reporter会去都键值然后存储到相应的位置。具体什么键值，看源代码吧。不完整和遗憾的地方也有，就是还没有http上传到提交dump收集服务器的代码。因为确实不会写php啥的。另外这个工程也用了不少开源代码，这里也感谢一下，其中包括反汇编引擎和ZIP代码。
@@ -24,6 +25,7 @@ BugReporter是一个窗口程序，在你融合了minidump_generator的程序崩
 
 以下是完整的dump log：
 
+{% highlight windbg %}
 SYSTEM INFORMATIONS
 ---------------
 ProcessorArchitecture : x86
@@ -79,3 +81,4 @@ Base Size Name FileVersion ProductVersion
 
 Crash IP Disasm :
 test dword ptr [eax], eax
+{% endhighlight %}

@@ -18,7 +18,7 @@ tags:
 
 正像标题写的，恩，我开始写kernel玩了。其实写一个简单，功能单一的kernel并不难。麻烦的只是搭建环境等等。kernel的编写资料也很多，但是可惜的是，绝大部分都是应用在linux环境。我是那种看到linux就头晕的人。所以还是坚持用windows和vc来开发kernel。令人惊喜的是grub能够帮助我们map kernel到内存中，所以boot loader这一步可以想放下。等kernel写了个大概再来写boot loader也不迟。
 
-环境和工具：
+环境和工具：  
 环境正如我上面提到了windows xp 和 vs 2008。其他工具包括winimage，virtual pc，bochsdbg（+ IDA）。当然还有grub4dos。
 
 要高效的起步，先要了解mulitBoot的一些知识。还有就是写一套能够在text mode下打印信息的函数，例如printf。这样在不用调试的情况下，就能了解一些信息。说实在的bochsdbg的调试功能真心不好用，但是加上IDA可能是一个比较好的做法。具备以上条件后，就可以开始kernel之旅了。

@@ -12,14 +12,14 @@ categories:
 
 gdi_handle_study 是一个用于查看进程中gdi句柄资源的工具。可以用于监控gdi资源是否泄露，已经对gdi资源的使用情况。使用方法非常简单：
 
-
+{% highlight windbg %}
 <blockquote>usage: gdi_handle_study.exe [-c] [-v [-f <filter>]] [processname|pid]
 processname    List GDI handles loaded by process (partial name accepted)
 pid                   List GDI handles associated with the specified process id
 -c                    Show GDI count information.
 -v                    Show GDI handle information.
 -f                    Filter the GDI handle type.</blockquote>
-
+{% endhighlight %}
 
 在不用任何参数的情况下，工具会显示所有进程的gdi资源使用概况，如图所示：
 [![20130504154700](/uploads/2013/05/20130504154700.png)](/uploads/2013/05/20130504154700.png)

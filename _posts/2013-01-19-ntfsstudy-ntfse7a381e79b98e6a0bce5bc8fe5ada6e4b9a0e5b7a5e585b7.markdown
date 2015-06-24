@@ -22,6 +22,7 @@ NtfsStudy这个工具的主要功能是：枚举目录文件，查看和dump文�
 
 下面就是他的Usage，也是目前该工具具有的功能。
 
+{% highlight windbg %}
 NtfsStudy v1.0 - Ntfs format study tool.
 Copyright (C) 2012-2013 nightxie
 0CCh - www.0cch.net
@@ -49,30 +50,27 @@ About attribute type:
 
 
 $STANDARD_INFORMATION         = 1
-$ATTRIBUTE_LIST                       = 2
-$FILE_NAME                                = 3
-$OBJECT_ID                                = 4
-$SECURITY_DESCRIPTOR             = 5
-$VOLUME_NAME                          = 6
-$VOLUME_INFORMATION              = 7
-$DATA                                        = 8
-$INDEX_ROOT                             = 9
-$INDEX_ALLOCATION                   = 10
-$BITMAP                                     = 11
-$REPARSE_POINT                        = 12
-$EA_INFORMATION                      = 13
-$EA                                             = 14
-$LOGGED_UTILITY_STREAM          = 16
-
+$ATTRIBUTE_LIST               = 2
+$FILE_NAME                    = 3
+$OBJECT_ID                    = 4
+$SECURITY_DESCRIPTOR          = 5
+$VOLUME_NAME                  = 6
+$VOLUME_INFORMATION           = 7
+$DATA                         = 8
+$INDEX_ROOT                   = 9
+$INDEX_ALLOCATION             = 10
+$BITMAP                       = 11
+$REPARSE_POINT                = 12
+$EA_INFORMATION               = 13
+$EA                           = 14
+$LOGGED_UTILITY_STREAM        = 16
 
 About secure id:
 
-
 To get the secure id of target file.
 Use '-v 1' command, secure id will displayed in STANDARD_INFORMATION.
-
+{% endhighlight %}
 
 另外我还会继续完善这个工具。如果发现bug请与我联系。
 
-下载[NtfsStudy](/uploads/2013/01/NtfsStudy.zip)[
-](/uploads/2013/01/NtfsStudy.zip)
+下载[NtfsStudy](/uploads/2013/01/NtfsStudy.zip)

@@ -46,16 +46,18 @@ return 0;
  {% endhighlight %}
 
 编译后看到代码如下
-`
+{% highlight asm %}
 0040103D push 0Eh
 0040103F call operator new[] (403ED0h)
-`
+{% endhighlight %}  
 注意到这里传入的大小时0Eh，也就是说申请分配14个字节大小的内存。但是我们知道C++标准中空类的大小应该是1字节。那么多出的dword我们就很容易想到他的用处，应该是记录数组大小的。事实也确实如此。
 
-`mov dword ptr [eax],0Ah `
+{% highlight asm %}
+mov dword ptr [eax],0Ah
+{% endhighlight %}  
 这里明确交代，给分配内存的第一个dword传入10。
 
-`
+{% highlight asm %}
 00401069 push offset A::~A (4011D0h)
 0040106E push offset A::A (401120h)
 00401073 push 0Ah
@@ -64,10 +66,10 @@ return 0;
 0040107D add ecx,4
 00401080 push ecx
 00401081 call `eh vector constructor iterator' (40A010h)
-`
+{% endhighlight %}  
 这里是调用构造函数，注意是vector版本的构造函数。参数分别是数组的this指针，sizeof(A)，数组数量，构造和析构函数。这样，在这个函数内部循环10次调用构造函数，构造完毕。
 
-`
+{% highlight asm %}
 004010BD mov eax,dword ptr [ebp-14h]
 004010C0 mov dword ptr [ebp-0E0h],eax
 004010C6 mov ecx,dword ptr [ebp-0E0h]
@@ -77,11 +79,11 @@ return 0;
 004010DB push 3
 004010DD mov ecx,dword ptr [ebp-0ECh]
 004010E3 call A::`vector deleting destructor' (401230h)
-`
+{% endhighlight %}  
 这里是析构部分传入数组的this指针，传入flag(3)，调用析构函数。
 
 继续看call之后的代码
-`
+{% highlight asm %}
 00401253 mov eax,dword ptr [ebp+8]
 00401256 and eax,2
 00401259 je A::`vector deleting destructor'+61h (401291h)
@@ -94,11 +96,11 @@ return 0;
 0040126C push edx
 0040126D call `eh vector destructor iterator' (40A920h)
 00401272 mov eax,dword ptr [ebp+8]
-`
+{% endhighlight %}
 如果flag中位1是set，那么调用eh_vector_destructor_iterator调用每个析构函数。参数分别是this，sizeof(A)，数组个数（这里很明显是从eax-4中拿出来的）以及析构函数地址。
 
 OK，明白了delete[]的做法，我们看看delete为什么失败。
-`
+{% highlight asm %}
 004010BD mov eax,dword ptr [ebp-14h]
 004010C0 mov dword ptr [ebp-0E0h],eax
 004010C6 mov ecx,dword ptr [ebp-0E0h]
@@ -108,11 +110,11 @@ OK，明白了delete[]的做法，我们看看delete为什么失败。
 004010DB push 1
 004010DD mov ecx,dword ptr [ebp-0ECh]
 004010E3 call A::`scalar deleting destructor' (4012D0h)
-`
+{% endhighlight %}
 这里调用的析构函数都不一样是一个scalar版本的函数。
 
 继续看这个函数的关键部分
-`
+{% highlight asm %}
 004012F3 mov ecx,dword ptr [this]
 004012F6 call A::~A (4011D0h)
 004012FB mov eax,dword ptr [ebp+8]
@@ -121,12 +123,13 @@ OK，明白了delete[]的做法，我们看看delete为什么失败。
 00401303 mov eax,dword ptr [this]
 00401306 push eax
 00401307 call operator delete (40A890h)
-`
+{% endhighlight %}
 这里很清楚的看到，只进行一次析构，然后就释放内存。所以我们看到的现象是只调用一次析构函数。那么为什么会崩溃呢？因为delete错了地址。看上面的对比的值，eax-4才是new返回的地址，所以delete的不应该是eax，而是eax-4。
 
 真相大白？NO，还有一个问题，delete[] 和delete 内建类型真的成功了么？
 看看我贴出的代码吧，这里不解释了。
-`
+
+{% highlight asm %}
 ;delete[] version
 0040101E push 0Ah
 00401020 call operator new[] (4014C0h)
@@ -152,6 +155,7 @@ OK，明白了delete[]的做法，我们看看delete为什么失败。
 00401040 mov ecx,dword ptr [ebp-0D4h]
 00401046 push ecx
 00401047 call operator delete (401600h)
+{% endhighlight %}
 
 就像我刚刚所说的delete[]会调用delete。所以不会出任何问题。
 
@@ -160,27 +164,26 @@ OK，明白了delete[]的做法，我们看看delete为什么失败。
 {% highlight cpp %}
 void A::'scalar deleting destructor'(unsigned int flags)
 {
-this->~A();
-if (flags & 1) {
-A::operator delete(this);
-}
+	this->~A();
+	if (flags & 1) {
+	A::operator delete(this);
 }
 
 void A::'vector deleting destructor'(unsigned int flags)
 {
-if (flags & 2) {
-count = *(int *)((int)this - 4);
-'eh vector destructor iterator'(this, sizeof(A), count, A::~A);
-if (flags&1) {
-A::operator delete((void *)((int)this - 4));
-}
-}
-else {
-this->~A();
-if (flags & 1) {
-A::operator delete(this);
-}
-}
+	if (flags & 2) {
+		count = *(int *)((int)this - 4);
+		'eh vector destructor iterator'(this, sizeof(A), count, A::~A);
+		if (flags&1) {
+			A::operator delete((void *)((int)this - 4));
+		}
+	}
+	else {
+		this->~A();
+		if (flags & 1) {
+			A::operator delete(this);
+		}
+	}
 };
  {% endhighlight %}
 

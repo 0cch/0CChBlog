@@ -31,8 +31,8 @@ void WaitDebuggerAttach(DWORD Second)
 }
  {% endhighlight %}
 
-这个函数可以指定等待时间，如果Debugger Attach上去了，那么就断下来方便调试，否则会超时，正常执行。
-这里我是用的IsDebuggerPresent这个API来获得进程的调试状态。实际上检测自己调试状态的方法很多，只不过这个用起来最方便而已。比如可以用测试断点异常的方法来检测自己的调试状态。
+这个函数可以指定等待时间，如果Debugger Attach上去了，那么就断下来方便调试，否则会超时，正常执行。  
+这里我是用的IsDebuggerPresent这个API来获得进程的调试状态。实际上检测自己调试状态的方法很多，只不过这个用起来最方便而已。比如可以用测试断点异常的方法来检测自己的调试状态。  
 
 {% highlight cpp %}
 BOOL CheckForDebugger()

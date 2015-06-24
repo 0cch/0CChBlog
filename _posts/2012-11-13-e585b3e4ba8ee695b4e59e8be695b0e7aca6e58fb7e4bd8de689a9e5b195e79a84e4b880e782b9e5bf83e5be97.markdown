@@ -41,8 +41,8 @@ unsigned long i = 0xffffffff;
 unsigned long long q = i;
  {% endhighlight %}
 
-那么这4肿情况中q都是多少呢？
-实验结果是case 1 和 2，他们的q的值（这里都表示为无符号）0xffffffff`ffffffff，而case 3 和 4 中q的值为0x00000000`ffffffff。
+那么这4肿情况中q都是多少呢？  
+实验结果是case 1 和 2，他们的q的值（这里都表示为无符号）0xffffffff`ffffffff，而case 3 和 4 中q的值为0x00000000`ffffffff。  
 看到这里，大概就能推测c++的转换策略。即以源操作数的类型为依据，对其进行扩展，然后赋值到目标操作数，他并不在乎目标的类型有无符号。
 
 看了相关编译完成后的汇编代码可以确认这一点，case 1和2的汇编代码完全相同，而3和4也是一样。更具体一点来说。有符号的情况下调用了cdq对符号位进行扩展，然后将edx赋值到q的高位，而无符号的情况下，简单xor了寄存器，然后赋值到q的高位。

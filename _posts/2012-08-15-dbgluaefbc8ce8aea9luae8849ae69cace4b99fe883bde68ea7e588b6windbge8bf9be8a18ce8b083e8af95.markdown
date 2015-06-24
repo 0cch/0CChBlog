@@ -10,15 +10,15 @@ categories:
 - Debugging
 ---
 
-关于dbgLua：
+关于dbgLua：  
 这是一个让windbg支持lua脚步的扩展程序。写这个程序的主要目的是希望能简单的取代windbg本身的脚本。因为我确实不喜欢windbg那种形式的脚本。
 
 使用方法：将dbgLua.dll拷贝到windbg的winext下，编写lua脚本。调试的时候，在输入框中输入“!dbgLua.run d:\sample.lua”其中“d:\sample.lua”是你的脚步路径。
 
 以下是1.0.0.1版本所支持的lua函数（后续可能会慢慢添加更多，看需求了）
 
-
-<blockquote>dbgLua 1.0.1.1 API
+{% highlight windbg %}
+dbgLua 1.0.1.1 API
 
 dprint 输出信息到windbg command窗口，例如dprint("hello")
 exec 执行一条windbg命令，例如exec("bp kernel32!CreateFileW")
@@ -37,7 +37,7 @@ evalmasm masm表达式求值，例如val = evalmasm("11+2*3")
 evalcpp cpp表达式求值，例如val = evalcpp("sizeof(char)")
 getmoduleinfo 通过模块名获得模块基址和大学，例如base,size = getmoduleinfo("kernel32")
 search 二进制查找，例如found = search(base, size, "cc 89 75 fc eb ")</blockquote>
-
+{% endhighlight %}
 
 具体的结合这些函数进行调试的例子还没有准备好，等有机会了，我会准备好调试案例放到这里来。
 

@@ -16,6 +16,7 @@ proc_study 是我通过逆向PsList而写出来的小工具，如果在本地查
 
 这个工具的使用方法和命令行参数可以直接参看PsList的。因为整个Usage我都是直接山寨过来的。
 
+{% highlight windbg %}
 Usage: proc_study [-d][-m][-x][-t][name|pid]
 -d      Show thread detail.
 -m     Show memory detail.
@@ -39,5 +40,6 @@ Faults Page Faults
 NonP Non-Paged Pool
 Page Paged Pool
 Cswtch Context Switches
+{% endhighlight %}
 
 下载[proc_study](/uploads/2013/02/proc_study.zip)

@@ -14,6 +14,7 @@ categories:
 
 hive_study 是一个注册表文件格式解析工具。功能也比较的简单，主要是dump出注册表里面的数据信息。例如显示子项，子键，显示键值以及他们的安全描述符。当然了，还是那样，注册表的hive文件实际上是不可读的，因为内核独占他了。想要获得可以读的hive文件，可以用ntfsstudy把hive文件dump出来，然后去读这个新的hive文件。以下是他的Usage。
 
+{% highlight windbg %}
 Usage : hive_study.exe -f hive_path [-options]
 
 Options:
@@ -23,6 +24,7 @@ Options:
 [-e] List values information
 [-s] Show key security description information
 [-w output_file] Dump attribute to a file
+{% endhighlight %}
 
 [![20130123181723](/uploads/2013/01/20130123181723.png)](/uploads/2013/01/20130123181723.png)
 

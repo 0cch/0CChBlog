@@ -30,6 +30,7 @@ tags:
 
 来看看NTFS文件系统是怎么来Check权限的。
 每个文件打开的时候系统会为文件分配一个FILE_OBJECT（文件对象）。在这里我们主要关注的是以下几个域。
+{% highlight asm %}
 nt!_FILE_OBJECT
 ...
 +0x00c FsContext        : Ptr32 Void
@@ -41,9 +42,10 @@ nt!_FILE_OBJECT
 +0x02a SharedWrite      : UChar
 +0x02b SharedDelete     : UChar
 ...
-
+{% endhighlight %}
 熟悉NTFS文件系统的同学都知道FsContext实际上是对应着一个SCB。SCB的数据结构是未公开的，所以只有逆向或者通过其他途径获得。而这篇文章只需要关注的是SCB的SHARE_ACCESS。SHARE_ACCESS在SCB的0x60的偏移处，这个和NT的SCB有些不同。SHARE_ACCESS的数据结构是这样
 
+{% highlight cpp %}
 typedef struct _SHARE_ACCESS {
 ULONG OpenCount;
 ULONG Readers;
@@ -53,7 +55,7 @@ ULONG SharedRead;
 ULONG SharedWrite;
 ULONG SharedDelete;
 } SHARE_ACCESS, *PSHARE_ACCESS;
-
+{% endhighlight %}
 这个就是这篇文章的关键。
 
 当一个文件被打开的时候，系统会初始化这个数据结构。根据CreateFile的权限设置来填充这个结构。

@@ -14,19 +14,19 @@ categories:
 
 下面是google一份开源代码中提到的统计结果
 
-
-<blockquote>// NOTE: This is the fastest implementation I found. The results were:
+{% highlight cpp %}
+// NOTE: This is the fastest implementation I found. The results were:
 // CreateFile 1783739 avg ticks/call
 // FindFirstFile 634148 avg ticks/call
 // GetFileAttributes 428714 avg ticks/call
 // GetFileAttributesEx 396324 avg ticks/call</blockquote>
-
+{% endhighlight %}
 
 为什么会这样呢？大概了看了下，原因应该是这样的。
 
-1.CreateFile会创建句柄，需要一个完整IO流程，所以需要的时间比如非常长。
-2.FindFirstFile回去查询文件夹的文件，虽然不会真正的打开文件句柄，并且在文件已经被缓存的情况下，走的是fastio流程，所以查询时间大幅下降，但是操作略微繁琐，导致他不是最好的选择。
-3. GetFileAttributes 和GetFileAttributesEx 也设置了QueryOnly标志，不需要获得真正的句柄，并且能够走fastio流程，也没有文件夹查询等工作，所以速度最快。
+1.CreateFile会创建句柄，需要一个完整IO流程，所以需要的时间比如非常长。  
+2.FindFirstFile回去查询文件夹的文件，虽然不会真正的打开文件句柄，并且在文件已经被缓存的情况下，走的是fastio流程，所以查询时间大幅下降，但是操作略微繁琐，导致他不是最好的选择。  
+3. GetFileAttributes 和GetFileAttributesEx 也设置了QueryOnly标志，不需要获得真正的句柄，并且能够走fastio流程，也没有文件夹查询等工作，所以速度最快。  
 
 那么为什么GetFileAttributesEx 会快那么一点点呢？因为这个函数少了一个获取BasicInformation，也就是少了一个fastio流程。所以速度更快。这样看来，自己实现一个PathFileExistsEx效率可以高过PathFileExists了。（其实没多大实际意义）
 

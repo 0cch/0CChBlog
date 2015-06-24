@@ -21,7 +21,7 @@ ntfs_info_study 这个工具可以显示ntfs卷的一些信息。主要也是学
 以上是一副对比图，其他功能是一样的，唯一的区别就是最后一项中，ntfs_info_study能够显示部分NTFS系统文件信息。
 
 
-<blockquote>Usage: ntfs_info_study.exe <drive letter></blockquote>
+>Usage: ntfs_info_study.exe <drive letter>
 
 
 使用方法自然也不必说明了，有兴趣的各位可以下载玩玩。

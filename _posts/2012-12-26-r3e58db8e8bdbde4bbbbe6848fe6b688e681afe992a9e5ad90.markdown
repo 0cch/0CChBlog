@@ -42,4 +42,3 @@ ObjectInR3 = HANDLEENTRY.pHead - Teb->Win32ClientInfo.ulClientDelta。
 
 这样也就得到了HOOK Object。接下来的事情就好办了，HOOK Object的第一项就是HHOOK。只需要UnhookWindowsHookEx((HHOOK)Hook->head.h);就能卸载钩子了。
 
-[DEMO CODE](http://0cch.net/wordpress/?attachment_id=104)

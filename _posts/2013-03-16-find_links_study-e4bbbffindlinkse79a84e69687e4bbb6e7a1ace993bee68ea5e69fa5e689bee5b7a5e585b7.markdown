@@ -18,5 +18,4 @@ categories:
 
 从图中我们可以发现，原来我们在系统中看到的多个notepad文件实际上就是一个文件而已，只不过他利用了hardlink的技术，产生了多个路径罢了。我感觉hardlink还是一个非常实用的技术，具体用在哪大家可以发挥想象力。就我个人看来，在某些情况下，用hardlink来备份文件，倒是一种不错的选择。
 
-下载[find_links_study](/uploads/2013/03/find_links_study.zip)[
-](/uploads/2013/03/find_links_study.zip)
+下载[find_links_study](/uploads/2013/03/find_links_study.zip)
