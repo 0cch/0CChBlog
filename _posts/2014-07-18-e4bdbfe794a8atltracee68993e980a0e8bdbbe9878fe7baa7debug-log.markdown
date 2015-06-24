@@ -15,31 +15,31 @@ categories:
 
 结合这些目的，我第一个想到的就是ATL的ATLTRACE。但是，ATLTRACE输出的日志都是显示在Debug Output窗口。如果想将信息输出到文件或者控制台上，这就够呛了。那么，接下来就要想办法改变ATLTRACE的输出设备了。由于ATL是有代码的，所以很容易的可以看到代码运行的脉络。看完这份代码的第一个收获就是知道了ATLTRACE运行效率不会很高，不过这个对我来说并不重要。另外一个就是，找到了改变输出设备的方法。
 
-在没有定义_ATL_NO_DEBUG_CRT的情况下，ATLTRACE最终的输出是通过_CrtDbgReport实现的，而如果定义了这个宏，那么输出是直接调用OutputDebugString。但一般程序都不会使用_ATL_NO_DEBUG_CRT这个宏，所以大部分情况下ATLTRACE都是调用的_CrtDbgReport。那么办法就来了_CrtDbgReport输出的数据，是可以通过_CrtSetReportMode和_CrtSetReportFile来改变输出设备的。例如我们想输出到控制台，我们只需要这样：
-_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
-_CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
+在没有定义_ATL_NO_DEBUG_CRT的情况下，ATLTRACE最终的输出是通过_CrtDbgReport实现的，而如果定义了这个宏，那么输出是直接调用OutputDebugString。但一般程序都不会使用_ATL_NO_DEBUG_CRT这个宏，所以大部分情况下ATLTRACE都是调用的_CrtDbgReport。那么办法就来了_CrtDbgReport输出的数据，是可以通过_CrtSetReportMode和_CrtSetReportFile来改变输出设备的。例如我们想输出到控制台，我们只需要这样：  
+_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);  
+_CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);  
 
-如果要输出到文件也只需要这样：
-HANDLE log_file;
-log_file = CreateFile("c:\\log.txt", GENERIC_WRITE, 
-	FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, 
-	FILE_ATTRIBUTE_NORMAL, NULL);
-_CrtSetReportFile(_CRT_WARN, log_file);
-CloseHandle(log_file);
-或者
-freopen( "c:\\log2.txt", "w", stdout);
-_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
-_CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDOUT);
+如果要输出到文件也只需要这样：  
+HANDLE log_file;  
+log_file = CreateFile("c:\\log.txt", GENERIC_WRITE,   
+	FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,   
+	FILE_ATTRIBUTE_NORMAL, NULL);  
+_CrtSetReportFile(_CRT_WARN, log_file);  
+CloseHandle(log_file);  
+或者  
+freopen( "c:\\log2.txt", "w", stdout);  
+_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);  
+_CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDOUT);  
 
-好了，这样就能解决输出设备的问题。既然已经说到这里，继续介绍下ATLTRACE很少人知道的其他优点吧。
-1.可以通过ATL/MFT TRACE Tool 随时设定Log的输出Filter，并且可以保持配置（工具用法很简单，具体直接用用就知道了）。
-2.通过AtlDebugAPI的接口，可以给自己的代码中添加读取配置文件的函数。这样每次修改配置文件就能改变ATLTRACE的行为。
-3.通过AtlDebugAPI的接口，可以直接制定输出内容，不用配置文件也可以。
-这三条涉及到的接口有：
-AtlTraceOpenProcess
-AtlTraceModifyProcess
-AtlTraceCloseProcess
-AtlTraceLoadSettings
+好了，这样就能解决输出设备的问题。既然已经说到这里，继续介绍下ATLTRACE很少人知道的其他优点吧。  
+1.可以通过ATL/MFT TRACE Tool 随时设定Log的输出Filter，并且可以保持配置（工具用法很简单，具体直接用用就知道了）。  
+2.通过AtlDebugAPI的接口，可以给自己的代码中添加读取配置文件的函数。这样每次修改配置文件就能改变ATLTRACE的行为。  
+3.通过AtlDebugAPI的接口，可以直接制定输出内容，不用配置文件也可以。  
+这三条涉及到的接口有：  
+AtlTraceOpenProcess  
+AtlTraceModifyProcess  
+AtlTraceCloseProcess  
+AtlTraceLoadSettings  
 
 为了更方便使用，我这写了几个宏代码如下：
 

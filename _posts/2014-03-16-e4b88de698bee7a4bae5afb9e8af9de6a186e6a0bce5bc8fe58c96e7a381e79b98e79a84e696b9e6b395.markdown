@@ -11,7 +11,9 @@ categories:
 ---
 
 我们都知道格式化磁盘会弹出如下图所示的这样的一个对话框。
+
 [![20140316210304](/uploads/2014/03/20140316210304-177x300.png)](/uploads/2014/03/20140316210304.png)
+
 编写格式化磁盘的程序的时候，我们需要用到SHFormatDrive这个API，同样的，他也会弹出一个对话框。出现对话框当然是为了安全考虑，防止磁盘被用户不知情的情况下格式化，导致数据丢失。但是，某些情况下，确实希望静默的去格式化，而不去打扰用户，例如格式化Ramdisk。那么就需要找点一个办法要求不弹出对话框的格式化磁盘。既然Windows并没有提供这样的API，那我们只能深入分析下调用过程，找出可以使用的API。
 
 怎么找的就不想说了，无非用ProcMon看一下堆栈就清楚明白了。在fmifs.dll中有一些导出的API可以帮助完成这一的任务，比如FormatEx，FormatEx2。
@@ -31,14 +33,14 @@ VOID WINAPI FormatEx(
 );
  {% endhighlight %}
 
-参数
-DriveRoot —— 盘符，如"K:\"
-MediaType —— 磁盘类型，如FixedMedia
-FileSystemTypeName —— 要格式化的文件系统，如"NTFS"
-Label —— 标签，随便写吧
-QuickFormat —— 快速格式化
-ClusterSize —— 簇大小
-Callback —— 状态回调函数
+参数  
+DriveRoot —— 盘符，如"K:\"  
+MediaType —— 磁盘类型，如FixedMedia  
+FileSystemTypeName —— 要格式化的文件系统，如"NTFS"  
+Label —— 标签，随便写吧  
+QuickFormat —— 快速格式化  
+ClusterSize —— 簇大小  
+Callback —— 状态回调函数  
 
 回调函数原型
 
