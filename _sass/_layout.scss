@@ -26,7 +26,8 @@
 .site-nav {
     float: right;
     line-height: 56px;
-
+	margin-right: 17%;
+	
     .menu-icon {
         display: none;
     }
@@ -209,7 +210,8 @@
 
 .post-content {
     margin-bottom: $spacing-unit;
-
+	width: 75%;
+	
     h2 {
         font-size: 32px;
 

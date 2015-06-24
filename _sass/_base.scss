@@ -149,7 +149,37 @@ pre {
     }
 }
 
-
+.sidebar
+{
+    float: right;
+    width: 20%;
+    min-height: 100%;
+    text-align: left;
+	
+	
+	ul {
+		list-style-type: none;
+	    margin-left: 0px;
+        margin-top: 10px;
+	}
+	
+	li {
+		list-style-type: none;
+	    padding: 5px 10px;
+		border-bottom: 1px dotted #dcdcdc;
+	}
+	
+	.page-link {
+        color: $text-color;
+        line-height: $base-line-height;
+		margin-top: 10px;
+		margin-left: 5px;
+    }
+	
+	.categories {
+		margin-top: 30px;
+	}
+}
 
 /**
  * Wrapper
