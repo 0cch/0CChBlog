@@ -16,7 +16,7 @@ categories:
 
 
 
-[python]
+{% highlight python %}
 '''
 Created on 2013-3-6
 
@@ -96,4 +96,4 @@ if __name__ == '__main__':
         print("youku.py  ");
    
 
-[/python]
+{% endhighlight %}

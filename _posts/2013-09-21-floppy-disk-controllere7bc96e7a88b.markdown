@@ -23,7 +23,7 @@ Floppy Disk Controller，中文称为：软盘控制器，简称：FDC，是一�
 虽然调用中断访问软盘简单，但是我们不能让自己的内核总是跑在实模式下啊。所以我们需要写一个能跑在保护模式下的软驱驱动，要完成这样的驱动，就必须对FDC进行编程了。不过在此之前，我们需要知道，到底PC上有没有软驱。要获得这个信息，我们需要读取CMOS，然后解析读取的信息即可。
 
 
-{% highlight cpp %}
+{% highlight asm %}
 mov dx, 70h
 mov al, 10h
 out dx, al
@@ -69,7 +69,7 @@ FDC寄存器
 下面就是一段控制FDC读取软盘数据的代码。需要说明的是这份代码为了保持简洁易学，它没有任何的错误检测，另外代码也假设了你已经初始化了PIC，并且设置好了IRQ6。
 
 
-{% highlight cpp %}
+{% highlight asm %}
 ; MASM的宏应该不陌生吧，就不做解释了。
 outb macro port:req, b:req
     mov dx, port
@@ -195,57 +195,57 @@ inb 3f5h
 outb 3f2h, 4h       ; 关闭电动机
  {% endhighlight %}
 
-1.重置数字输出寄存器
-这是一个只写寄存器，可以用来控制FDC，例如控制软驱电动机，重置控制器，选择目标软驱，设置数据模式，以下是他的详细参数
-Bits 0-1
-00 - 软驱 0
-01 - 软驱 1
-10 - 软驱 2
-11 - 软驱 3
-Bit 2 重置
-0 - 重置控制器
-1 - 开启控制器
-Bit 3 模式
-0 - IRQ 模式
-1 - DMA 模式
-Bits 4 - 7 电动机控制器 (软驱 0 - 3)
-0 - 停止电动机
-1 - 开启电动机
+1.重置数字输出寄存器  
+这是一个只写寄存器，可以用来控制FDC，例如控制软驱电动机，重置控制器，选择目标软驱，设置数据模式，以下是他的详细参数  
+Bits 0-1  
+00 - 软驱 0  
+01 - 软驱 1  
+10 - 软驱 2  
+11 - 软驱 3  
+Bit 2 重置  
+0 - 重置控制器  
+1 - 开启控制器  
+Bit 3 模式  
+0 - IRQ 模式  
+1 - DMA 模式  
+Bits 4 - 7 电动机控制器 (软驱 0 - 3)  
+0 - 停止电动机  
+1 - 开启电动机  
 
 我这里设置的是0Ch也就是说，选择了0号软驱，开启了控制器和DMA模式。
 
-2.设置传输速度为500kb/s
-这个寄存器只有前两位有效，下面两位不同的组合表达了不同的速度，如下表：
-00 500 Kbps
-10 250 Kbps
-01 300 Kbps
-11 1 Mbps
+2.设置传输速度为500kb/s  
+这个寄存器只有前两位有效，下面两位不同的组合表达了不同的速度，如下表：  
+00 500 Kbps  
+10 250 Kbps  
+01 300 Kbps  
+11 1 Mbps  
 
-3.设置FDC里面三个时钟以及DMA
-三个时钟分别是步进速率时钟、磁头卸载时钟和磁头装入时钟。数据格式如下：
-S S S S H H H H - S=步进速率时钟 H=磁头卸载时钟
-H H H H H H H NDMA - H=磁头装入时钟 NDMA=0 (DMA模式) 或者 1 (非DMA模式)
-实际上这个大家可以随意设置，我设置的是步进速率时钟=3ms, 磁头卸载时钟=240ms, 磁头装入时钟=16ms
+3.设置FDC里面三个时钟以及DMA  
+三个时钟分别是步进速率时钟、磁头卸载时钟和磁头装入时钟。数据格式如下：  
+S S S S H H H H - S=步进速率时钟 H=磁头卸载时钟  
+H H H H H H H NDMA - H=磁头装入时钟 NDMA=0 (DMA模式) 或者 1 (非DMA模式)  
+实际上这个大家可以随意设置，我设置的是步进速率时钟=3ms, 磁头卸载时钟=240ms, 磁头装入时钟=16ms  
 
-4.发送寻道命令进行寻道
-寻道命令的参数是两个自己，分别代表磁头、柱面和驱动器号，格式如下
-x x x x x HD DR1 DR0 - HD=磁头 DR1/DR0 = 驱动器
-C C C C C C C C - C=柱面
+4.发送寻道命令进行寻道  
+寻道命令的参数是两个自己，分别代表磁头、柱面和驱动器号，格式如下  
+x x x x x HD DR1 DR0 - HD=磁头 DR1/DR0 = 驱动器  
+C C C C C C C C - C=柱面  
 
-5.发送读取扇区命令
-读取和写入命令一样，有8个参数和7个返回值！
-第1个参数字节 = (磁头号 << 2) | 驱动器号 (驱动器号必须是当前选择的驱动器)
-第2个参数字节 = 柱面号
-第3个参数字节 = 磁头号 (没错，重复了 = =)
-第4个参数字节 = 开始的扇区号
-第5个参数字节 = 2 (总是2，代表软盘扇区大小总是512字节)
-第6个参数字节 = 操作扇区数
-第7个参数字节 = 0x1b (软盘大小是3.5in)
-第8个参数字节 = 0xff (总是0xff)
-这里不关心返回值，如果有兴趣可以自己查找资料。
+5.发送读取扇区命令  
+读取和写入命令一样，有8个参数和7个返回值！  
+第1个参数字节 = (磁头号 << 2) | 驱动器号 (驱动器号必须是当前选择的驱动器)  
+第2个参数字节 = 柱面号  
+第3个参数字节 = 磁头号 (没错，重复了 = =)  
+第4个参数字节 = 开始的扇区号  
+第5个参数字节 = 2 (总是2，代表软盘扇区大小总是512字节)  
+第6个参数字节 = 操作扇区数  
+第7个参数字节 = 0x1b (软盘大小是3.5in)  
+第8个参数字节 = 0xff (总是0xff)  
+这里不关心返回值，如果有兴趣可以自己查找资料。  
 
-读取就是这样，如果要写入安排，只需要更改命令即可，这里就不再赘述了。最后按照国际惯例，提供一些深入学习的链接：
-[http://wiki.osdev.org/Floppy](http://wiki.osdev.org/Floppy)
-[http://en.wikipedia.org/wiki/Floppy](http://en.wikipedia.org/wiki/Floppy)
-[http://www.isdaman.com/alsos/hardware/fdc/floppy.htm](http://www.isdaman.com/alsos/hardware/fdc/floppy.htm)
-[http://www.osdever.net/documents/82077AA_FloppyControllerDatasheet.pdf](http://www.osdever.net/documents/82077AA_FloppyControllerDatasheet.pdf?the_id=41)
+读取就是这样，如果要写入安排，只需要更改命令即可，这里就不再赘述了。最后按照国际惯例，提供一些深入学习的链接：  
+[http://wiki.osdev.org/Floppy](http://wiki.osdev.org/Floppy)  
+[http://en.wikipedia.org/wiki/Floppy](http://en.wikipedia.org/wiki/Floppy)  
+[http://www.isdaman.com/alsos/hardware/fdc/floppy.htm](http://www.isdaman.com/alsos/hardware/fdc/floppy.htm)  
+[http://www.osdever.net/documents/82077AA_FloppyControllerDatasheet.pdf](http://www.osdever.net/documents/82077AA_FloppyControllerDatasheet.pdf?the_id=41)  

@@ -15,25 +15,25 @@ ETW（Event Tracing for Windows）是Windows提供的对程序进行事件记录
 
 ETW是Windows提供的机制，我们要使用他还需要工具，这些工具我们可以自己开发，因为Windows提供了调用接口。当然，更惬意的选择就是直接使用Windows提供的工具集WPT（Windows Performance Toolkit）。利用WPT和SDK，我们可以将ETW融入到我们自己的程序中，帮助我们调试程序和提升性能。
 
-以下是我们需要的工具：
-SDK:
-1. ECMangen.exe
-2. mc.exe
+以下是我们需要的工具：  
+SDK:  
+1. ECMangen.exe  
+2. mc.exe  
 
-Windows:
-WEVTUtil.exe
+Windows:  
+WEVTUtil.exe  
 
-WPT:
-1. XPerf.exe
-2. XPerfView.exe
+WPT:  
+1. XPerf.exe  
+2. XPerfView.exe  
 
 首先我们需要用SDK中的工具ECMangen，生成一个manifest文件，这个文件用来描述记录的事件，如图。
 [![20131117114336](/uploads/2013/11/20131117114336.png)](/uploads/2013/11/20131117114336.png)
 这里，我们首先创建一个Provider，接下来创建一个Event，参数可以随便填下，就像上图所示。作为演示，这里一个Event就够了（FirstEvent）。
 然后保存为0CChProvider.man。
 
-接下来我们MC来生成一个头文件，一个资源文件和两个二进制文件。命令行如：
-mc -um C:\etw\0CChProvider.man
+接下来我们MC来生成一个头文件，一个资源文件和两个二进制文件。命令行如：  
+mc -um C:\etw\0CChProvider.man  
 [![20131117114801](/uploads/2013/11/20131117114801.png)](/uploads/2013/11/20131117114801.png)
 
 然后我们可以创建一个工程，加入这个头文件和资源文件。并且在代码中插入写事件的代码，例如：

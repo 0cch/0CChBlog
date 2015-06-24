@@ -36,8 +36,8 @@ categories:
 需要调用的中断函数是0x15以及AX=E820，通过这个中断和功能号，我们就能获得SYSTEM MEMORY MAP  
 
 下面附带上这个功能的使用方法  
-
-> INT 15 - newer BIOSes - GET SYSTEM MEMORY MAP  
+{% highlight windbg %}
+INT 15 - newer BIOSes - GET SYSTEM MEMORY MAP  
    AX = E820h  
    EAX = 0000E820h  
    EDX = 534D4150h ('SMAP')  
@@ -84,7 +84,7 @@ Values for System Memory Map address type:
     sessions)  
 other   not defined yet -- treat as Reserved  
 （from http://www.ctyme.com/intr/rb-1741.htm
-
+{% endhighlight %}
 
 获得了4GB内存以上的RAM范围以后，再加上MmMapIoSpace，我们就能够访问系统没有使用的内存了。
 
