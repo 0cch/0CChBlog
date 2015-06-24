@@ -38,7 +38,7 @@ mc -um C:\etw\0CChProvider.man
 
 然后我们可以创建一个工程，加入这个头文件和资源文件。并且在代码中插入写事件的代码，例如：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 #include "stdafx.h"
 #include 
 #include "../../0CChProvider.h"

@@ -131,7 +131,7 @@ notepad.exe</blockquote>
 创建%windbg_dir%\winext\manifest\Context.h
 并且写入这些内容
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 category ActivationContext:
 module KERNEL32.DLL:

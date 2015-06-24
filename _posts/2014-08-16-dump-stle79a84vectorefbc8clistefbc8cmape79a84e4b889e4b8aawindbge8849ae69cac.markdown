@@ -13,7 +13,7 @@ categories:
 用Windbg查看stl的容器实在是已经让人悲伤的事情，为了方便，所以写了这么3个脚本
 vector:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 r? $t0 = ${$arg1}
 
 .if (${/d:$VectorType}) {
@@ -54,7 +54,7 @@ ad command
 
 list:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 r? $t0 = ${$arg1}
 
 .if (${/d:$ListType}) {
@@ -95,7 +95,7 @@ ad command
 
 map:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 .if ($sicmp("${$arg1}", "-n") == 0) { 
 
     .if (@@C++(@$t0->_Left) != @@C++(@$t1)) { 

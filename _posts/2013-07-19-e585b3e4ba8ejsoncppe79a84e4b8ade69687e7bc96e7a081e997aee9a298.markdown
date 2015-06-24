@@ -18,7 +18,7 @@ categories:
 简单读了下jsoncpp的read和write的代码。jsoncpp在read的时候会调用codePointToUTF8这个函数把\uXXXX这个形式的代码转换成UTF-8，但是write的时候就没有这样的转换了，虽然不是很了解作者这么写的思路，但是修改的思路倒是有了。我的做法是把所有需要两个和两个以上字节表示一个字符的UTF-8字符串全部转换成\uXXXX这个形式。那么就需要写一个转换函数。[http://en.wikipedia.org/wiki/UTF-8](http://en.wikipedia.org/wiki/UTF-8) 上很清楚的描述了这些转换关系，所以完全可以自己动手写一个这样的函数。以下是我自己的实现：
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 static int UTF8TocodePoint(const char *c, unsigned int *result)
 {
 int count = 0;
@@ -55,7 +55,7 @@ return count;
 然后把这个函数的调用加入到valueToQuotedString中，将原始的代码：
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 if ( isControlCharacter( *c ) )
 {
@@ -74,7 +74,7 @@ break;
 修改为：
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 if ( isControlCharacter( *c ) )
 {
@@ -100,7 +100,7 @@ break;
 这样还没算结束，因为这个函数开头的地方还有一个判断，我们也需要修改一下，将原始代码：
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 if (strpbrk(value, "\"\\\b\f\n\r\t") == NULL && !containsControlCharacter( value ))
 return std::string("\"") + value + "\"";
@@ -110,7 +110,7 @@ return std::string("\"") + value + "\"";
 修改为：
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 if (strpbrk(value, "\"\\\b\f\n\r\t") == NULL && !containsControlCharacter( value ) && !containsMultiByte( value ))
 return std::string("\"") + value + "\"";
@@ -120,7 +120,7 @@ return std::string("\"") + value + "\"";
 containsMultiByte的实现是这样的：
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 static bool containsMultiByte( const char* str )
 {
 while ( *str )

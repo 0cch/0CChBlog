@@ -14,28 +14,28 @@ categories:
 
 这里举个例子：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // case 1
 long i = -1;
 long long q = i;
  {% endhighlight %}
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // case 2
 long i = -1;
 unsigned long long q = i;
  {% endhighlight %}
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // case 3
 unsigned long i = 0xffffffff;
 long long q = i;
  {% endhighlight %}
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // case 4
 unsigned long i = 0xffffffff;
 unsigned long long q = i;

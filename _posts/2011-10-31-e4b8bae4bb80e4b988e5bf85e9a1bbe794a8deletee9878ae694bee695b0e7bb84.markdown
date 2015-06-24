@@ -24,7 +24,7 @@ OK，这些都不是记录这篇tip的重点。重点在于boost，或者说是g
 
 先看测试代码
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 #include
 
 using namespace std;
@@ -157,7 +157,7 @@ OK，明白了delete[]的做法，我们看看delete为什么失败。
 
 如果汇编看的头疼的话，这里我写了两个函数的逆向代码（说了精彩的应该放在后面的）：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 void A::'scalar deleting destructor'(unsigned int flags)
 {
 this->~A();

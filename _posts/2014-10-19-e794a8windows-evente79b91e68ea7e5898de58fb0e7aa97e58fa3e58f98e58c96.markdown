@@ -14,7 +14,7 @@ categories:
 Windows提供了一种叫做Windows Event Hook的机制，来让我们获得多种不同的事件，其中一种就是前台窗口变化事件。所以要完成这个功能很简单，只需要注册一个针对EVENT_SYSTEM_FOREGROUND的HOOK就行了。注册和反注册Hook的函数分别是SetWinEventHook和UnhookWinEvent。
 比如注册EVENT_SYSTEM_FOREGROUND事件的Hook，我们只需要这样：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 HWINEVENTHOOK hWinEventHook = SetWinEventHook(
 		EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND,
 		NULL, WinEventProc, 0, 0,
@@ -23,12 +23,12 @@ HWINEVENTHOOK hWinEventHook = SetWinEventHook(
 前两个参数设置我们感兴趣的事件范围，由于我们最后一个参数设置的WINEVENT_OUTOFCONTEXT，表示Hook函数并不在产生Event的进程内部，所以hmodWinEventProc设置为NULL。WinEventProc则是我们的Hook函数idProcess和idThread为0，表示我们关心所有桌面上的进程线程，最后的flags还有一个WINEVENT_SKIPOWNPROCESS表示我们对自己的进程不感兴趣。
 要反注册Hook只需要
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 UnhookWinEvent(hWinEventHook);
  {% endhighlight %}
 WinEventProc的很简单
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 void CALLBACK WinEventProc(
 	HWINEVENTHOOK hWinEventHook,
 	DWORD event,

@@ -12,7 +12,7 @@ categories:
 
 代码如下：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 namespace ProcessHelper {
 

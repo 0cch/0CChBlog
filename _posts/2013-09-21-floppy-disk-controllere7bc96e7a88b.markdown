@@ -23,7 +23,7 @@ Floppy Disk Controller，中文称为：软盘控制器，简称：FDC，是一�
 虽然调用中断访问软盘简单，但是我们不能让自己的内核总是跑在实模式下啊。所以我们需要写一个能跑在保护模式下的软驱驱动，要完成这样的驱动，就必须对FDC进行编程了。不过在此之前，我们需要知道，到底PC上有没有软驱。要获得这个信息，我们需要读取CMOS，然后解析读取的信息即可。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 mov dx, 70h
 mov al, 10h
 out dx, al
@@ -69,7 +69,7 @@ FDC寄存器
 下面就是一段控制FDC读取软盘数据的代码。需要说明的是这份代码为了保持简洁易学，它没有任何的错误检测，另外代码也假设了你已经初始化了PIC，并且设置好了IRQ6。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 ; MASM的宏应该不陌生吧，就不做解释了。
 outb macro port:req, b:req
     mov dx, port

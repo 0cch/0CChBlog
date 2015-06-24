@@ -9,4 +9,4 @@ wordpress_id: 1
 ---
 
 
-{% highlight cpp linenos %}printf("hello world!"); {% endhighlight %}
+{% highlight cpp %}printf("hello world!"); {% endhighlight %}

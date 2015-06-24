@@ -15,7 +15,7 @@ categories:
 以下脚本是Windows 7 32Bit，对于64bit，稍微修改下就行。不过如果是Windows 8，DLL的加载细节已经发生变化，所以这个脚本就不适用了。希望能抛砖引玉一下，期待更多系统的脚本分享出来。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 bp ntdll!LdrpFindOrMapDll "
 .push /r /q
 r @$t0 = poi(@esp+4)

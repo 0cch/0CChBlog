@@ -70,7 +70,7 @@ ULONG SharedDelete;
 我想做的就是复制出这个SYSTEM文件，实际上网上已经有很多做法，什么底层磁盘解析读取数据，句柄复制大法。而我这次是修改底层SCB的ShareAccess来达到复制的目的。如果读懂了上面的原理，看下面这段代码就很轻松了。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 kfile File;
 ns = File.Create(FILENAME, FILE_OPEN, FILE_READ_ATTRIBUTES, 0);
 FileObj = File.GetObject();

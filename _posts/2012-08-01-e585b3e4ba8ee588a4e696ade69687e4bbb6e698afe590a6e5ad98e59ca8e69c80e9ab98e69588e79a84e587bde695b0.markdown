@@ -32,7 +32,7 @@ categories:
 
 google就是这样做的：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 bool File::Exists(const TCHAR* file_name) {
 ASSERT1(file_name && *file_name);

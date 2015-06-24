@@ -16,7 +16,7 @@ categories:
 
 代码也很简单：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 #include "stdafx.h"
 #include <atlbase.h>

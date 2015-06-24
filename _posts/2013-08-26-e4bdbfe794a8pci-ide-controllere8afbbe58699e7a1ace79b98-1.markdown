@@ -30,7 +30,7 @@ LBA寻址模式从0开始编号来定位区块，第一区块LBA=0，第二区�
 好了，介绍理论的知识不是这篇文章的目的，就让我们一边堆代码，一边讲解这些理论知识吧。下面就是一段读取硬盘数据的asm代码。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
     mov dx, 3f6h    ; 1.设置nIEN
     mov al, 2h
     out dx, al
@@ -88,7 +88,7 @@ pri_stat:
 再看看写扇区有哪些不同呢？没错，只有最后几条指令有细微的差别。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
     mov dx, 1f7h
     mov al, 30h     ; 这里命令改为30h，写扇区
     out dx, al

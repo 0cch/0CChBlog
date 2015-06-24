@@ -13,7 +13,7 @@ categories:
 
 今天继续来玩Windbg script。在写复杂的脚本的时候，可能需要根据调试的环境，指定不同的脚本代码来运行。而Windbg貌似没有提供很好的方式，让脚本得知调试环境。还好，我们可以用一些其他的方式获得这些信息，例如：写一个扩展程序来设置这些信息到Aliase上，[0cchext](https://github.com/0cch/0cchext)就实现了这个功能。另外一个方式就是使用脚本自身来获得一些简单的信息，算是个windbg script中的小把戏吧。脚本如下：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 $$ Initialize script environment
 $$ Author: nighxie 
 $$ Blog: 0cch.net

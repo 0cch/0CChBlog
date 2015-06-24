@@ -14,7 +14,7 @@ categories:
 [![20150518202121](/uploads/2015/05/20150518202121.png)](/uploads/2015/05/20150518202121.png)
 拼写检查会给出三个结果，分别是删除，替换和建议，根据不同的结果我们可以调用不同的接口来获得最佳的体验。代码如下：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // SpellCheck.cpp : Defines the entry point for the console application.
 //
 

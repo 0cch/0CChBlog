@@ -14,7 +14,7 @@ categories:
 
 要解决这个问题，原理上很简单。无非是程序运行初期不断的去检测本进程是否被调试，如果是就把自己断下来，如果不是继续等待。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 void WaitDebuggerAttach(DWORD Second)
 {
 	DWORD CurSec = 0;
@@ -34,7 +34,7 @@ void WaitDebuggerAttach(DWORD Second)
 这个函数可以指定等待时间，如果Debugger Attach上去了，那么就断下来方便调试，否则会超时，正常执行。
 这里我是用的IsDebuggerPresent这个API来获得进程的调试状态。实际上检测自己调试状态的方法很多，只不过这个用起来最方便而已。比如可以用测试断点异常的方法来检测自己的调试状态。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 BOOL CheckForDebugger()
 {
     __try 

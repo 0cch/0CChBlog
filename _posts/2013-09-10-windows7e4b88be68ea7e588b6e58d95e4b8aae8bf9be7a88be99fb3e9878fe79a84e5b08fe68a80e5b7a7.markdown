@@ -15,7 +15,7 @@ categories:
 如上图所示，Windows7下有一个很有趣的功能，就是可以给单独的进程调节音量。出于好奇，在网上翻了下资料，原来这个功能要归功于Windows7上新的音频接口——Core Audio APIs。这套API是用COM写，各种接口也比较多。但是如果我们的目的只是控制单个进程的音量，那还是很简单的。接下来的代码就是控制进程音量的函数了。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 const CLSID CLSID_MMDeviceEnumerator = __uuidof(MMDeviceEnumerator);
 const IID IID_IMMDeviceEnumerator = __uuidof(IMMDeviceEnumerator);
 const IID IID_IAudioSessionManager2 = __uuidof(IAudioSessionManager2);

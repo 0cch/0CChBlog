@@ -12,7 +12,7 @@ categories:
 
 学好Windbg，基本上可以代替很多工具，这次分享一个查看Object Hook的脚本：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 r @$t0 = 2;
 r? @$t1 = ((nt!_OBJECT_TYPE**)@@(nt!ObTypeIndexTable))[@$t0];
 

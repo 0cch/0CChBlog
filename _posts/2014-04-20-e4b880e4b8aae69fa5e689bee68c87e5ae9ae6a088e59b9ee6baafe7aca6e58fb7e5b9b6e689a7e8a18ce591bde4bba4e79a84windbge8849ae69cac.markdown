@@ -15,7 +15,7 @@ categories:
 有时候比如IE这样的程序，线程实在是非常的多，我想操作某个特殊线程就比较麻烦，需要先找到线程然后再实行命令，为了偷懒就写了这个脚本。
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 $$ If a frame of a thread has the target symbol, we execute the command.
 $$ Author: nighxie 
 $$ Blog: 0cch.net

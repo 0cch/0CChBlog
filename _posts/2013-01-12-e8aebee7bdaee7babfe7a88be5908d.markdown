@@ -15,7 +15,7 @@ categories:
 [![](/uploads/2013/01/QQ截图20130112151544.png)](/uploads/2013/01/QQ截图20130112151544.png)
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 #include 
 const DWORD MS_VC_EXCEPTION=0x406D1388;

@@ -19,7 +19,7 @@ categories:
 现在是已经知道了可以去读Hook对象，但是上哪去读就是要解决的问题了。这里就要提到老生常谈的Sharedinfo了。用户态的Sharedinfo获取方法很多，顺手就行。与上面问题相关的就是Sharedinfo里面会有一个Handle Entry Table，里面存储的就是包括Hook在内的User Object。Entry的结构如下（来自reactos）：
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 
 typedef struct _HANDLEENTRY
 {

@@ -14,7 +14,7 @@ C4930是微软的C++编译器提示的一个警告，在维基百科中，把造
 
 那么首先，我最开始发现这个问题是在类似这样的代码中碰到的。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 std::ifstream s("d:\\xxx.txt");
 std::string str(std::istream_iterator<char>(s), std::istream_iterator<char>());
  {% endhighlight %}
@@ -22,7 +22,7 @@ std::string str(std::istream_iterator<char>(s), std::istream_iterator<char>());
 
 先说个简单的C4930的例子吧。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 MyClass sample();
  {% endhighlight %}
 这句代码非常简单，也很容易明白。如果这么写，那么编译器就混乱，因为这句话可以是描述：  
@@ -31,7 +31,7 @@ MyClass sample();
 所以编译器就傻了，他把这个认为是函数声明，所以不会做任何事情。  
 同样的事情发生在  
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 std::string str(std::istream_iterator<char>(s), std::istream_iterator<char>());
  {% endhighlight %}
 这里，我们实际上就是给string的构造函数传入iterator来构造这个string。但是编译器可不是这么觉得，他认为这句话应该这样解析：一个返回string的函数，函数名为str，函数参数有两个并且类型相同，都是istream_iterator<char>，不同的是一个有参数名s，一个省略了参数名！
@@ -39,12 +39,12 @@ std::string str(std::istream_iterator<char>(s), std::istream_iterator<char>());
 编译器这么解析，也真没错，我们就只能通过修改代码来明确目的了。通常的做法是给第一个iterator外加上括
 号：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 std::string str((std::istream_iterator<char>(s)), std::istream_iterator<char>());
  {% endhighlight %}
 不过，我写这两行代码也就是为了偷懒读取一个文件的字符串，所以我可以干脆改成一行：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 std::string str(std::istream_iterator<char>(std::ifstream("d:\\xxx.txt")), std::istream_iterator<char>());
  {% endhighlight %}
 这样就能顺利编译运行了。

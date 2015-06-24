@@ -21,7 +21,7 @@ categories:
 这里简单的描述下FormatEx的用法：
 函数原型是
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 VOID WINAPI FormatEx(
 	LPCWSTR DriveRoot,
 	MEDIA_TYPE MediaType,
@@ -44,7 +44,7 @@ Callback —— 状态回调函数
 
 回调函数原型
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 typedef BOOLEAN (__stdcall *FILE_SYSTEM_CALLBACK)(
 	ULONG                        Command,
 	ULONG                        Action,
@@ -56,7 +56,7 @@ Command 表示Action和pData的意义，比如Command = 0表示pData是进度，
 
 比如，下面是格式化K盘：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 FormatEx(L"K:\", FixedMedia, L"NTFS", L"0CCh", TRUE, 4096, FormatExCallback);
  {% endhighlight %}
 

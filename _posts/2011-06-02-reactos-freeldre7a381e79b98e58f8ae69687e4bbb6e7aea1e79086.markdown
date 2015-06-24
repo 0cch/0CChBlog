@@ -11,7 +11,7 @@ wordpress_id: 30
 Freeldr提供了对fat12、fat32、fatx、ntfs等文件系统的只读功能。这部分代码主要集中在boot\freeldr\freeldr\fs\fs.c文件中。
 首先计算机加电后会把mbr读取到物理内存的0x7c00位置，mbr搜索活动分区并加载活动分区根目录下的Freeldr.sys文件。加载后跳入Freeldr入口start。Freeldr进行32为初始化后跳入主初始化函数BootMain(boot\freeldr\freeldr\Freeldr.c)中。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 VOID BootMain(LPSTR CmdLine)
 {
 ......
@@ -25,7 +25,7 @@ BootMain会对硬件(MachInit)和文件系统(FsInit)进行检测和初始化。
 Fs初始化和DEVICE、FILEDATA结构
 下面看一下文件系统的初始化 FsInit(boot\freeldr\freeldr\fs\fs.c)
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 VOID FsInit(VOID)
 {
 ULONG i;
@@ -38,7 +38,7 @@ InitializeListHead(&DeviceListHead);
 FsInit初始化FileData数组。和一个和磁盘分区相关的链表DeviceListHead。
 首先fs.c维护了一个MAX_FDS(60)大小的数组 static FILEDATA FileData[MAX_FDS];
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 typedef struct tagDEVVTBL
 {
 ARC_CLOSE Close;
@@ -65,7 +65,7 @@ FileFuncTable只对"磁盘文件"有意义。当Freeldr确定了磁盘文件对�
 Specific存放于文件有关的结构。磁盘文件就是DISKCONTEXT指针，fat12下的文件就是FAT_FILE_INFO指针 等等。
 之后是DeviceListHead，这是DEVICE结构的链表头
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 typedef struct tagDEVICE
 {
 LIST_ENTRY ListEntry;        // 链表节点
@@ -83,7 +83,7 @@ DEVICE(磁盘及分区)的检测
 上面说到Freeldr操作的路径都是存储在DEVICE结构中的ArcPath。那么这些DEVICE是怎么来的呢？
 首先我们看一下DEVICE的注册函数，FsRegisterDevice(boot\freeldr\freeldr\fs\fs.c)
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 VOID FsRegisterDevice(CHAR* Prefix, const DEVVTBL* FuncTable)
 {
 DEVICE* pNewEntry;
@@ -103,7 +103,7 @@ InsertHeadList(&DeviceListHead, &pNewEntry->ListEntry);
 那么又是谁调用的FsRegisterDevice呢？是DetectBiosDisks(boot\freeldr\freeldr\arch\i386\hardware.c)函数。虽然这一部分已经不属于FS的范畴，还是在这里简单讲一下便于理解。这里我略去了不必要的代码。
 DetectBiosDisks的调用顺序是 RunLoader -> MachHwDetect (PcHwDetect)-> DetectISABios -> DetectBiosDisks
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 static VOID
 DetectBiosDisks(PCONFIGURATION_COMPONENT_DATA BusKey)
 {
@@ -129,7 +129,7 @@ GetHarddiskIdentifier(Identifier, 0x80 + i);
 GetHarddiskIdentifier的作用是为制定硬盘生成一个唯一的ID，并通过Identifier参数返回。但这个函数名起得并不好，因为生成ID其实只是这个函数的功能之一。另外的一大功能是检测硬盘，并且为硬盘本身和硬盘分区调用FsRegisterDevice函数进行注册。通过这个注册后硬盘才能真正被文件系统识别。
 freeldr\freeldr\arch\i386\hardware.c中
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 static VOID
 GetHarddiskIdentifier(PCHAR Identifier,
 ULONG DriveNumber)
@@ -208,7 +208,7 @@ Identifier[19] = 0;
 函数首先使用MachDiskReadLogicalSectors读取指定硬盘的MBR。对于PC机而言MachDiskReadLogicalSectors使用int 13h中断实现对硬盘的读操作。里面包括了16、32位代码的互转，和本节内容无关，以后再做说明。
 MBR结构为。详细信息可以参考(http://en.wikipedia.org/wiki/Master_boot_record)
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 typedef struct _MASTER_BOOT_RECORD
 {
 UCHAR        MasterBootRecordCodeAndData[0x1b8];   /* 0x000 */
@@ -224,7 +224,7 @@ FsRegisterDevice(ArcName, &DiskVtbl);
 生成对应硬盘的ArcName，使用FsRegisterDevice注册这块硬盘，这个函数我们已经看过。注意这里Partition为0，所以0号分区实际表示硬盘本身。
 之后
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 i = 1;
 while (DiskGetPartitionEntry(DriveNumber, i, &PartitionTableEntry))
 {
@@ -240,7 +240,7 @@ DiskGetParititionEntry将会解析DriveNumber对应磁盘的分区表，填充�
 使用刚才计算的CheckSum和Signature组合一个ID返回给调用者。其实这个ID没有被使用过。。。
 最后看一下调用FsRegisterDevice时的第二个参数DiskVtbl
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 static const DEVVTBL DiskVtbl = {
 DiskClose,
 DiskGetFileInformation,
@@ -257,7 +257,7 @@ DiskSeek,
 首先，Freeldr使用的是Arc路径，IDE硬盘以multi(0)disk(0)rdisk(n)开头，文件也是以Arc路径表示的。打开文件的函数在Freeldr\Freeldr\fs\fs.c中。这函数比较长，我们分段阅读。
 Freeldr\Freeldr\fs\fs.c
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 LONG ArcOpen(CHAR* Path, OPENMODE OpenMode, ULONG* FileId)
 {
 ......
@@ -298,7 +298,7 @@ FileName会指向Arc路径中的文件名部分，上面的例子将是Freeldr.s
 文件打开分为两步，第一步是开个文件所在的设备、创建设备的句柄。第二部才是打开文件本身。
 这里是第一步打开设备的代码。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 ......
 pEntry = DeviceListHead.Flink;
 while (pEntry != &DeviceListHead)
@@ -361,7 +361,7 @@ return ENODEV;
 找到DEVICE节点后判断DEVICE->ReferenceCount是否为0。这个代表该DEVICE被打开的次数，如果ReferenceCount不为0，说明DEVICE已经被打开。那个直接从Device->DeviceId中获得设备的文件句柄。可以看出无论打开一个设备多少次，只会有ReferenceCount的变化，而句柄都是相同的。所以如果设备打开两次，SEEK时会相互影响。读写之前最好重新调用SEEK函数。
 当DEVICE->ReferenceCount为0时是Freeldr需要调用进行打开和文件系统的识别。我们仔细读读。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 /* Search some room for the device */
 for (DeviceId = 0; DeviceId < MAX_FDS; DeviceId++)
 if (!FileData[DeviceId].FuncTable)
@@ -371,7 +371,7 @@ return EMFILE;
  {% endhighlight %}
 首先在FileData数组中找到空闲项，数组的索引即将成为设备句柄。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 /* Try to open the device */
 FileData[DeviceId].FuncTable = pDevice->FuncTable;
 ret = pDevice->FuncTable->Open(pDevice->Prefix, DeviceOpenMode, &DeviceId);
@@ -394,7 +394,7 @@ return ESUCCESS;
 如果不为空，则下面开始识别分区格式，打开文件的操作。
 在继续读ArcOpen函数前我们先看看DiskOpen在打开设备时都做了什么。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 ArcOpen -> DiskOpen (freeldr\freeldr\arch\i386\hardware.c)
 static LONG DiskOpen(CHAR* Path, OPENMODE OpenMode, ULONG* FileId)
 {
@@ -433,7 +433,7 @@ return ESUCCESS;
 之后确定扇区大小，分区开始的扇区号、分区扇区数等信息，存入DISKCONTEXT结构。使用FsSetDeviceSpecific和FildId相关联。
 还记得FILEDATA的结构么？FsSetDeviceSpecific就是填充里面的Specific指针 ：）
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 VOID FsSetDeviceSpecific(ULONG FileId, VOID* Specific)
 {
 if (FileId >= MAX_FDS || !FileData[FileId].FuncTable)
@@ -444,7 +444,7 @@ FileData[FileId].Specific = Specific;
 实际上DiskOpen的作用就是获得该设备（分区）的基本信息——BIOS驱动器号、扇区大小、开始扇区号、扇区数量和当前读写指针（SectorNumber）。生成DISKCONTENT结构使用FsSetDeviceSpecific和FileID绑定。
 现在我们回到ArcOpen函数，希望你还记得 ：）
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 /* Try to detect the file system */
 FileData[DeviceId].FileFuncTable = FatMount(DeviceId);
 if (!FileData[DeviceId].FileFuncTable)
@@ -465,7 +465,7 @@ pDevice->DeviceId = DeviceId;
 下面我们就来看看第二步，打开文件
 首先为文件找一个空闲的FileData
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 for (i = 0; i < MAX_FDS; i++)
 if (!FileData[i].FuncTable)
 break;
@@ -474,13 +474,13 @@ return EMFILE;
  {% endhighlight %}
 跳过文件名开始的 "\" 字符
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 if (*FileName == '\\')
 FileName++;
  {% endhighlight %}
 我们前面说的，为FileData.FuncTable赋值。FileData.DeviceId是文件所在分区的句柄。FuncTable内部函数将通过这个句柄调用读写分区内容，为用户提供文件的读写接口。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 FileData[i].FuncTable = FileData[DeviceId].FileFuncTable;
 FileData[i].DeviceId = DeviceId;
 *FileId = i;

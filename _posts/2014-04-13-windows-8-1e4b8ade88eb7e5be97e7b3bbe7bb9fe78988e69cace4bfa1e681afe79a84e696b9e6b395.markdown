@@ -24,7 +24,7 @@ Applications not manifested for Windows 8.1 will return the Windows 8 OS versi
 
 那么第二套方案，是我觉得比较满意的，那就是调用[VerSetConditionMask](http://msdn.microsoft.com/en-us/library/windows/desktop/ms725493(v=vs.85).aspx)和[VerifyVersionInfo](http://msdn.microsoft.com/en-us/library/windows/desktop/ms725492(v=vs.85).aspx)来完成对系统版本的判断。具体做法如下：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 BOOL IsWindows8Point1()
 {
 	OSVERSIONINFOEX version_info = {0};
@@ -40,7 +40,7 @@ BOOL IsWindows8Point1()
 
 那么，我们就可以用这个函数来判断系统是否是Windows 8.1，如果不是，我们就可以用老办法，GetVersionEx来获得系统的版本号作判断了。当然了，大家看到这估计也能看出，我们自己也能用这两个函数实现一套所谓的Version Helper functions。举个例子：
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 BOOL WINAPI IsWindowsVersionOrGreater(
 	WORD wMajorVersion,
 	WORD wMinorVersion,
@@ -68,7 +68,7 @@ BOOL WINAPI IsWindowsVersionOrGreater(
 
 更新另外一个方法，在网上看到的，感觉也还行。只不过需要引入其他DLL，可以作为备选方案。
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 ULONG MyGetVersion()
 {	
 	LPBYTE raw_data;

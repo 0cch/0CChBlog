@@ -16,7 +16,7 @@ categories:
 [![20131007195716](/uploads/2013/10/20131007195716.png)](/uploads/2013/10/20131007195716.png)
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 $$ Convert HWND to tagWnd
 $$ Author: nighxie 
 $$ Blog: 0cch.net
