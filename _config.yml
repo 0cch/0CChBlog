@@ -13,3 +13,6 @@ markdown: kramdown
 highlighter: rouge
 
 category_title_prefix: ""
+
+paginate: 30
+paginate_path: "page:num"

@@ -111,9 +111,9 @@ blockquote {
     color: $grey-color;
     border-left: 4px solid $grey-color-light;
     padding-left: $spacing-unit / 2;
-    font-size: 18px;
+    font-size: 12px;
     letter-spacing: -1px;
-    font-style: italic;
+    /* font-style: italic; */
 
     > :last-child {
         margin-bottom: 0;
@@ -201,7 +201,31 @@ pre {
     }
 }
 
+.navi-content {
+  float: left;
+  width: 70%;
+}
 
+.nav-previous {
+  float: left;
+  width: 50%;
+}
+
+.nav-next {
+  float: right;
+  text-align: right;
+  width: 50%;
+}
+
+.more-link {
+  padding: 4px 8px;
+  background: #EEE;
+  border: 1px solid #dcdcdc;
+  border-radius: 3px;
+  clear: both;
+  margin-bottom: 0px;
+  display: inline-block;
+}
 
 /**
  * Clearfix
