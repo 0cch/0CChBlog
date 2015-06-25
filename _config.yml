@@ -16,3 +16,8 @@ category_title_prefix: ""
 
 paginate: 30
 paginate_path: "page:num"
+
+comments:
+provider: duoshuo
+duoshuo: 
+short_name: 0cch
