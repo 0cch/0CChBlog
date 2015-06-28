@@ -3,6 +3,10 @@
  */
 .highlight {
     background: #fff;
+	border-top: 1px solid $grey-color-light;
+	border-right: 1px solid $grey-color-light;
+	border-left: 1px solid $grey-color-light;
+    border-radius: 3px;
     @extend %vertical-rhythm;
 
     .c     { color: #998; font-style: italic } // Comment

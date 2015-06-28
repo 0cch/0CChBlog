@@ -125,23 +125,27 @@ blockquote {
 /**
  * Code formatting
  */
-pre,
-code {
+pre {
 	font-family: consolas;
     font-size: 12px;
-    border: 1px solid $grey-color-light;
-    border-radius: 3px;
+	border-bottom: 1px solid $grey-color-light;
     background-color: #ffffff;
 }
 
 code {
     padding: 1px 5px;
+	font-family: consolas;
+    font-size: 12px;
+    border: 0px;
+    background-color: #ffffff;
 }
 
 pre {
     padding: 8px 12px;
     overflow-x: auto;
-
+	.lineno {
+		border-right: 1px solid $grey-color-light;
+	}
     > code {
         border: 0;
         padding-right: 0;
