@@ -12,7 +12,7 @@ categories:
 
 Python干啥都挺方便的，出了调用win32的api。当然了，可以用pywin32这种库。但我不喜欢为了一两个api又给简单的东西加一堆依赖。比如获取文件版本，本来想在网上找个函数复制过去用得了，却发现还真没啥好用的。无奈自己就写了一个。
 
-{% highlight python linenos %}
+{% highlight python %}
 
 class VS_FIXEDFILEINFO(Structure):
 	_fields_ = [
