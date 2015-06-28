@@ -149,6 +149,10 @@ pre {
     }
 }
 
+pre.line-pre {
+  overflow-x: auto;
+}
+
 .sidebar
 {
     float: right;
