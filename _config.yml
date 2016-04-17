@@ -21,3 +21,5 @@ comments:
 provider: duoshuo
 duoshuo: 
 short_name: 0cch
+
+gems: [jekyll-paginate, jekyll-gist]

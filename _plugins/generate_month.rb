@@ -18,7 +18,7 @@ module Jekyll
     safe true
     def generate(site)
       if site.layouts.key? 'archive_index'
-        site.posts.group_by{ |c| {"month" => c.date.month, "year" => c.date.year} }.each do |period, posts|
+        site.posts.docs.group_by{ |c| {"month" => c.date.month, "year" => c.date.year} }.each do |period, posts|
           archive_dir = File.join(period["year"].to_s(), "%02d" % period["month"])
           write_archive_index(site, archive_dir, period, posts)
         end
