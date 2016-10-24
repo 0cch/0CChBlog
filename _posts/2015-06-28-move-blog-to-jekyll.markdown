@@ -33,5 +33,3 @@ categories:
 这样我们看到的就是一个最简单的jekyll的blog，要想改变主题，自己去折腾吧。我能做的就是推荐两个jekyll的插件，分别是按日期和分类生成归档网页的，可以在我的[Github](https://github.com/0cch/0CChBlog/tree/master/_plugins)上看到。
 
 最后要说的是rouge语法高亮有个bug，在使用显示行号linenos参数的时候会出现嵌套错误的问题，解决方法倒是有，不过有了行号之后高亮的显示极其丑陋，所以还是我还是没用这个参数。如果有需求可以使用代码[rouge_linenos_patch.rb](https://gist.github.com/0cch/775e4a8a94be175cae9c)覆盖"\\lib\ruby\gems\2.2.0\gems\jekyll-2.5.3\lib\jekyll\tags\highlight.rb"里对应的函数即可。
-
-{% gist 0cch/775e4a8a94be175cae9c rouge_linenos_patch.rb %}
