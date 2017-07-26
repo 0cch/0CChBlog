@@ -1,0 +1,16 @@
+---
+author: admin
+comments: true
+date: 2017-07-09 11:28:15+00:00
+layout: post
+slug: 'insert-163-music'
+title: 测试插入网易云音乐
+categories:
+- Tips
+---
+
+真心喜欢古风歌曲
+
+{% raw %}
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="450" src="//music.163.com/outchain/player?type=1&id=3164957&auto=1&height=430"></iframe>
+{% endraw %}
