@@ -1,0 +1,36 @@
+<section class="container">
+    <div class="columns">
+        <div class="column <%if (page.toc == undefined ? true:page.toc) {%> three-fourths <%} else {%> single-column <%}%>" >
+            <article class="article-content markdown-body">
+                <%- post.content %>
+            </article>
+            <% if (page.share == undefined ? true : page.share) { %>
+                <div class="share">
+                    <%- partial('_widget/sns-share',{page: page}) %>
+                </div>    
+            <% } %>
+
+            
+            <%if(theme.disqus_username){%>
+                <%- partial('_widget/disqus-comments',{
+                    key: post.slug,
+                    title: post.title,
+                    url: config.url+url_for(post.path)
+                }) %>
+             <%} else {%>
+                <%- partial('_widget/gitment-comments',{
+                    key: post.slug,
+                    title: post.title,
+                    url: url_for(post.path)
+                }) %>
+            <%}%>
+
+        </div>
+        <div class="column one-fourth">
+            <% if (page.toc == undefined ? true:page.toc) { %>
+                <%page.toc=true%>
+                <%- partial('_partial/post/toc') %>
+            <% } %>
+        </div>
+    </div>
+</section>

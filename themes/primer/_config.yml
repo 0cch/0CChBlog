@@ -1,0 +1,37 @@
+menus:
+	- 
+		name: Home
+		link: /
+	- 
+		name: Category
+		link: categories/
+	- 
+		name: Open-Source
+		link: open-source/
+	- 
+		name: Message
+		link: message/
+
+profile:
+	location: China
+	github: 0cch
+
+github: 
+	username: 0cch
+  popular_repos: [0cchext]
+
+search: google
+
+
+# 多说已关闭 目前支持 Disqus 和 Gitmet(两者选一)
+
+#Disqus
+disqus_username:
+
+#Giemtn 是基于repo的issus的评论系统，项目地址: https://github.com/imsun/gitment
+#在 https://github.com/settings/applications/new 注册
+
+# gitment_owner: github_id
+# gitment_repo: 存放评论的repo
+# gitment_client_id: 申请的client_id
+# gitment_client_secret: 申请的client_secret
