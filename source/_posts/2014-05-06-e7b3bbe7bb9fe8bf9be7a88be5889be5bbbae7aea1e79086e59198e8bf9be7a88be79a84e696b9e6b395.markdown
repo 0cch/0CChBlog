@@ -1,0 +1,146 @@
+---
+author: admin
+comments: true
+date: 2014-05-06 06:30:46+00:00
+layout: post
+slug: '%e7%b3%bb%e7%bb%9f%e8%bf%9b%e7%a8%8b%e5%88%9b%e5%bb%ba%e7%ae%a1%e7%90%86%e5%91%98%e8%bf%9b%e7%a8%8b%e7%9a%84%e6%96%b9%e6%b3%95'
+title: 系统进程创建管理员进程的方法
+wordpress_id: 444
+categories:
+- Tips
+---
+
+代码如下：
+
+{% codeblock lang:cpp %}
+
+namespace ProcessHelper {
+
+	typedef BOOL (__stdcall *CREATEENVIRONMENTBLOCK)(LPVOID *lpEnvironment,
+		HANDLE hToken,
+		BOOL bInherit);
+
+	BOOL CreateProcessAsExplorer(LPCTSTR AppName, LPTSTR CommandLine, PPROCESS_INFORMATION pi)
+	{
+		ULONG ExplorerID = 0;
+		HANDLE ExplorerHandle;
+		HANDLE Snapshot;
+		ULONG CreationFlags = 0;
+		CREATEENVIRONMENTBLOCK CreateEnvironmentBlock;
+		HANDLE ExplorerToken;
+		HANDLE NewToken = 0;
+		LPVOID Environment = NULL;
+		ULONG ReturnLength = 0;
+		TOKEN_LINKED_TOKEN LinkedToken = {0};
+		STARTUPINFO si = {0};
+		PROCESSENTRY32 pe;
+		BOOL Ret;
+		HMODULE UserenvModule;
+		LUID Luid = {0};
+
+
+		Snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+		if (Snapshot == INVALID_HANDLE_VALUE) {
+			return FALSE;
+		}
+
+		pe.dwSize = sizeof(pe);
+		if (Process32FirstW(Snapshot, &pe;)) {
+
+			for(;;) {
+
+				if (_tcsicmp(pe.szExeFile, L"explorer.exe") == 0) {
+					ProcessIdToSessionId(pe.th32ProcessID, &Luid.LowPart;);
+					ExplorerID = pe.th32ProcessID;
+					break;
+				}
+				if (!Process32Next(Snapshot, &pe;)) {
+					break;
+				}
+			}
+
+		}
+
+		CloseHandle(Snapshot);
+		if (ExplorerID == 0) {
+			return FALSE;
+		}
+
+		ExplorerHandle = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, ExplorerID);
+		if (ExplorerHandle == NULL) {
+			return FALSE;
+		}
+
+		if (!OpenProcessToken(ExplorerHandle, TOKEN_ALL_ACCESS_P, &ExplorerToken;)) {
+			CloseHandle(ExplorerHandle);
+			return FALSE;
+		}
+
+		CloseHandle(ExplorerHandle);
+
+		if (GetTokenInformation(ExplorerToken, 
+			TokenLinkedToken, 
+			&LinkedToken;, 
+			sizeof(TOKEN_LINKED_TOKEN), 
+			&ReturnLength;)) {
+
+				NewToken = LinkedToken.LinkedToken;
+		}
+		else {
+			
+			LookupPrivilegeValueW(0, L"SeDebugPrivilege", &Luid;);
+			DuplicateTokenEx(ExplorerToken, MAXIMUM_ALLOWED, NULL, SecurityIdentification, TokenPrimary, &NewToken;);
+		}
+
+		CloseHandle(ExplorerToken);
+
+		UserenvModule = LoadLibrary(TEXT("Userenv.dll"));
+		if (UserenvModule == NULL) {
+			return FALSE;
+		}
+
+		CreateEnvironmentBlock = (CREATEENVIRONMENTBLOCK)GetProcAddress(UserenvModule, "CreateEnvironmentBlock");
+		if (CreateEnvironmentBlock == NULL) {
+			FreeLibrary(UserenvModule);
+			return FALSE;
+		}
+
+
+		if (CreateEnvironmentBlock(&Environment;, NewToken, TRUE)) {
+			CreationFlags = CREATE_UNICODE_ENVIRONMENT;
+		}
+
+		si.cb = sizeof(si);
+		Ret = CreateProcessAsUser(
+			NewToken,
+			AppName,
+			CommandLine,
+			NULL,
+			NULL,
+			FALSE,
+			CreationFlags,
+			Environment,
+			NULL,
+			&si;,
+			pi);
+
+		CloseHandle(NewToken);
+		
+		if (Environment != NULL) {
+			DestroyEnvironmentBlock(Environment);
+		}
+
+		if (!Ret) {
+
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+}
+
+{% endcodeblock %}
+ 
+ 
+ 
+ 

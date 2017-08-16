@@ -1,0 +1,33 @@
+---
+author: admin
+comments: true
+date: 2013-01-23 10:21:18+00:00
+layout: post
+slug: hive_study-%e6%b3%a8%e5%86%8c%e8%a1%a8%e6%96%87%e4%bb%b6%e6%a0%bc%e5%bc%8f%e8%a7%a3%e6%9e%90%e5%b7%a5%e5%85%b7
+title: hive_study —— 注册表文件格式解析工具
+wordpress_id: 142
+categories:
+- NTInternals
+---
+
+这几天又写了个小工具，刚下班就在这发了算了。
+
+hive_study 是一个注册表文件格式解析工具。功能也比较的简单，主要是dump出注册表里面的数据信息。例如显示子项，子键，显示键值以及他们的安全描述符。当然了，还是那样，注册表的hive文件实际上是不可读的，因为内核独占他了。想要获得可以读的hive文件，可以用ntfsstudy把hive文件dump出来，然后去读这个新的hive文件。以下是他的Usage。
+
+{% codeblock lang:windbg %}
+Usage : hive_study.exe -f hive_path [-options]
+
+Options:
+[-k key_path] Specifies key path (e.g.: -k "ControlSet001\Control\Session Manager")
+[-v value_name] Specifies value name (e.g.: -v BootExecute)
+[-l] List subkeys information
+[-e] List values information
+[-s] Show key security description information
+[-w output_file] Dump attribute to a file
+{% endcodeblock %}
+
+[![20130123181723](/uploads/2013/01/20130123181723.png)](/uploads/2013/01/20130123181723.png)
+
+
+
+下载[hive_study](/uploads/2013/01/hive_study.zip)

@@ -1,0 +1,99 @@
+---
+author: admin
+comments: true
+date: 2013-09-28 05:48:02+00:00
+layout: post
+slug: '%e8%a7%a3%e6%9e%90youku%e8%a7%86%e9%a2%91%e5%9c%b0%e5%9d%80%e7%9a%84python%e8%84%9a%e6%9c%ac'
+title: 解析youku视频地址的python脚本
+wordpress_id: 359
+categories:
+- Tips
+---
+
+几个月前写的东西，偶然翻出来发现还能用，就贴出来吧。非专业python程序员，代码比较乱 :-(
+
+[![20130928134507](/uploads/2013/09/20130928134507.png)](/uploads/2013/09/20130928134507.png)
+
+
+
+{% codeblock lang:python %}
+'''
+Created on 2013-3-6
+
+@author: nightxie
+'''
+
+import sys
+import urllib.request
+import urllib.parse
+import json
+
+def GetKeyString(seed):
+    base_string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/\\:._-1234567890';
+    target_string = '';
+    while len(base_string) != 0 :
+        seed = (seed * 211 + 30031) % 65536;
+        index = (seed / 65536 * len(base_string));
+        target_string += base_string[int(index)];
+        base_string = base_string[:int(index)] + base_string[int(index)+1:];
+    return target_string;
+
+def GetFildId(daye_str, seed):
+
+    new_list = daye_str.split('*');
+    target_string = '';
+    base_string = GetKeyString(seed);
+    length = len(new_list);
+    i = 0;
+    while i < length - 1:
+        index = int(new_list[i]);
+        target_string += base_string[index];
+        i += 1;
+    return target_string;
+
+def GetFlvPath(videoids, flv_type):
+    url = 'http://v.youku.com/player/getPlayList/VideoIDS/' + videoids + '/timezone/+08/version/5/source/video'
+    req = urllib.request.Request(url);
+    req.add_header('Referer', 'http://static.youku.com/v1.0.0307/v/swf/player_yk.swf');
+    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.56 Safari/537.17');
+    play_list = urllib.request.urlopen(req).read().decode("utf8");
+   
+    play_list_data = json.loads(play_list)['data'][0];
+    seed = play_list_data['seed'];
+    streamfileids = play_list_data['streamfileids'];
+    regs = play_list_data['segs'];
+    
+    type_fileid = streamfileids[flv_type];
+    type_list = regs[flv_type];
+    url_type = flv_type;
+    if url_type == 'hd2':
+        url_type = 'flv'
+    
+    type_list_count = len(type_list);
+    i = 0;
+    while i < type_list_count :
+        fileid = GetFildId(type_fileid, seed);
+        fileid = fileid[:8] + ("%0.2X" % i) + fileid[10:];
+        fileid += '?k=';
+        fileid += type_list[i]['k'];
+        flv_path = 'http://f.youku.com/player/getFlvPath/sid/00_00/st/'+url_type+'/fileid/' + fileid;
+        print(flv_path);
+        i += 1;
+        
+def GetVideoIdsFromUrl(url):
+    url_object = urllib.parse.urlparse(url);
+    url_path = url_object.path;
+    return url_path[11:-5]
+
+def GetFlvPathFromUrl(url, video_type):
+    video_ids = GetVideoIdsFromUrl(url);
+    GetFlvPath(video_ids, video_type);
+
+if __name__ == '__main__':
+    if len(sys.argv) == 3:
+        GetFlvPathFromUrl(sys.argv[1], sys.argv[2]);
+    else:
+        print("youku.py  ");
+   
+
+{% endcodeblock %}

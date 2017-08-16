@@ -1,0 +1,77 @@
+---
+author: admin
+comments: true
+date: 2016-12-13 10:36:42+00:00
+layout: post
+slug: 'int29h'
+title: 快速抛出失败的方法 INT 29H
+categories:
+- Debugging
+---
+
+从Windows8开始，Windows设计了一个新的中断，INT 29H，用来快速的抛出失败。在sdk中，他被声明为 __fastfail:
+
+{% codeblock lang:cpp %}
+
+
+#define FAST_FAIL_LEGACY_GS_VIOLATION          0
+#define FAST_FAIL_VTGUARD_CHECK_FAILURE        1
+#define FAST_FAIL_STACK_COOKIE_CHECK_FAILURE   2
+#define FAST_FAIL_CORRUPT_LIST_ENTRY           3
+#define FAST_FAIL_INCORRECT_STACK              4
+#define FAST_FAIL_INVALID_ARG                  5
+#define FAST_FAIL_GS_COOKIE_INIT               6
+#define FAST_FAIL_FATAL_APP_EXIT               7
+#define FAST_FAIL_RANGE_CHECK_FAILURE          8
+#define FAST_FAIL_UNSAFE_REGISTRY_ACCESS       9
+#define FAST_FAIL_GUARD_ICALL_CHECK_FAILURE    10
+#define FAST_FAIL_GUARD_WRITE_CHECK_FAILURE    11
+#define FAST_FAIL_INVALID_FIBER_SWITCH         12
+#define FAST_FAIL_INVALID_SET_OF_CONTEXT       13
+#define FAST_FAIL_INVALID_REFERENCE_COUNT      14
+#define FAST_FAIL_INVALID_JUMP_BUFFER          18
+#define FAST_FAIL_MRDATA_MODIFIED              19
+#define FAST_FAIL_CERTIFICATION_FAILURE        20
+#define FAST_FAIL_INVALID_EXCEPTION_CHAIN      21
+#define FAST_FAIL_CRYPTO_LIBRARY               22
+#define FAST_FAIL_INVALID_CALL_IN_DLL_CALLOUT  23
+#define FAST_FAIL_INVALID_IMAGE_BASE           24
+#define FAST_FAIL_DLOAD_PROTECTION_FAILURE     25
+#define FAST_FAIL_UNSAFE_EXTENSION_CALL        26
+#define FAST_FAIL_DEPRECATED_SERVICE_INVOKED   27
+#define FAST_FAIL_INVALID_BUFFER_ACCESS        28
+#define FAST_FAIL_INVALID_BALANCED_TREE        29
+#define FAST_FAIL_INVALID_NEXT_THREAD          30
+#define FAST_FAIL_GUARD_ICALL_CHECK_SUPPRESSED 31         // Telemetry, nonfatal
+#define FAST_FAIL_APCS_DISABLED                32
+#define FAST_FAIL_INVALID_IDLE_STATE           33
+#define FAST_FAIL_MRDATA_PROTECTION_FAILURE    34
+#define FAST_FAIL_UNEXPECTED_HEAP_EXCEPTION    35
+#define FAST_FAIL_INVALID_FAST_FAIL_CODE       0xFFFFFFFF
+
+#if _MSC_VER >= 1610
+
+DECLSPEC_NORETURN
+VOID
+__fastfail(
+    _In_ unsigned int Code
+    );
+
+#pragma intrinsic(__fastfail)
+
+#endif
+
+/*
+	// 汇编代码为
+	mov ecx, code
+	int 29h
+*/
+
+{% endcodeblock %}
+
+在中断代码执行后，操作系统会根据执行代码的环境来做出不同的处理。  
+如果__fastfail发生在Ring0中，操作系统会抛出一个KERNEL_SECURITY_CHECK_FAILURE (0x139)的蓝屏。如果__fastfail发生在Ring3，系统会抛出一个第二次机会的不可继续执行的异常，异常代码为0xC0000409，然后走进我们熟悉的Windows Error Reporting(WER)流程。另外，无论__fastfail发生在R0或者R3，如果有调试器正在调试系统或进程，都将得到一次中断到调试器的机会，这让我们能够看清楚具体发生了什么事情。但是正如我上面所说，这个是一个不可继续执行的异常，所以我们不能在调试器里处理了异常后让程序继续向前跑，当然也不能用try和except去捕获异常。
+
+我觉得__fastfail是个非常不错的设计，它让程序可以快速的进入内核异常处理流程，不需要执行额外的用户层的代码，也不需要额外的内存空间，提高了不可恢复的异常处理的性能，更重要的是，简单快速不依赖内存的执行方式也保证了系统的安全。所以在系统的安全检查失败处理中，大量使用了这个方式，减少被攻击的可能性。
+
+最后，如果INT 29H发生在Windows8以下的系统上，内核里会抛出一个常规的UNEXPECTED_KERNEL_MODE_TRAP的蓝屏，而用户层程序会抛出一个ACCESS VIOLATION的异常。

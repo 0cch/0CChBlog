@@ -1,0 +1,53 @@
+---
+author: admin
+comments: true
+date: 2014-03-01 15:06:06+00:00
+layout: post
+slug: '%e4%b8%80%e4%b8%aa%e6%9c%89%e6%84%8f%e6%80%9d%e7%9a%84warning-c4930'
+title: 一个有意思的warning —— C4930
+wordpress_id: 413
+categories:
+- Tips
+---
+
+C4930是微软的C++编译器提示的一个警告，在维基百科中，把造成这种警告的语句描述成最让人为难的解析的语句。那么这里我们看看到底是有多么为难，这个可以帮助我们进一步了解C++和编译器。
+
+那么首先，我最开始发现这个问题是在类似这样的代码中碰到的。
+
+{% codeblock lang:cpp %}
+std::ifstream s("d:\\xxx.txt");
+std::string str(std::istream_iterator<char>(s), std::istream_iterator<char>());
+ {% endcodeblock %}
+如果编译这个，编译器会毫不留情地扔给你一个C4930警告，提示编译器不知道怎么做，所以跳过编译。如果你没看懂这警告，后果就是这句话根本不会编译进去，即使编译通过了，运行也会和设想的不同。
+
+先说个简单的C4930的例子吧。
+
+{% codeblock lang:cpp %}
+MyClass sample();
+ {% endcodeblock %}
+这句代码非常简单，也很容易明白。如果这么写，那么编译器就混乱，因为这句话可以是描述：  
+1.一个变量的定义，调用默认构造。  
+2.一个函数的声明。  
+所以编译器就傻了，他把这个认为是函数声明，所以不会做任何事情。  
+同样的事情发生在  
+
+{% codeblock lang:cpp %}
+std::string str(std::istream_iterator<char>(s), std::istream_iterator<char>());
+ {% endcodeblock %}
+这里，我们实际上就是给string的构造函数传入iterator来构造这个string。但是编译器可不是这么觉得，他认为这句话应该这样解析：一个返回string的函数，函数名为str，函数参数有两个并且类型相同，都是istream_iterator<char>，不同的是一个有参数名s，一个省略了参数名！
+
+编译器这么解析，也真没错，我们就只能通过修改代码来明确目的了。通常的做法是给第一个iterator外加上括
+号：
+
+{% codeblock lang:cpp %}
+std::string str((std::istream_iterator<char>(s)), std::istream_iterator<char>());
+ {% endcodeblock %}
+不过，我写这两行代码也就是为了偷懒读取一个文件的字符串，所以我可以干脆改成一行：
+
+{% codeblock lang:cpp %}
+std::string str(std::istream_iterator<char>(std::ifstream("d:\\xxx.txt")), std::istream_iterator<char>());
+ {% endcodeblock %}
+这样就能顺利编译运行了。
+
+最近在看新版的《The C++ Standard Library A Tutorial and Reference》里面也看到了这个东西，很有意思所
+以拿出来说下。而且新版的书中，已经包含了C++11的解释，很有意思。

@@ -1,0 +1,112 @@
+---
+author: admin
+comments: true
+date: 2013-06-07 03:58:20+00:00
+layout: post
+slug: '%e5%87%a0%e4%b8%aa%e6%9c%89%e8%b6%a3%e7%9a%84%e6%9c%aa%e6%96%87%e6%a1%a3%e5%8c%96windbg%e7%9a%84%e6%89%a9%e5%b1%95%e5%91%bd%e4%bb%a4'
+title: 几个有趣的未文档化Windbg的扩展命令
+wordpress_id: 263
+categories:
+- Tips
+---
+
+这里使用的是Windbg最新版本，版本号是6.2.9200，可以在Windows8的SDK中获得。
+
+1.eflags 用更加友好的方式显示被设置的标志寄存器
+
+{% codeblock lang:windbg %}
+0:000> r efl
+efl=00000246
+
+0:000> !eflags
+BIT_1_RESERVED
+PARITY_FLAG
+ZERO_FLAG
+INTERRUPTS_ENABLED
+
+0:000> r zf
+zf=1
+0:000> r if
+if=1
+{% endcodeblock %}
+
+2.frame 用module!function的方式设置栈帧
+
+{% codeblock lang:windbg %}
+0:000> kn L3
+# ChildEBP RetAddr
+00 0018df2c 7586d7db kernel32!CreateFileW
+01 0018e024 7586d9d1 apphelp!IdentifyCandidates+0x176
+02 0018e054 7586d87b apphelp!ApphelpQueryExe+0xb8
+
+0:000> .frame
+00 0018df2c 7586d7db kernel32!CreateFileW
+
+0:000> !frame apphelp!ApphelpQueryExe
+Frame Set to 0x00000002
+
+0:000> .frame
+02 0018e054 7586d87b apphelp!ApphelpQueryExe+0xb8
+{% endcodeblock %}
+
+3.hashblob 计算指定内存的hash，hash方式包括md5和sha1
+
+{% codeblock lang:windbg %}
+0:000> !hashblob
+Not enough parameters 0
+!hashblob <hash> <Start> <End>
+<hash>: 1 for MD5
+<hash>: 2 for SHA1
+
+0:000> !hashblob 1 001f0000 001f0100
+DCC4E0B6659F6887DEC24A9FF2D57DC8
+{% endcodeblock %}
+
+4.imports 列出指定模块的导入函数
+
+{% codeblock lang:windbg %}
+0:000> !imports notepad
+
+notepad notepad Imports from file: ADVAPI32.dll
+RegSetValueExW
+RegQueryValueExW
+...
+notepad Imports from file: KERNEL32.dll
+FindNLSString
+GlobalAlloc
+GlobalUnlock
+GlobalLock
+GetTimeFormatW
+GetDateFormatW
+GetLocalTime
+...
+{% endcodeblock %}
+
+5.inframe 找出指定地址所在的栈帧范围
+
+{% codeblock lang:windbg %}
+ChildEBP RetAddr
+0018df2c 7586d7db kernel32!CreateFileW
+0018e024 7586d9d1 apphelp!IdentifyCandidates+0x176
+
+0:000> !inframe 0018df8c
+0018df8c 0 00001714 0018df34 < 0018df8c < 0018e02c
+Frame: 1
+{% endcodeblock %}
+
+6.inmodule 找出指定地址所在的模块
+
+{% codeblock lang:windbg %}
+0:000> !inmodule 7586d9d1
+0x7586d9d1: apphelp!ApphelpQueryExe
+{% endcodeblock %}
+
+7.url 用默认浏览器打开指定网页
+
+{% codeblock lang:windbg %}
+0:000> !url
+Please provide a valid URL (http://... or https://... )
+USAGE: !url <url>
+
+0:000> !url http://0cch.net
+{% endcodeblock %}

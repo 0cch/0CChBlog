@@ -1,0 +1,32 @@
+---
+author: admin
+comments: true
+date: 2014-06-23 03:00:18+00:00
+layout: post
+slug: '%e6%9b%b4%e6%96%b0windbg%e6%89%a9%e5%b1%950cchext-dll'
+title: 更新:Windbg扩展0cchext.dll
+wordpress_id: 448
+categories:
+- Debugging
+---
+
+Commands for 0cchext.dll:  
+  !autocmd         - Execute the debugger commands.(The config file is  
+                     autocmd.ini)  
+  !dpx             - Display the contents of memory in the given range.  
+  !dtx             - Displays information about structures. (The config file is  
+                     struct.ini)  
+  !favcmd          - Display the favorite debugger commands.(The config file is  
+                     favcmd.ini)  
+  !grep            - Search plain-text data sets for lines matching a regular  
+                     expression.  
+  !help            - Displays information on available extension commands  
+  !hwnd            - Show window information by handle.  
+  !init_script_env - Initialize script environment.  
+  !setvprot        - Set the protection on a region of committed pages in the  
+                     virtual address space of the debuggee process.  
+  !url             - Open a URL in a default browser.  
+  !version         - Displays the version information for 0cchext.dll  
+!help  will give more information for a particular command  
+
+下载：[0cchext](/uploads/2014/06/0cchext.zip)

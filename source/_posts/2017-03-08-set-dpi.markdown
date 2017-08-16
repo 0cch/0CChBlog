@@ -1,0 +1,87 @@
+---
+author: admin
+comments: true
+date: 2017-03-08 14:47:37+00:00
+layout: post
+slug: 'set dpi'
+title: Windows 10设置系统DPI
+categories:
+- Tips
+---
+
+现在的显示器分辨率越来越高2K，4K甚至5K，而很多程序并不支持这一的高分辨率，所以这些程序在桌面上会显示的很小，好在Windows 8以后的系统中，我们可以设置DPI来放大程序的窗口，如下图所示：  
+
+[![20170309145111](/uploads/2017/03/20170309145111.png)](/uploads/2017/03/20170309145111.png)
+
+但是，微软并没有把设置DPI的接口文档化。所以我把这个功能逆了一下，还原的代码如下：
+
+{% codeblock lang:cpp %}
+
+/*
+	BOOL ApplyDpiSetting(int val);
+	val 为DPI要设置的数字，例如0是100%，1是125%，以此类推，注意250%以后是300%。
+	另外上面的对应关系只是通常情况下的，还有可能有其他对应关系，例如0是300%，-1是250%等等。
+	具体怎么对应可以通过GetDpiForMonitor函数来获取
+*/
+
+typedef struct _SET_DPI {
+	DISPLAYCONFIG_DEVICE_INFO_HEADER header;
+	ULONG val;
+} SET_DPI;
+
+BOOL ApplyDpiSetting(ULONG val)
+{
+	UINT32 num_of_paths = 0;
+	UINT32 num_of_modes = 0;
+	DISPLAYCONFIG_PATH_INFO* display_paths = NULL; 
+	DISPLAYCONFIG_MODE_INFO* display_modes = NULL;
+	BOOL retval = FALSE;
+
+	do 
+	{
+		if (GetDisplayConfigBufferSizes(QDC_ONLY_ACTIVE_PATHS, 
+			&num_of_paths, 
+			&num_of_modes) != ERROR_SUCCESS) {
+				break;
+		}
+
+
+		display_paths = (DISPLAYCONFIG_PATH_INFO*)calloc((int)num_of_paths, sizeof(DISPLAYCONFIG_PATH_INFO));
+		display_modes = (DISPLAYCONFIG_MODE_INFO*)calloc((int)num_of_modes, sizeof(DISPLAYCONFIG_MODE_INFO));
+		
+		if (QueryDisplayConfig(QDC_ONLY_ACTIVE_PATHS, 
+			&num_of_paths, 
+			display_paths, 
+			&num_of_modes, 
+			display_modes, 
+			NULL) != ERROR_SUCCESS) {
+				break;
+		}
+
+		SET_DPI dpi;
+		dpi.header.type = (DISPLAYCONFIG_DEVICE_INFO_TYPE)0xFFFFFFFC;
+		dpi.header.size = sizeof(dpi);
+		dpi.header.adapterId = display_paths[0].sourceInfo.adapterId;
+		dpi.header.id = display_paths[0].sourceInfo.id;
+		dpi.val = val;
+
+		if (DisplayConfigSetDeviceInfo((DISPLAYCONFIG_DEVICE_INFO_HEADER*)&dpi) == ERROR_SUCCESS) {
+			retval = TRUE;
+		}
+
+	} while (0);
+
+	if (display_paths) {
+		free(display_paths);
+	}
+	
+	if (display_modes) {
+		free(display_modes);
+	}
+
+	return retval;
+}
+
+
+
+{% endcodeblock %}

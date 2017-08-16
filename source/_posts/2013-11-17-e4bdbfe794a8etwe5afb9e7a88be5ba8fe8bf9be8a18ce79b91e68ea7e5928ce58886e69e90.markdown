@@ -1,0 +1,77 @@
+---
+author: admin
+comments: true
+date: 2013-11-17 04:20:11+00:00
+layout: post
+slug: '%e4%bd%bf%e7%94%a8etw%e5%af%b9%e7%a8%8b%e5%ba%8f%e8%bf%9b%e8%a1%8c%e7%9b%91%e6%8e%a7%e5%92%8c%e5%88%86%e6%9e%90'
+title: 使用ETW对程序进行监控和分析
+wordpress_id: 376
+categories:
+- Debugging
+- NTInternals
+---
+
+ETW（Event Tracing for Windows）是Windows提供的对程序进行事件记录，跟踪，使用的机制。我们可以利用这个机制对程序进行调试和性能分析。从Windows Vista开始，ETW已经非常好的融合在Windows内核之中了，在Windows 7开始，这一个机制更加完善，几乎记录了Windows运行的每一个细节。我个人猜测，从Windows Vista开始到Windows 7直到现在的Windows 8，性能都在不断提高，ETW机制应该是功不可没的。
+
+ETW是Windows提供的机制，我们要使用他还需要工具，这些工具我们可以自己开发，因为Windows提供了调用接口。当然，更惬意的选择就是直接使用Windows提供的工具集WPT（Windows Performance Toolkit）。利用WPT和SDK，我们可以将ETW融入到我们自己的程序中，帮助我们调试程序和提升性能。
+
+以下是我们需要的工具：  
+SDK:  
+1. ECMangen.exe  
+2. mc.exe  
+
+Windows:  
+WEVTUtil.exe  
+
+WPT:  
+1. XPerf.exe  
+2. XPerfView.exe  
+
+首先我们需要用SDK中的工具ECMangen，生成一个manifest文件，这个文件用来描述记录的事件，如图。
+[![20131117114336](/uploads/2013/11/20131117114336.png)](/uploads/2013/11/20131117114336.png)
+这里，我们首先创建一个Provider，接下来创建一个Event，参数可以随便填下，就像上图所示。作为演示，这里一个Event就够了（FirstEvent）。
+然后保存为0CChProvider.man。
+
+接下来我们MC来生成一个头文件，一个资源文件和两个二进制文件。命令行如：  
+mc -um C:\etw\0CChProvider.man  
+[![20131117114801](/uploads/2013/11/20131117114801.png)](/uploads/2013/11/20131117114801.png)
+
+然后我们可以创建一个工程，加入这个头文件和资源文件。并且在代码中插入写事件的代码，例如：
+
+{% codeblock lang:cpp %}
+#include "stdafx.h"
+#include 
+#include "../../0CChProvider.h"
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    EventRegisterMy0CChProvider();
+    EventWriteFirstEvent(L"Hello ETW World!");
+    Sleep(1000);
+    EventWriteFirstEvent(L"Bye ETW World!");
+    EventUnregisterMy0CChProvider();
+    return 0;
+}
+ {% endcodeblock %}
+
+在这里，我们利用EventRegisterMy0CChProvider先注册自己的Provider，接下写事件才会发挥作用。记录事件后，我们需要反注册Provider。
+好了，演示代码就这么一点，然后编译即可。
+
+接下来我们需要注册这个Provider给系统，需要使用到系统自带的工具WEVTUtil.exe。
+wevtutil im C:\etw\0CChProvider.man
+
+注册成功后就可以利用XPerf开启ETW，然后运行程序，查看记录的事件了。
+
+1. xperf -start 0cch -on My0CChProvider:::'stack'
+2. xperf -on base
+3. Run 0CChProvider.exe
+4. xperf -stop 0cch -stop -d d:\0cch.etl
+5. xperf d:\0cch.etl
+
+XPerfView会生成分析数据如图：
+[![20131117115853](/uploads/2013/11/20131117115853.png)](/uploads/2013/11/20131117115853.png)
+
+[![20131117120007](/uploads/2013/11/20131117120007-1024x622.png)](/uploads/2013/11/20131117120007.png)
+
+整体来说，想简单的使用ETW也就是这么简单，当然你也可以把他弄得很复杂，这里就不介绍了。话说[sysdbg](http://sysdbg.com/)早就让我写点XPerf的东西，但是因为各种懒没写，刚好最近终于有空了，就先写了这么个简单的介绍，就当作一个开篇吧，话说某人的Blog好久没更新了呀。。。

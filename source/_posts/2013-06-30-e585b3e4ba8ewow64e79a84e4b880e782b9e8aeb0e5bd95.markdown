@@ -1,0 +1,65 @@
+---
+author: admin
+comments: true
+date: 2013-06-30 17:44:59+00:00
+layout: post
+slug: '%e5%85%b3%e4%ba%8ewow64%e7%9a%84%e4%b8%80%e7%82%b9%e8%ae%b0%e5%bd%95'
+title: 关于WOW64的一点记录
+wordpress_id: 275
+categories:
+- NTInternals
+- Tips
+---
+
+1.关于TEB的地址：32位的TEB地址在64位TEB地址加上0x2000的偏移处。验证如下：
+
+{% codeblock lang:windbg %}
+0:000> r @$teb
+$teb=000000007efdb000
+
+0:000:x86> dg @fs
+P Si Gr Pr Lo
+Sel Base Limit Type l ze an es ng Flags
+---- ----------------- ----------------- ---------- - -- -- -- -- --------
+0053 7efdd000 00000fff Data RW Ac 3 Bg By P Nl 000004f3
+
+0:000:x86> ? 7efdd000 - 7efdb000
+Evaluate expression: 8192 = 00002000
+{% endcodeblock %}
+
+2.从32位切换到到64位的时候，系统会保存32位的寄存器状态。这些状态保存在Teb->TlsShots[1]中。继续用Windbg验证：
+
+{% codeblock lang:windbg %}
+0:000> dt _teb @$teb -a5 TlsSlots
+ntdll!_TEB
++0x1480 TlsSlots :
+[00] (null)
+[01] 0x00000000`001cfd20 Void
+[02] (null)
+[03] 0x00000000`001ca930 Void
+[04] (null)
+
+0:000> !wow64exts.r
+
+No wow64 context address specified, dumping wow64 context from cpu area...
+Teb64 Address: 0x7efdb000, CpuArea Address: 0x1cfd20
+
+Context Address: 0x1cfd24
+
+eax=00000000 ebx=00000000 ecx=00000000 edx=00000000 esi=77200094 edi=00000000
+eip=772000a6 esp=000ee0ac ebp=000ee150 iopl=0 nv up ei pl zr na po nc
+cs=0023 ss=002b ds=002b es=002b fs=0053 gs=002b efl=00000246
+{% endcodeblock %}
+
+3.从64位切换到到32位的时候,会保存64位的RSP，保持的地址是Teb->TlsShots[0]。切换回64位的时候，这个地址被清0。
+
+{% codeblock lang:windbg %}
+0:000> dt ntdll!_TEB @r12 -a5 TlsSlots
++0x1480 TlsSlots :
+[00] 0x00000000`001ce530 Void
+[01] 0x00000000`001cfd20 Void
+[02] (null)
+[03] (null)
+[04] (null)
+{% endcodeblock %}
+

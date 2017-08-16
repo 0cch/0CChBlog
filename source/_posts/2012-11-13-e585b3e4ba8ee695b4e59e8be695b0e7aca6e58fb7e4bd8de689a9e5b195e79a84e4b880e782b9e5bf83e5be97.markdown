@@ -1,0 +1,50 @@
+---
+author: admin
+comments: true
+date: 2012-11-13 16:56:17+00:00
+layout: post
+slug: '%e5%85%b3%e4%ba%8e%e6%95%b4%e5%9e%8b%e6%95%b0%e7%ac%a6%e5%8f%b7%e4%bd%8d%e6%89%a9%e5%b1%95%e7%9a%84%e4%b8%80%e7%82%b9%e5%bf%83%e5%be%97'
+title: 关于整型数符号位扩展的一点心得
+wordpress_id: 98
+categories:
+- Tips
+---
+
+最近写的程序中遇到了整型数符号位扩展的小问题。稍稍看了下，写在这里备忘。
+
+这里举个例子：
+
+{% codeblock lang:cpp %}
+// case 1
+long i = -1;
+long long q = i;
+ {% endcodeblock %}
+
+
+{% codeblock lang:cpp %}
+// case 2
+long i = -1;
+unsigned long long q = i;
+ {% endcodeblock %}
+
+
+{% codeblock lang:cpp %}
+// case 3
+unsigned long i = 0xffffffff;
+long long q = i;
+ {% endcodeblock %}
+
+
+{% codeblock lang:cpp %}
+// case 4
+unsigned long i = 0xffffffff;
+unsigned long long q = i;
+ {% endcodeblock %}
+
+那么这4肿情况中q都是多少呢？  
+实验结果是case 1 和 2，他们的q的值（这里都表示为无符号）0xffffffff`ffffffff，而case 3 和 4 中q的值为0x00000000`ffffffff。  
+看到这里，大概就能推测c++的转换策略。即以源操作数的类型为依据，对其进行扩展，然后赋值到目标操作数，他并不在乎目标的类型有无符号。
+
+看了相关编译完成后的汇编代码可以确认这一点，case 1和2的汇编代码完全相同，而3和4也是一样。更具体一点来说。有符号的情况下调用了cdq对符号位进行扩展，然后将edx赋值到q的高位，而无符号的情况下，简单xor了寄存器，然后赋值到q的高位。
+
+

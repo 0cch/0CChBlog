@@ -1,0 +1,234 @@
+---
+author: admin
+comments: true
+date: 2013-07-05 17:40:28+00:00
+layout: post
+slug: '%e8%b0%83%e8%af%95%e6%8c%82%e6%ad%bb%e7%9a%84explorer'
+title: 调试挂死的Explorer
+wordpress_id: 279
+categories:
+- Debugging
+---
+
+一个同事前几天告诉我说，他的explorer.exe总是挂死，不知道是什么情况导致的。于是我让他下次挂死的时候抓个dump我。抓Dump的工具很多，例如用Win7的TaskMgr，sysinternals的Procexp，或者Windbg本身。不过考虑到explorer挂死了，操作桌面起来不方便，所以最好选择能够自动检测挂死并且抓住dump的工具。这里比较推荐的是sysinternals的Procdump以及我开发的[proc_dump_study](http://0cch.net/wordpress/?p=208)（带UI）。
+
+[![20130706003632](/uploads/2013/07/20130706003632.png)](/uploads/2013/07/20130706003632.png)
+
+
+
+第二天，同事把explorer.exe挂死的Dump传给了我，200多MB。用Windbg打开Dump文件，第一反应就是看看有多少线程再说吧。
+
+{% codeblock lang:windbg %}
+0:000> ~
+. 0 Id: b14.b18 Suspend: 0 Teb: 7ffde000 Unfrozen
+1 Id: b14.b1c Suspend: 0 Teb: 7ffdd000 Unfrozen
+...
+54 Id: b14.1a94 Suspend: 0 Teb: 7ff75000 Unfrozen
+55 Id: b14.18c8 Suspend: 0 Teb: 7ff74000 Unfrozen
+{% endcodeblock %}
+
+56个线程，肯定不能依次看栈回溯。按照尝试判断，explorer界面挂死，肯定是刷新界面的线程挂死了。所以栈回溯里肯定有explorer的身影。于是找找哪个线程有explorer模块。
+
+{% codeblock lang:windbg %}
+0:000> !findstack explorer!
+Thread 000, 2 frame(s) match
+* 04 001bf924 0087aa50 explorer!wWinMain+0x54a
+* 05 001bf9b8 75771154 explorer!_initterm_e+0x1b1
+
+Thread 003, 2 frame(s) match
+* 11 0324f714 008757a6 explorer!CTray::_MessageLoop+0x265
+* 12 0324f724 75b346bc explorer!CTray::MainThreadProc+0x8a
+
+Thread 008, 1 frame(s) match
+* 03 04a1fc0c 75b346bc explorer!CSoundWnd::s_ThreadProc+0x3a
+{% endcodeblock %}
+
+从上面的结果看来，3号线程最可疑，于是看看完整的堆栈情况。
+
+{% codeblock lang:windbg %}
+0:003> kv
+# ChildEBP RetAddr Args to Child
+00 0324f508 76eb5aec 75236924 00000002 0324f55c ntdll!KiFastSystemCallRet (FPO: [0,0,0])
+01 0324f50c 75236924 00000002 0324f55c 00000001 ntdll!NtWaitForMultipleObjects+0xc (FPO: [5,0,0])
+02 0324f5a8 7576f10a 0324f55c 0324f5d0 00000000 KERNELBASE!WaitForMultipleObjectsEx+0x100 (FPO: [Non-Fpo])
+03 0324f5f0 75fa90be 00000002 7ffdf000 00000000 kernel32!WaitForMultipleObjectsExImplementation+0xe0 (FPO: [Non-Fpo])
+04 0324f644 73d51717 000002fc 0324f678 ffffffff user32!RealMsgWaitForMultipleObjectsEx+0x13c (FPO: [Non-Fpo])
+05 0324f664 73d517b8 000024ff ffffffff 00000000 duser!CoreSC::Wait+0x59 (FPO: [Non-Fpo])
+06 0324f68c 73d51757 000024ff 00000000 0324f6b8 duser!CoreSC::WaitMessage+0x54 (FPO: [Non-Fpo])
+07 0324f69c 75fa949f 000024ff 00000000 0324f68c duser!MphWaitMessageEx+0x2b (FPO: [Non-Fpo])
+08 0324f6b8 76eb60ce 0324f6d0 00000008 0324f7e8 user32!__ClientWaitMessageExMPH+0x1e (FPO: [Non-Fpo])
+09 0324f6d4 75fa93f3 00851dee 00000000 80000000 ntdll!KiUserCallbackDispatcher+0x2e (FPO: [0,0,0])
+0a 0324f6d8 00851dee 00000000 80000000 00901180 user32!NtUserWaitMessage+0xc (FPO: [0,0,0])
+0b 0324f714 008757a6 00000000 75b318f2 0324f7ac explorer!CTray::_MessageLoop+0x265 (FPO: [Non-Fpo])
+0c 0324f724 75b346bc 00901180 00000000 00000000 explorer!CTray::MainThreadProc+0x8a (FPO: [Non-Fpo])
+0d 0324f7ac 75771154 001bf810 0324f7f8 76ecb299 shlwapi!WrapperThreadProc+0x1b5 (FPO: [Non-Fpo])
+0e 0324f7b8 76ecb299 001bf810 75d00467 00000000 kernel32!BaseThreadInitThunk+0xe (FPO: [Non-Fpo])
+0f 0324f7f8 76ecb26c 75b345e9 001bf810 00000000 ntdll!__RtlUserThreadStart+0x70 (FPO: [Non-Fpo])
+10 0324f810 00000000 75b345e9 001bf810 00000000 ntdll!_RtlUserThreadStart+0x1b (FPO: [Non-Fpo])
+{% endcodeblock %}
+
+可以看出线程正在调用WaitForMultipleObjectsEx等待两个内核对象。那么看看这两个内核对象是什么吧。
+
+{% codeblock lang:windbg %}
+0:003> dp 0324f55c L2
+0324f55c 00000318 000002fc
+0:003> !handle 00000318
+Handle 00000318
+Type Event
+0:003> !handle 000002fc
+Handle 000002fc
+Type Event
+{% endcodeblock %}
+
+很不幸，两个内核对象都是Event，这样就没有什么可参考的价值了，因为我们没办法知道谁应该去设置两个event。那么好吧，从其他方面下手，看能不能发现问题。看看关键区的情况。
+
+{% codeblock lang:windbg %}
+0:003> !cs -l
+-----------------------------------------
+DebugInfo = 0x76f47540
+Critical section = 0x76f47340 (ntdll!LdrpLoaderLock+0x0)
+LOCKED
+LockCount = 0x6
+WaiterWoken = No
+OwningThread = 0x000013e0
+RecursionCount = 0x1
+LockSemaphore = 0x220
+SpinCount = 0x00000000
+-----------------------------------------
+DebugInfo = 0x002ac6e0
+Critical section = 0x765ea0f0 (shell32!CMountPoint::_csDL+0x0)
+LOCKED
+LockCount = 0x0
+WaiterWoken = No
+OwningThread = 0x000013e0
+RecursionCount = 0x1
+LockSemaphore = 0xA50
+SpinCount = 0x00000000
+{% endcodeblock %}
+
+看到一个很可疑的情况了，两个cs都被一个线程占用，更可疑的是这个线程居然还占用了LdrpLoaderLock。这就很有可能是引起死锁的原因了。来看看这个线程的完整堆栈。
+
+{% codeblock lang:windbg %}
+0:053> ~~[13e0]s
+eax=06d02f00 ebx=00000000 ecx=03920000 edx=06ce0000 esi=000015ac edi=00000000
+eip=76eb6194 esp=0b1ad1cc ebp=0b1ad238 iopl=0 nv up ei pl zr na pe nc
+cs=001b ss=0023 ds=0023 es=0023 fs=003b gs=0000 efl=00000246
+ntdll!KiFastSystemCallRet:
+76eb6194 c3 ret
+0:053> k
+# ChildEBP RetAddr
+00 0b1ad1c8 76eb5b0c ntdll!KiFastSystemCallRet
+01 0b1ad1cc 7523179c ntdll!ZwWaitForSingleObject+0xc
+02 0b1ad238 7576efe3 KERNELBASE!WaitForSingleObjectEx+0x98
+03 0b1ad250 7576ef92 kernel32!WaitForSingleObjectExImplementation+0x75
+04 0b1ad264 7622399a kernel32!WaitForSingleObject+0x12
+05 0b1ad294 7622299c shell32!CMountPoint::_InitLocalDrives+0xcd
+...
+14 0b1ad81c 762aa690 shell32!SHGetFolderLocation+0x121
+15 0b1ad838 0a5c0bf5 shell32!SHGetSpecialFolderLocation+0x17
+WARNING: Stack unwind information not available. Following frames may be wrong.
+16 0b1ae0bc 0a5bfceb HaoZipExt!DllUnregisterServer+0x1cd04
+17 0b1ae240 0a5e0200 HaoZipExt!DllUnregisterServer+0x1bdfa
+18 0b1ae284 0a5e02b9 HaoZipExt!DllUnregisterServer+0x3c30f
+19 0b1ae2ac 76ecfbdf HaoZipExt!DllUnregisterServer+0x3c3c8
+1a 0b1ae3a0 76ed008b ntdll!LdrpRunInitializeRoutines+0x26f
+1b 0b1ae50c 76ecf499 ntdll!LdrpLoadDll+0x4d1
+1c 0b1ae540 7523b96d ntdll!LdrLoadDll+0x92
+1d 0b1ae57c 7534a333 KERNELBASE!LoadLibraryExW+0x1d3
+1e 0b1ae598 7534a2b8 ole32!LoadLibraryWithLogging+0x16
+...
+39 0b1afbac 76241ee6 shell32!CShellExecute::_DoExecute+0x5a
+3a 0b1afbc0 75b346bc shell32!CShellExecute::s_ExecuteThreadProc+0x30
+3b 0b1afc48 75771154 shlwapi!WrapperThreadProc+0x1b5
+3c 0b1afc54 76ecb299 kernel32!BaseThreadInitThunk+0xe
+3d 0b1afc94 76ecb26c ntdll!__RtlUserThreadStart+0x70
+3e 0b1afcac 00000000 ntdll!_RtlUserThreadStart+0x1b
+{% endcodeblock %}
+
+首先一眼就看到了一个非系统模块HaoZipExt。再扫一眼，发现他在LdrpLoaderLock的时候又去等待了某个内核对象。那么再来看看这个内核对象是什么吧。
+
+{% codeblock lang:windbg %}
+0:053> kv L5
+# ChildEBP RetAddr Args to Child
+00 0b1ad1c8 76eb5b0c 7523179c 000015ac 00000000 ntdll!KiFastSystemCallRet (FPO: [0,0,0])
+01 0b1ad1cc 7523179c 000015ac 00000000 00000000 ntdll!ZwWaitForSingleObject+0xc (FPO: [3,0,0])
+02 0b1ad238 7576efe3 000015ac ffffffff 00000000 KERNELBASE!WaitForSingleObjectEx+0x98 (FPO: [Non-Fpo])
+03 0b1ad250 7576ef92 000015ac ffffffff 00000000 kernel32!WaitForSingleObjectExImplementation+0x75 (FPO: [Non-Fpo])
+04 0b1ad264 7622399a 000015ac ffffffff 00000000 kernel32!WaitForSingleObject+0x12 (FPO: [Non-Fpo])
+0:053> !handle 000015ac f
+Handle 000015ac
+Type Thread
+Attributes 0
+GrantedAccess 0x1fffff:
+Delete,ReadControl,WriteDac,WriteOwner,Synch
+Terminate,Suspend,Alert,GetContext,SetContext,SetInfo,QueryInfo,SetToken,Impersonate,DirectImpersonate
+HandleCount 4
+PointerCount 7
+Name <none>
+Object specific information
+Thread Id b14.1a94
+Priority 10
+Base Priority 0
+{% endcodeblock %}
+
+原来他在等待1a94这个线程结束啊，那么这个1a94线程又在干嘛呢？
+
+{% codeblock lang:windbg %}
+0:054> ~~[1a94]s
+eax=0bbdfbb4 ebx=00000000 ecx=00000000 edx=00000000 esi=76f47340 edi=00000000
+eip=76eb6194 esp=0bbdfa24 ebp=0bbdfa88 iopl=0 nv up ei pl nz ac pe cy
+cs=001b ss=0023 ds=0023 es=0023 fs=003b gs=0000 efl=00000217
+ntdll!KiFastSystemCallRet:
+76eb6194 c3 ret
+0:054> kv
+# ChildEBP RetAddr Args to Child
+00 0bbdfa20 76eb5b0c 76e9f98e 00000220 00000000 ntdll!KiFastSystemCallRet (FPO: [0,0,0])
+01 0bbdfa24 76e9f98e 00000220 00000000 00000000 ntdll!ZwWaitForSingleObject+0xc (FPO: [3,0,0])
+02 0bbdfa88 76e9f872 00000000 00000000 00000000 ntdll!RtlpWaitOnCriticalSection+0x13e (FPO: [Non-Fpo])
+03 0bbdfab0 76ecb31d 76f47340 7d4908db 7ff75000 ntdll!RtlEnterCriticalSection+0x150 (FPO: [Non-Fpo])
+04 0bbdfb44 76ecb13c 0bbdfbb4 7d49080f 00000000 ntdll!LdrpInitializeThread+0xc6 (FPO: [Non-Fpo])
+05 0bbdfb90 76ecb169 0bbdfbb4 76e70000 00000000 ntdll!_LdrpInitialize+0x1ad (FPO: [Non-Fpo])
+06 0bbdfba0 00000000 0bbdfbb4 76e70000 00000000 ntdll!LdrInitializeThunk+0x10 (FPO: [Non-Fpo])
+{% endcodeblock %}
+
+原来这个线程在等待LdrpLoaderLock这个锁啊，真相大白了。这里理一下思路，线程13e0，创建后，调用Loadlibrary，装载HaoZipExt。这个时候HaoZipExt获得LdrpLoaderLock，但是HaoZipExt犯了编写DLL的大忌。在DLLMain里面做了一些不能预期的事情。HaoZipExt调用了SHGetSpecialFolderLocation，这个函数在内部会创建一个线程，运行一个叫做FirstHardwareEnumThreadProc 的子过程。这个线程起来之后，就会通知所用的DllMain，告诉他们DLL_THREAD_ATTACH的消息。但是告诉他们这个消息之前，首先要获得LdrpLoaderLock这个锁。但是LdrpLoaderLock这个锁正在被创建他的线程使用，而且还在等自己结束，就这样死锁了。这也是MSDN特别强调告诉我们，不要在DllMain里有过多自己不能预期的操作的原因。
+
+那么看看这个罪魁祸首是什么模块吧。
+
+{% codeblock lang:windbg %}
+0:054> lmvm HaoZipExt
+Browse full module list
+start end module name
+0a5a0000 0a605000 HaoZipExt (export symbols) HaoZipExt.dll
+Loaded symbol image file: HaoZipExt.dll
+Image path: C:\Program Files\HaoZip\HaoZipExt.dll
+Image name: HaoZipExt.dll
+Browse all global symbols functions data
+Timestamp: Wed Jul 25 17:16:06 2012 (500FB956)
+CheckSum: 0006C14B
+ImageSize: 00065000
+File version: 3.0.1.9002
+Product version: 3.0.1.9002
+File flags: 0 (Mask 3F)
+File OS: 40004 NT Win32
+File type: 2.0 Dll
+File date: 00000000.00000000
+Translations: 0804.04b0
+CompanyName: 瑞创网络
+ProductName: 2345好压（HaoZip）
+InternalName: HaoZipExt
+OriginalFilename: HaoZipExt.dll
+ProductVersion: 3.0
+FileVersion: 3.0.1.9002
+FileDescription: 2345好压-Windows扩展模块
+LegalCopyright: 版权所有(c) 2012 瑞创网络
+Comments: www.haozip.com
+{% endcodeblock %}
+
+知道问题后，我感觉这应该就是explorer挂死的原因，虽然没有100%的证据，但是至少也是一个造成死锁的程序，早卸载为妙，于是我告诉了同事，卸载了这个叫做好压的软件。之后几天，explorer运行正常，再也没有出现过挂死现象了。
+
+最后总结HaoZipExt犯的错误
+1.在DllMain里面的做了线程创建的操作。
+2.跟挂死无关，只是吐槽一下他在DllMain里面调用了SHGetSpecialFolderLocation这个函数。因为这个函数已经不被支持，而且有可能在将来被废弃。以下是MSDN的原话：[SHGetSpecialFolderLocation is not supported and may be altered or unavailable in the future. Instead, useSHGetFolderLocation.]
+
+感叹一下，写一个健壮的程序真的不是件容易的事啊。
