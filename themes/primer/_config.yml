@@ -8,9 +8,9 @@ menus:
 	- 
 		name: Open-Source
 		link: open-source/
-	- 
-		name: Message
-		link: message/
+#	- 
+#		name: Message
+#		link: message/
 
 profile:
 	location: China
@@ -31,7 +31,7 @@ disqus_username:
 #Giemtn 是基于repo的issus的评论系统，项目地址: https://github.com/imsun/gitment
 #在 https://github.com/settings/applications/new 注册
 
-# gitment_owner: github_id
-# gitment_repo: 存放评论的repo
-# gitment_client_id: 申请的client_id
-# gitment_client_secret: 申请的client_secret
+gitment_owner: 0cch
+gitment_repo: 0CCh.github.io
+gitment_client_id: 671c226461f366904767
+gitment_client_secret: bc9407ce0e7a28726ea7b01c1e64a40e99857329
