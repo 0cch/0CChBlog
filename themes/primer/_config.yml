@@ -18,7 +18,7 @@ profile:
 
 github: 
 	username: 0cch
-  popular_repos: [0cchext]
+	popular_repos: [0cchext,luadbg]
 
 search: google
 
@@ -26,12 +26,14 @@ search: google
 # 多说已关闭 目前支持 Disqus 和 Gitmet(两者选一)
 
 #Disqus
-disqus_username:
+disqus_username: 0cch
+comment:
+    disqus_username: 0cch
 
-#Giemtn 是基于repo的issus的评论系统，项目地址: https://github.com/imsun/gitment
-#在 https://github.com/settings/applications/new 注册
+# Giemtn 是基于repo的issus的评论系统，项目地址: https://github.com/imsun/gitment
+# 在https://github.com/settings/applications/new 注册
 
-gitment_owner: 0cch
-gitment_repo: 0CCh.github.io
-gitment_client_id: 671c226461f366904767
-gitment_client_secret: bc9407ce0e7a28726ea7b01c1e64a40e99857329
+# gitment_owner: 0cch
+# gitment_repo: 0CCh.github.io
+# gitment_client_id: 671c226461f366904767
+# gitment_client_secret: bc9407ce0e7a28726ea7b01c1e64a40e99857329
