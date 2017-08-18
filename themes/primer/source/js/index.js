@@ -2,8 +2,9 @@
 var index = function(){
 
 	var handleHighlight = function(){	//处理代码高亮
-		hljs.initHighlightingOnLoad();
+		
 	}
+
 
 	var handleScroll = function(){	//处理滚动条
 
