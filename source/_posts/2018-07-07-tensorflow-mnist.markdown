@@ -95,6 +95,6 @@ plt.plot([i*500 for i in range(len(loss_array))], loss_array, 'b-',
 
 > **step7：**最后一步，我们将数据分为小份，随着迭代，逐步喂给模型。然后记录损失和准确率的变化，并做图。
 
-这里我们为了简单，没有使用softmax，dropout和正则化等优化方法，所以识别率只达到了90%，不过最为一个入门来说已经够了。
+这里我们为了简单，没有使用softmax，dropout和正则化等优化方法，所以识别率只达到了90%，不过作为一个入门来说已经够了。
 
 [![2018-07-07-tensorflow-mnist](/uploads/2018/07/2018-07-07-tensorflow-mnist.png)](/uploads/2018/07/2018-07-07-tensorflow-mnist.png)
