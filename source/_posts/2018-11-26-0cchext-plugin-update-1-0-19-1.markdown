@@ -2,8 +2,8 @@
 author: admin
 comments: true
 layout: post
-slug: '0cchext插件更新 1.0.19.1'
-title: 不要使用GetFullPathName获得相对路径的全路径
+slug: '0cchext plugin update 1.0.19.1'
+title: 0cchext插件更新 1.0.19.1
 date: 2018-11-26 22:05:21
 categories:
 - Tips
