@@ -1,0 +1,74 @@
+---
+author: admin
+comments: true
+layout: post
+slug: 'cpp11 macro'
+title: C++11新增预定义的宏
+date: 2019-03-20 21:39:56
+categories:
+- Tips
+---
+C++11中新增了4个预定义的宏，他们分别为`__STDC__`，`__STDC_HOSTED__`，`__STDC_VERSION__`和`__STDC_ISO_10646__`。
+
+1. `__STDC__`用于指示编译器是否支持ISO标准C语言，如果支持ISO标准C语言则`_STDC__`定义为1，否为定义为0。这个宏在不同的编译器上可能有不同的定义，甚至有未定义的情况。例如在GCC上，编译并输出该宏的值为1，而在Visual Studio C++上，默认情况下该宏处于未定义状态。
+
+2. `__STDC_HOSTED__`用于指示宿主环境是否具有标准C库的完整功能，如果具有标准C库的完整功能则`__STDC_HOSTED__`定义为1，否为定义为0。
+
+3. `__STDC_VERSION__`用于定义C标准的版本号，但是标准文档中并没有明确规定其实现，所以在很多编译器中这个宏处于未定义状态。
+
+4. `__STDC_ISO_10646__`用于指示`wchar_t`是否使用Unicode，如果使用Unicode那么`wchar_t`展开为yyyymmL的形式。
+
+编译运行下面这段代码用于检测这些宏的定义状态：
+
+``` c++
+#include <iostream>
+using namespace std;
+int main(int argc, char *argv[])
+{
+	cout << "__cplusplus is " << __cplusplus << endl;
+	cout << "__DATE__ is " << __DATE__ << endl;
+	cout << "__FILE__ is " << __FILE__ << endl;
+	cout << "__LINE__ is " << __LINE__ << endl;
+#ifdef __STDC_HOSTED__
+	cout << "__STDC_HOSTED__ is " << __STDC_HOSTED__ << endl;
+#else
+	cout << "__STDC_HOSTED__ is not defined" << endl;
+#endif
+	cout << "__TIME__ is " << __TIME__ << endl;
+#ifdef __STDC__
+	cout << "__STDC__ is " << __STDC__ << endl;
+#else
+	cout << "__STDC__ is not defined" << endl;
+#endif
+#ifdef __STDC_MB_MIGHT_NEQ_WC__
+	cout << "__STDC_MB_MIGHT_NEQ_WC__ is " << __STDC_MB_MIGHT_NEQ_WC__ << endl;
+#else
+	cout << "__STDC_MB_MIGHT_NEQ_WC__ is not defined" << endl;
+#endif
+#ifdef __STDC_VERSION__
+	cout << "__STDC_VERSION__ is " << __STDC_VERSION__ << endl;
+#else
+	cout << "__STDC_VERSION__ is not defined" << endl;
+#endif
+#ifdef __STDC_ISO_10646__
+	cout << "__STDC_ISO_10646__ is " << __STDC_ISO_10646__ << endl;
+#else
+	cout << "__STDC_ISO_10646__ is not defined" << endl;
+#endif
+#ifdef __STDCPP_DEFAULT_NEW_ALIGNMENT__
+	cout << "__STDCPP_DEFAULT_NEW_ALIGNMENT__ is " << __STDCPP_DEFAULT_NEW_ALIGNMENT__ << endl;
+#else
+	cout << "__STDCPP_DEFAULT_NEW_ALIGNMENT__ is not defined" << endl;
+#endif
+#ifdef __STDCPP_STRICT_POINTER_SAFETY__
+	cout << "__STDCPP_STRICT_POINTER_SAFETY__ is " << __STDCPP_STRICT_POINTER_SAFETY__ << endl;
+#else
+	cout << "__STDCPP_STRICT_POINTER_SAFETY__ is not defined" << endl;
+#endif
+#ifdef __STDCPP_THREADS__
+	cout << "__STDCPP_THREADS__ is " << __STDCPP_THREADS__ << endl;
+#else
+	cout << "__STDCPP_THREADS__ is not defined" << endl;
+#endif
+}
+```
