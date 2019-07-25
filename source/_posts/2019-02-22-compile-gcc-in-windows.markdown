@@ -8,7 +8,7 @@ date: 2019-02-22 19:00:12
 categories:
 - Tips
 ---
-最近心血来潮想体验下C++2a的标准，但是mingw中的GCC最新版本是8.2。于是乎就产生了编译thunk下最新代码。
+最近心血来潮想体验下C++2a的标准，但是mingw中的GCC最新版本是8.2。于是乎就产生了编译thunk下最新代码的想法。
 
 要在Windows上编译GCC没有在linux上方便，但是也是可以完成的。首先我们需要一个mingw的环境。自带mingw环境的软件有很多，这里我比较推荐MSYS2，因为这个环境更新的比较快。下载安装好了以后，运行MSYS2，会弹出类似linux终端窗口。这里我们首先下载需要的开发编译环境：
 > pacman -S --needed mingw-w64-i686-toolchain mingw-w64-x86_64-toolchain
