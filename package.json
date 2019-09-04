@@ -6,7 +6,7 @@
     "version": "3.9.0"
   },
   "dependencies": {
-    "ejs": "^2.6.2",
+    "ejs": "^2.7.1",
     "hexo": "^3.9.0",
     "hexo-generator-archive": "^0.1.4",
     "hexo-generator-category": "^0.1.3",
