@@ -18,10 +18,10 @@ $$\frac{\partial u}{\partial t}
 \frac{\partial^2 u}{\partial y^2} +
 \frac{\partial^2 u}{\partial z^2}\right)$$
 
-{% math %}
+{% mathjax %}
 \begin{aligned}
 \dot{x} & = \sigma(y-x) \\
 \dot{y} & = \rho x - y - xz \\
 \dot{z} & = -\beta z + xy
 \end{aligned}
-{% endmath %}
+{% endmathjax %}

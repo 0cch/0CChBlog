@@ -13,14 +13,14 @@ categories:
 
 当然，我并不是在鼓动初学者跳过数学原理部分，而是认为，如果没有数学基础，入门就死磕原理容易产生挫败感导致放弃。这样就不如先接触简单的项目，在有了一定的体会后，再回头去看看数学原理的东西，这样会更容易接受。比如，当能用tensorflow完成对mnist的训练之后，再去理解反向传播这四个公式，应该会更有感觉。
 
-{% math %}
+{% mathjax %}
 \begin{align}
 \delta^L &= \nabla_a C \odot \sigma'(z^L) \tag{1} \\
 \delta^l &= ((w^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l) \tag{2}\\
 \frac{\partial C}{\partial b^l_j} &= \delta^l_j \tag{3}\\
 \frac{\partial C}{\partial w^l_{jk}} &= a^{l-1}_k \delta^l_j \tag{4}
 \end{align}
-{% endmath %}
+{% endmathjax %}
 
 接下来相信看看这份代码
 

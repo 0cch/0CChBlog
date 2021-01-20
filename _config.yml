@@ -39,9 +39,11 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace: '    '
+  wrap: true
+  hljs: false
   
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -72,7 +74,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: primer
+theme: bootstrap-blog
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -94,4 +96,13 @@ math:
     js: custom_js_source # not used
     config:
       # KaTeX config
-
+theme_config:
+  widgets:
+   - category
+   - archive
+   - recent_posts
+   - tag
+   - about
+  about_widget_content: >
+    <p>https://github.com/0cch</p>
+    
