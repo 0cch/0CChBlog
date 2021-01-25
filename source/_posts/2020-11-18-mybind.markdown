@@ -1,0 +1,80 @@
+---
+author: admin
+comments: true
+layout: post
+slug: 'mybind'
+title: 实现一个类似std::bind的功能
+date: 2020-11-18 17:38:46
+categories:
+- CPP
+---
+
+前两天有朋友问我`std::bind`是如何实现的，对照STL讲述原理后朋友表示还是很难理解，这可以理解，因为STL涉及到的东西太多，很难清晰的将核心部分显式出来。为了解释清楚这个问题，我自己实现了一个bind功能。当然了，比`std::bind`要简单非常非常多，缺少很多有用的特性，但是也能展示bind的核心原理了。
+
+``` c++
+template<int _Nx>
+struct _MyPh
+{
+};
+
+constexpr _MyPh<0> _0;
+constexpr _MyPh<1> _1;
+constexpr _MyPh<2> _2;
+constexpr _MyPh<3> _3;
+constexpr _MyPh<4> _4;
+
+template<typename R, typename F, typename ... Arg>
+class _MyBind {
+public:
+	_MyBind(F f, Arg ... arg) : _MyList(arg...), _f(f) {}
+	template<typename ... CallArg>
+	R operator()(CallArg... arg)
+	{
+		_MyBind<R, F, CallArg...> c(0, arg...);
+		std::size_t constexpr tSize 
+			= std::tuple_size<std::tuple<Arg...>>::value;
+		return call_tuple(_f, _MyList, 
+			c, std::make_index_sequence<tSize>());
+	}
+
+	template<typename F, typename Tuple, typename C, size_t ...S>
+	R call_tuple(F f, Tuple t, C c, std::index_sequence<S...>)
+	{
+		return f(c[std::get<S>(_MyList)]...);
+	}
+
+	template<typename T> T operator[] (T &t) { return t; }
+	template<int N> typename std::tuple_element<N, 
+		std::tuple<Arg...>>::type operator[] (_MyPh<N>) 
+	{ 
+			return std::get<N>(_MyList);
+	}
+private:
+	std::tuple<Arg...> _MyList;
+	F _f;
+};
+template<typename R, typename F, typename ... Arg> 
+	_MyBind<R, F, Arg...> mybind(F f, Arg ... arg)
+{
+	return _MyBind<R, F, Arg...>(f, arg...);
+}
+
+int sum(int a, int b, int c)
+{
+	std::cout << a << b << c;
+	return a + b + c;
+}
+
+int main()
+{
+	auto myfunc = mybind<int>(sum, _0, 2, _1)(1, 5);
+}
+```
+
+首先占位符其实就是一个空类型，我们不需要类型里有什么，只是想要一个类型标识符。
+
+然后看到最关键的`_MyBind`类模板，该类模板有数据成员`_MyList`和`_f`，用于存放绑定的函数和参数。在构造对象的时候数据成员会被填充，并且在调用`template<typename ... CallArg> R operator()(CallArg... arg)`的时候使用这两个数据成员。这里比较难理解的是`call_tuple`函数模板，该函数需要将绑定的参数列表和后续调用的参数列表传入函数，
+
+最后使用SFINAE的技巧有选择的通过`operator[]`获取对应的值。如果`std::get<S>(_MyList)`返回的是绑定的具体值，那么通过`template<typename T> T operator[] (T &t) { return t; }`返回值本身，注意这里的`t`是最外层`_MyList`中的元素；如果`std::get<S>(_MyList)`返回的是占位符，那么将通过`template<int N> typename std::tuple_element<N, std::tuple<Arg...>>::type operator[] (_MyPh<N>) { return std::get<N>(_MyList); }`返回`c`中`_MyList`的元素，请注意这里的`this`对象是`c`。
+
+当然为了使用方便需要一个函数模板`mybind`，它只需要指定一个返回类型就可以使用了。
