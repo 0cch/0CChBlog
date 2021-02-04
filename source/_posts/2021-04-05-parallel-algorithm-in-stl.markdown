@@ -4,7 +4,7 @@ comments: true
 layout: post
 slug: 'parallel algorithm in STL'
 title: STL中并行算法
-date: 2021-02-05 11:04:49
+date: 2021-04-05 11:04:49
 categories:
 - CPP
 ---
