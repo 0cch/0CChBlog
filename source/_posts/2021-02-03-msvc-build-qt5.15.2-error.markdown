@@ -9,7 +9,9 @@ categories:
 - CPP
 ---
 
-记录一下编译qt-everywhere-src-5.15.2中qtwebengine遇到的问题。在windows上用vs2019编译qtwebengine的时候需要patch其中的3个文件，否则会报错。错误看起来好像是：
+记录一下编译qt-everywhere-src-5.15.2中qtwebengine遇到的问题。
+
+第一、在windows上用vs2019编译qtwebengine的时候需要patch其中的3个文件，否则会报错。错误看起来好像是：
 
 ```
 ninja: build stopped: subcommand failed. 
@@ -100,4 +102,28 @@ index 02363d0..8860287 100644
      switch (type) {
        case Type::kInvalid:
 
+```
+
+第二、在Windows上编译blink的pch也会有些问题，报错找不到头文件：
+
+```
+qt5/qtwebengine/src/3rdparty/chromium/third_party/WebKit/Source/core/win/Precompile-core.cpp: fatal error C1083: Cannot open include file: 
+'../../../../../qt5srcgit/qt5/qtwebengine/src/3rdparty/chromium/third_party/WebKit/Source/core/Precompile-core.h': No such file or directory
+```
+
+需要patch两个文件blink/renderer/platform/BUILD.gn 和 blink/renderer/core/BUILD.gn
+
+```
+--- qtwebengine/src/3rdparty/chromium/third_party/blink/renderer/platform/BUILD.gn
++++ qtwebengine/src/3rdparty/chromium/third_party/blink/renderer/platform/BUILD.gn
+@@ -204,7 +204,7 @@
+
+
+config("blink_platform_pch") {
+   if (enable_precompiled_headers) {
+-    if (is_win) {
++    if (false) {
+       # This is a string rather than a file GN knows about. It has to match
+       # exactly what's in the /FI flag below, and what might appear in the
+       # source code in quotes for an #include directive.
 ```
