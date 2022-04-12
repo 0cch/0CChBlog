@@ -1,0 +1,14 @@
+---
+author: admin
+comments: true
+layout: post
+slug: '2021k+ ppt'
+title: 2021K+软件峰会PPT
+date: 2022-02-12 11:15:07
+categories:
+- Tips
+---
+
+去年K+上用的PPT，讲了一些跟C++20协程有关的内容，分享出来。
+
+{% pdf https://0cch.com/uploads/2022/02/k+2021.pdf %}
