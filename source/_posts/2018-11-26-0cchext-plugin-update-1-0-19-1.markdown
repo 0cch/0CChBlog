@@ -93,7 +93,7 @@ dx (combase!tagSOleTlsData *)0x0000019370ad0360
    +0x030 cCalls           : 0
    ...
 ```
-另外可以看[调试COM的一个tip](https://0cch.com/2017/07/09/tip-about-com/)来简单了解以下这个命令的用途
+另外可以看[调试COM的一个tip](/2017/07/09/tip-about-com/)来简单了解以下这个命令的用途
 
 ### cppexcrname命令：
 > 这个命令用于查询C++ 异常名
@@ -110,4 +110,4 @@ NumberParameters: 3
 0:000> !cppexcrname
 Exception name: .?AVexception@std@@
 ```
-这个的详情可以参考[C++异常的参数分析(0xE06D7363)](https://0cch.com/2015/12/06/cpp-exception-params/)
+这个的详情可以参考[C++异常的参数分析(0xE06D7363)](/2015/12/06/cpp-exception-params/)

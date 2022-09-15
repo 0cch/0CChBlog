@@ -23,4 +23,4 @@ categories:
 
 最后，奉上K+大会的PPT：
 
-{% pdf https://0cch.com/uploads/2022/08/k+2022.pdf %}
+{% pdf /uploads/2022/08/k+2022.pdf %}

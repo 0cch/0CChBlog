@@ -14,4 +14,4 @@ categories:
 [![20150502010045](/uploads/2015/05/20150502010045.png)](/uploads/2015/05/20150502010045.png)
 
 将ACCESS_MASK数字转换成我们看得懂的宏，可以使用我写的一个小网页：
-[http://0cch.com/accessmask.html](http://0cch.com/accessmask.html)
+[http://0cch.com/accessmask.html](/accessmask.html)

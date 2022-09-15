@@ -11,7 +11,7 @@ categories:
 
 在oneAPI的一系列的产品中，我首先要介绍的是DPC和它的编译器，因为这部分内容十分有趣。我们都知道，一个程序运行效率高低，跟语言本身和他的编译器是息息相关的，比如我们不能指望python的程序在算法和运行环境相同的情况下跑过C和C的程序。
 
-![组件](https://0cch.com/uploads/2022/03/oneapi-summary-1.png)
+![组件](/uploads/2022/03/oneapi-summary-1.png)
 
 Intel的DPC团队当然考虑到了这一点，DPC和他的编译器正是基于高效的C语言以及时下先进的编译器clang/llvm的。在llvm的支持下，让DPC能够轻松的在不同的平台上使用。
 
@@ -21,7 +21,7 @@ DPC是基于标准C和SYCL的，也就是说，我们可以用C一种语言来�
 
 oneAPI还提供了一套兼容性工具，这套工具可以将CUDA编写的代码转换为标准的c代码，便于使用DPC进行编译。不过需要注意的是，并不是所有的代码都可以。CUDA代码大约可以有90%到95%能够正确的转换为DPC++的代码，当然剩下的一部分会注释留白，让开发人员进行转换。这个转换工具会尽可能的转换出开发人员可读的源代码程序。
 
-![兼容性工具](https://0cch.com/uploads/2022/03/oneapi-summary-2.png)
+![兼容性工具](/uploads/2022/03/oneapi-summary-2.png)
 
 [dpc-compatibility-tool](https://www.intel.com/content/www/us/en/developer/tools/oneapi/dpc-compatibility-tool.html#gs.zio9bm)
 
@@ -35,7 +35,7 @@ oneAPI提供的库有很多，有兴趣的朋友可以直接上官网查看，�
 
 第二个工具是Advisor，这个工具可以对异构程序进行分析，并且提供优化建议，包括怎么使用内存，怎么使用多线程，怎么使用并发。这个工具我是用的不多，有兴趣的朋友还是可以看官方文档。
 
-![Vtune](https://0cch.com/uploads/2022/03/oneapi-summary-3.png)
+![Vtune](/uploads/2022/03/oneapi-summary-3.png)
 
 第三个工具是Vtune，这个工具就厉害了，我想做过性能优化的朋友肯定是用过的。这个工具在做性能优化方面并不局限于异构程序，其实很早之前我就接触过它了。它可以对程序性能的缺陷做非常系统的分析，包括IO，线程、内存、指令集的使用等等，分析的粒度可以从指令到代码行再到函数块，支持的架构从CPU、GPU到FPGA，总之做性能优化的朋友千万不要错过这个工具。
 

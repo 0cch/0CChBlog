@@ -11,4 +11,4 @@ categories:
 
 去年K+上用的PPT，讲了一些跟C++20协程有关的内容，分享出来。
 
-{% pdf https://0cch.com/uploads/2022/02/k+2021.pdf %}
+{% pdf /uploads/2022/02/k+2021.pdf %}
