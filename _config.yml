@@ -105,4 +105,12 @@ theme_config:
    - about
   about_widget_content: >
     <p>https://github.com/0cch</p>
+  
+sitemap:
+  path: 
+    - sitemap.xml
+    - sitemap.txt
+  rel: false
+  tags: true
+  categories: true
     
