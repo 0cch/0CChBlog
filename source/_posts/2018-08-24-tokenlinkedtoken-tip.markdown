@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'tokenlinkedtoken tip'
 title: 关于TokenLinkedToken的一点记录
 date: 2018-08-24 20:14:23
 categories:
 - Tips
+tags:
+- security
+
 ---
 
 我们用GetTokenInformation可以获得一个TokenLinkedToken，简单的说就是要获得与我们进程token关联的token。  

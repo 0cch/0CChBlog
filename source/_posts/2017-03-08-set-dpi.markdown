@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2017-03-08 14:47:37+00:00
 layout: post
 slug: 'set dpi'
 title: Windows 10设置系统DPI
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 现在的显示器分辨率越来越高2K，4K甚至5K，而很多程序并不支持这一的高分辨率，所以这些程序在桌面上会显示的很小，好在Windows 8以后的系统中，我们可以设置DPI来放大程序的窗口，如下图所示：  

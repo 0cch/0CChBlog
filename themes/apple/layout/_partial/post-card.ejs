@@ -1,0 +1,18 @@
+<article class="post-card">
+  <a href="<%- url_for(post.path) %>" class="post-card-link">
+    <div class="post-card-body">
+      <h2 class="post-card-title"><%= post.title %></h2>
+      <div class="post-card-meta">
+        <time datetime="<%= date(post.date, 'YYYY-MM-DD') %>"><%= date(post.date, theme.date_format || 'YYYY-MM-DD') %></time>
+        <% if (post.categories && post.categories.length){ %>
+          <span class="post-card-cat"><%= post.categories.first().name %></span>
+        <% } %>
+      </div>
+      <% if (post.excerpt){ %>
+        <div class="post-card-excerpt"><%- strip_html(post.excerpt).substring(0, 140) %>...</div>
+      <% } else { %>
+        <div class="post-card-excerpt"><%- strip_html(post.content).substring(0, 140) %>...</div>
+      <% } %>
+    </div>
+  </a>
+</article>

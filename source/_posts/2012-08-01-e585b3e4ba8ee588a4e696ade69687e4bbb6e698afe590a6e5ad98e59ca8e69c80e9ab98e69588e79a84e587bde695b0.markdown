@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2012-08-01 06:08:16+00:00
 layout: post
 slug: '%e5%85%b3%e4%ba%8e%e5%88%a4%e6%96%ad%e6%96%87%e4%bb%b6%e6%98%af%e5%90%a6%e5%ad%98%e5%9c%a8%e6%9c%80%e9%ab%98%e6%95%88%e7%9a%84%e5%87%bd%e6%95%b0'
@@ -8,6 +7,9 @@ title: 关于判断文件是否存在最高效的函数
 wordpress_id: 84
 categories:
 - NTInternals
+tags:
+- filesystem
+
 ---
 
 判断文件存在方法有很多，例如CreateFile，FindFirstFile，GetFileAttributes，PathFileExists等等。但是哪一种更加高效呢？其实作为常识，可能都能判断出GetFileAttributes和PathFileExists会比较快（而实际上PathFileExists就是调用的GetFileAttributes）。

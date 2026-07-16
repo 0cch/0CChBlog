@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'k+&c++ new standard details'
 title: K+ 技术峰会之旅&C++新标准细节简析
 date: 2022-08-21 14:15:46
 categories:
-- TIPS
+- Tips
+tags:
+- cpp
+
 ---
 
 这年头，参加一次线下技术大会实属不易，当然举办方就更加不容易了。这届K+大会举办地是深圳，好巧不巧，开幕前一周深圳出现疫情，大会临时将举办地点从迁移到没有疫情的区域，只用了一周时间，可想而知这个事情有多难。

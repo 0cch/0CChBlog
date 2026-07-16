@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2012-11-13 16:56:17+00:00
 layout: post
 slug: '%e5%85%b3%e4%ba%8e%e6%95%b4%e5%9e%8b%e6%95%b0%e7%ac%a6%e5%8f%b7%e4%bd%8d%e6%89%a9%e5%b1%95%e7%9a%84%e4%b8%80%e7%82%b9%e5%bf%83%e5%be%97'
@@ -8,6 +7,9 @@ title: 关于整型数符号位扩展的一点心得
 wordpress_id: 98
 categories:
 - Tips
+tags:
+- misc
+
 ---
 
 最近写的程序中遇到了整型数符号位扩展的小问题。稍稍看了下，写在这里备忘。

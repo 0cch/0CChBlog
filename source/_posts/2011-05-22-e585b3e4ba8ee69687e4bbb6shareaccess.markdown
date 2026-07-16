@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2011-05-22 18:26:22+00:00
 layout: post
 slug: '%e5%85%b3%e4%ba%8e%e6%96%87%e4%bb%b6shareaccess'

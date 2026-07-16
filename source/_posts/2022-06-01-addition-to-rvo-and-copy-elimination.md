@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'addition to rvo and copy elimination'
 title: 返回值优化和拷贝消除的一点补充
 date: 2022-06-01 21:17:10
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 在我写的《现代C++语言核心特性解析》中有一个小节是讲解的返回值优化，在这篇文章中，我将对这部分内容进行一点补充，将更多细节展示出来。

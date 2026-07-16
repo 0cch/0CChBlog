@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'metaprogramming overview'
 title: 初探C++模板元编程
 date: 2019-10-20 20:38:15
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 C++模板元编程，通常来说是指利用模板控制编译器产生临时源代码的技术。该临时源代码可以和以后代码共同编译为可执行程序。由于模板元编程控制的是编译器，所以这个过程是在编译期进行，对于代码运行期的状态没有影响。

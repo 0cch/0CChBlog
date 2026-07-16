@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-10-07 14:00:26+00:00
 layout: post
 slug: windbg%e5%86%85%e6%a0%b8%e8%b0%83%e8%af%95%e6%9f%a5%e7%9c%8b%e7%aa%97%e5%8f%a3%e5%8f%a5%e6%9f%84%e4%bf%a1%e6%81%af%e7%9a%84%e8%84%9a%e6%9c%ac
@@ -9,6 +8,10 @@ wordpress_id: 363
 categories:
 - Debugging
 - Tips
+tags:
+- windbg
+- debug
+
 ---
 
 十一长假瞬间就结束了，整一周都在玩，也没有研究什么好玩的东西，这里就分享一个以前写的windbg脚本吧。通途是内核调试查看窗口句柄信息。用法很简单，例如 $$>a<hwnd.wds 000207B8。运行结果如下图：

@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-08-04 08:12:15+00:00
 layout: post
 slug: '%e4%bd%bf%e7%94%a8%e5%8f%af%e7%bc%96%e7%a8%8b%e9%97%b4%e9%9a%94%e5%ae%9a%e6%97%b6%e5%99%a8programmable-interval-timer%e7%bc%96%e5%86%99%e7%b3%bb%e7%bb%9f%e6%97%b6%e9%92%9f'
@@ -8,6 +7,9 @@ title: 使用可编程间隔定时器(Programmable Interval Timer)编写系统�
 wordpress_id: 290
 categories:
 - MiniKernel
+tags:
+- os
+
 ---
 
 很久没有写关于MiniKernel的文章了，这周末看着有点时间，就写一点关于定时器的东西吧。

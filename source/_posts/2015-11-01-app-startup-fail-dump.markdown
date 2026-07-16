@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2015-11-01 21:17:15+00:00
 layout: post
 slug: 'app-startup-fail-dump'
 title: 程序初始化失败DUMP分析
 categories:
-- debugging
+- Debugging
+tags:
+- memory
+
 ---
 
 拿到程序初始化失败的DUMP，一般情况下我们看到的栈是这个样子的：

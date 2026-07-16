@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-08-16 02:34:15+00:00
 layout: post
 slug: dump-stl%e7%9a%84vector%ef%bc%8clist%ef%bc%8cmap%e7%9a%84%e4%b8%89%e4%b8%aawindbg%e8%84%9a%e6%9c%ac
@@ -8,6 +7,11 @@ title: Dump stl的vector，list，map的三个windbg脚本
 wordpress_id: 460
 categories:
 - Debugging
+tags:
+- windbg
+- cpp
+- memory
+
 ---
 
 用Windbg查看stl的容器实在是已经让人悲伤的事情，为了方便，所以写了这么3个脚本

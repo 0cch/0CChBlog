@@ -1,0 +1,20 @@
+<div class="widget widget-archive">
+  <h3 class="widget-title">Archives</h3>
+  <ul class="widget-list">
+    <% var archives = site.archive; %>
+    <% if (archives){ %>
+      <% archives.each(function(item){ %>
+        <li><a href="<%- url_for(item.path) %>"><%= item.name %></a><span class="widget-count"><%= item.length %></span></li>
+      <% }) %>
+    <% } else { %>
+      <% var last_year; %>
+      <% site.posts.sort('-date').each(function(post){ %>
+        <% var y = post.date.year(); %>
+        <% if (y !== last_year){ %>
+          <li><a href="<%- url_for(config.archive_dir + '/' + y + '/') %>"><%= y %></a></li>
+          <% last_year = y; %>
+        <% } %>
+      <% }) %>
+    <% } %>
+  </ul>
+</div>

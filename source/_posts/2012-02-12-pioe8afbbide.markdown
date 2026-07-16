@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2012-02-12 07:26:09+00:00
 layout: post
 slug: pio%e8%af%bbide

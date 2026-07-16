@@ -1,13 +1,13 @@
-# Hexo Configuration
+﻿# Hexo Configuration
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
 title: 0CCh Blog
 subtitle:
-description:
+description: 0CCh的技术博客 - C++、调试、系统编程
 author: 0CCh
-language:
+language: zh-CN
 timezone:
 
 # URL
@@ -37,13 +37,14 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
+syntax_highlighter: prismjs
 highlight:
+  enable: false
+prismjs:
   enable: true
+  preprocess: true
   line_number: false
-  auto_detect: false
   tab_replace: '    '
-  wrap: true
-  hljs: false
   
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -74,7 +75,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: bootstrap-blog
+theme: apple
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -88,7 +89,7 @@ search:
 math:
   engine: 'mathjax'
   mathjax:
-    src: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
+    src: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js'
     config:
       # MathJax config
   katex:
@@ -98,12 +99,7 @@ math:
       # KaTeX config
 theme_config:
   widgets:
-   - category
-   - archive
-   - recent_posts
-   - tag
-   - about
-  about_widget_content: >
-    <p>https://github.com/0cch</p>
-  
-    
+    - category
+    - archive
+    - recent_posts
+    - tag

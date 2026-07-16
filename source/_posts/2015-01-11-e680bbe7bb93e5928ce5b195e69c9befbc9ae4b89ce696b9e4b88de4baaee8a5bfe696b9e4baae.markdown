@@ -1,11 +1,13 @@
 ---
 author: admin
-comments: true
 date: 2015-01-11 14:08:30+00:00
 layout: post
 slug: '%e6%80%bb%e7%bb%93%e5%92%8c%e5%b1%95%e6%9c%9b%ef%bc%9a%e4%b8%9c%e6%96%b9%e4%b8%8d%e4%ba%ae%e8%a5%bf%e6%96%b9%e4%ba%ae'
 title: 总结和展望：东方不亮西方亮
 wordpress_id: 510
+tags:
+- 总结
+
 ---
 
 一转眼，一年又过去了，又到了总结过去的一年，计划新年的时候了。过去的一年里，最大的感觉是，好想经过了好多事情，但却没有经历什么事情。说起来挺绕的，慢慢来回忆下吧。

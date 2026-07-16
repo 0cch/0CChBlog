@@ -1,0 +1,20 @@
+<div class="archive">
+<% var last_year; %>
+<% page.posts.each(function(post){ %>
+  <% var year = post.date.year(); %>
+  <% if (last_year !== year){ %>
+    <% if (last_year){ %></ul><% } %>
+    <h2 class="archive-year"><%= year %></h2>
+    <ul class="archive-list">
+    <% last_year = year; %>
+  <% } %>
+  <li class="archive-item">
+    <span class="archive-date"><%= date(post.date, 'MM-DD') %></span>
+    <a href="<%- url_for(post.path) %>" class="archive-link"><%= post.title %></a>
+  </li>
+<% }) %>
+<% if (page.posts.length){ %></ul><% } %>
+</div>
+<% if (page.total > 1){ %>
+  <%- partial('_partial/pagination') %>
+<% } %>

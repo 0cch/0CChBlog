@@ -1,12 +1,16 @@
 ---
 author: admin
-comments: true
 date: 2015-07-01 00:11:15+00:00
 layout: post
 slug: 'dump-pe-with-windbg-script'
 title: 用Windbg script将内存中的PE文件dump出来
 categories:
 - Tips
+tags:
+- windbg
+- pe
+- memory
+
 ---
 
 最近看到有些恶意程序，从网络上下载PE文件后，直接放在内存里重定位和初始化，为了能将其dump出来，所以写了这个Windbg脚本。

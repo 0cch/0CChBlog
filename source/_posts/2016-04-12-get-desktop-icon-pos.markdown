@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-04-12 15:04:35+00:00
 layout: post
 slug: 'get-desktop-icon-pos'
 title: 获取桌面图标位置
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 用来干什么就不用说了，反正不是什么好事情 =v=

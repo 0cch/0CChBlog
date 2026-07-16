@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'use std::sample to get random samples'
 title: 使用std::sample获取随机样本
 date: 2020-12-26 10:16:36
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 C++17标准库提供了一个`std::sample`函数模板用于获取随机样本，该样本是输入全体样本的一个子集。具体例子如下：

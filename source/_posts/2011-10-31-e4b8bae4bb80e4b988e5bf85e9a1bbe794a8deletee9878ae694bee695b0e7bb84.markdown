@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2011-10-31 16:54:55+00:00
 layout: post
 slug: '%e4%b8%ba%e4%bb%80%e4%b9%88%e5%bf%85%e9%a1%bb%e7%94%a8delete%e9%87%8a%e6%94%be%e6%95%b0%e7%bb%84'
@@ -8,6 +7,9 @@ title: 为什么必须用delete[]释放数组
 wordpress_id: 67
 categories:
 - Tips
+tags:
+- cpp
+
 ---
 
 最近不知哪来的好奇心，对C++产生了一些兴趣，要知道我通常情况下都是cpp文件中写c代码，c代码中嵌汇编。不过，在做了一些大点的项目之后，确确实实发现了，这种编码方式麻烦的一面。有时候甚至自己都难得维护以前写的东西。所以选择性看了google的c++编程规范，而且对scoped_ptr和auto_ptr的区别参数兴趣。然后我得出的结论是这两种实际上是其实差不多，只不过scoped_ptr拷贝构造函数和赋值构造函数都是私有的。这样就避免粗心大意的程序员调用他。其他的区别还真没看出来。

@@ -1,11 +1,13 @@
 ---
 author: admin
-comments: true
 date: 2013-02-17 16:28:09+00:00
 layout: post
 slug: '%e6%b2%a1%e6%9c%89%e4%b8%96%e7%95%8c%e6%9c%ab%e6%97%a5%ef%bc%8c%e7%94%9f%e6%b4%bb%e8%bf%98%e8%a6%81%e7%bb%a7%e7%bb%ad'
 title: 又是总结和展望：没有世界末日，生活还要继续
 wordpress_id: 154
+tags:
+- 总结
+
 ---
 
 今天总算是有时间，有心情写一篇总结去年生活，展望今年的文章了。

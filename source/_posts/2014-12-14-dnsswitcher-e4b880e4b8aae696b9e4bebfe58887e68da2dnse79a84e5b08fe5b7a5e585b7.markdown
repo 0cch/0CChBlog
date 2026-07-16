@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-12-14 11:07:07+00:00
 layout: post
 slug: dnsswitcher-%e4%b8%80%e4%b8%aa%e6%96%b9%e4%be%bf%e5%88%87%e6%8d%a2dns%e7%9a%84%e5%b0%8f%e5%b7%a5%e5%85%b7
@@ -8,6 +7,9 @@ title: DNSSwitcher —— 一个方便切换DNS的小工具
 wordpress_id: 500
 categories:
 - Tips
+tags:
+- tool
+
 ---
 
 最近百度也推出的自己的公共DNS，现在可供我们选择使用的DNS也多了起来。但是每次更改DNS都输入IP，确实挺麻烦的。于是我周末在家就写了个切换DNS的小程序，绿色且易用，能在配置好的DNS直接切换，当然也能切换回自动获取DNS的模式。至于配置文件，可以手动修改，也可以通过程序来修改，都挺方便的。

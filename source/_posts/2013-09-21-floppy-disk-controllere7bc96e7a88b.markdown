@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-09-21 08:39:56+00:00
 layout: post
 slug: floppy-disk-controller%e7%bc%96%e7%a8%8b
@@ -8,6 +7,9 @@ title: Floppy Disk Controller编程
 wordpress_id: 348
 categories:
 - MiniKernel
+tags:
+- Floppy
+
 ---
 
 [![N82077AA](/uploads/2013/09/N82077AA.jpg)](/uploads/2013/09/N82077AA.jpg)

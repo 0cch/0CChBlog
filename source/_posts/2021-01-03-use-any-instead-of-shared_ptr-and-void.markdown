@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'use std::any instead of std::shared_ptr <void> and void *'
 title: 使用std::any代替std::shared_ptr<void>和void *
 date: 2021-01-03 12:30:07
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 大家在编写程序的时候应该遇到过这样一个场景，该场景需要传递某种数据，但是数据类型和数据大小并不确定，这种时候我们常用`void *`类型的变量来保存对象指针。例如：

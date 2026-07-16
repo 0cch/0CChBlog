@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-01-20 09:17:01+00:00
 layout: post
 slug: dia_study-pdb%e6%9f%a5%e7%9c%8b%e5%b7%a5%e5%85%b7
@@ -8,6 +7,9 @@ title: Dia_study —— PDB查看工具
 wordpress_id: 130
 categories:
 - Debugging
+tags:
+- tool
+
 ---
 
 没事在家翻代码，发现大半年前的一份代码，写的是一个调用DIA SDK查看PDB文件的小工具。仔细想想我觉得还有点用处，而且使用方式简单，所以现在就发到blog上来吧。

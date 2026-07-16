@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: '2021 summary'
 title: 2021小结
 date: 2022-01-01 07:15:55
 categories:
 - Tips
+tags:
+- 总结
+
 ---
 
 这是一篇想到哪写到哪的流水账，和技术无关和工作无关，就是想写点东西。

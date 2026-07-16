@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: '2018 plan'
 title: 鸡年总结，狗年计划
 date: 2018-02-25 21:00:28
 categories:
 - Tips
+tags:
+- 总结
+
 ---
 
 虽然没到十五，但是这个年基本上也是过完了。是收心总结鸡年，展望狗年的时候了。

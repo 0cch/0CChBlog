@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'use std::string_view to improve string processing performance'
 title: 使用std::string_view提升字符串处理性能
 date: 2020-09-25 14:27:45
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 C++标准库提供了一个非常优秀的字符串处理类`std::string`，我们可以通过该类完成各种字符串操作。但是`std::string`有一个缺点，它的很多操作都是针对字符串实体，存在不必要的内存拷贝的代码，导致字符串的处理性能不尽如人意。针对这种情况C++17标准引入了`std::string_view`这个类，该类不会直接作用在字符串实体上，而是记录字符串处理的位置，这样就可以保证用最小的代价对字符串进行处理。

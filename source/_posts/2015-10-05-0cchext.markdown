@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2015-10-05 18:56:46+00:00
 layout: post
 slug: '0cchext'
 title: Windbg插件0cchext
 categories:
-- debugging
+- Debugging
+tags:
+- windbg
+
 ---
 
 [0cchext.dll](https://github.com/0cch/0cchext)是我一直在开发和维护的一个Windbg扩展程序。扩展程序中包含了一些或者有趣，或者实用，或者纯个人偏好的功能。这篇文章就来介绍一些主要的功能：

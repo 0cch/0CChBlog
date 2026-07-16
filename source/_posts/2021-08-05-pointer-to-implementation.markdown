@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'Pointer to implementation'
 title: 指向实现的指针Pointer to implementation
 date: 2021-08-05 21:25:52
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 写这篇文章缘于我的一个朋友的故事：

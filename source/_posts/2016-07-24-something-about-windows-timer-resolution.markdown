@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-07-24 11:27:25+00:00
 layout: post
 slug: 'something-about-windows-timer-resolution'
 title: 关于Windows Timer精确度
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 Windows Timer相比大家都用过，WM_TIMER, WM_SYSTIMER, Waitable Timer, Multimedia Timer, Timer Queue Timer，这么多种Timer，给我们变成提供了很大的方便，有窗口无窗口都能自如选择。所以尽量也不要自己再造轮子，用什么Sleep来写Timer。这种“自定义”的Timer肯定是没有由系统内核DPC触发的Timer效率高的。

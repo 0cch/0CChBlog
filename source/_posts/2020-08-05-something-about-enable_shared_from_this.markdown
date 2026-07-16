@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'something about enable_shared_from_this'
 title: std::enable_shared_from_this原理浅析
 date: 2020-08-05 17:54:11
 categories:
-- CPP
+- C++
+tags:
+- std
+
 ---
 
 在解释`std::enable_shared_from_this`之前，先看一个`std::shared_ptr`典型用法：

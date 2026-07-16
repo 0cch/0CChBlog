@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-12-13 10:36:42+00:00
 layout: post
 slug: 'int29h'
 title: 快速抛出失败的方法 INT 29H
 categories:
 - Debugging
+tags:
+- misc
+
 ---
 
 从Windows8开始，Windows设计了一个新的中断，INT 29H，用来快速的抛出失败。在sdk中，他被声明为 __fastfail:

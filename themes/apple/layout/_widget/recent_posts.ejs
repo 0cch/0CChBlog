@@ -1,0 +1,8 @@
+<div class="widget widget-recent">
+  <h3 class="widget-title">Recent Posts</h3>
+  <ul class="widget-list">
+    <% site.posts.sort('-date').limit(8).each(function(post){ %>
+      <li><a href="<%- url_for(post.path) %>"><%= post.title %></a></li>
+    <% }) %>
+  </ul>
+</div>

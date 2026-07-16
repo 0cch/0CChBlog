@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'printer api tip'
 title: 打印机API相关的一点记录
 date: 2019-09-03 20:01:29
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 最近研究了一点Windows上打印相关的内容，发现打印这块的东西的确挺多的。比如纸张，分辨率，打印处理器，打印数据类型等等。

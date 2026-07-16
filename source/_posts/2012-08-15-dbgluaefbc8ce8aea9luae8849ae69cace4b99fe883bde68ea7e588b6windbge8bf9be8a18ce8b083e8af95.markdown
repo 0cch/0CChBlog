@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2012-08-15 17:09:50+00:00
 layout: post
 slug: dbglua%ef%bc%8c%e8%ae%a9lua%e8%84%9a%e6%9c%ac%e4%b9%9f%e8%83%bd%e6%8e%a7%e5%88%b6windbg%e8%bf%9b%e8%a1%8c%e8%b0%83%e8%af%95
@@ -8,6 +7,11 @@ title: dbgLua，让lua脚本也能控制windbg进行调试(更新1.0.1.1)
 wordpress_id: 88
 categories:
 - Debugging
+tags:
+- windbg
+- lua
+- debug
+
 ---
 
 关于dbgLua：  

@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'yampl seq and iterator part2'
 title: 序列和迭代器(2)
 date: 2020-05-20 17:20:11
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 ## list序列

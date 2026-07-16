@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2011-10-30 09:03:12+00:00
 layout: post
 slug: volume-snapshot

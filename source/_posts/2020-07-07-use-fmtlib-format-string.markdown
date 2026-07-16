@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'use fmtlib format string'
 title: 使用fmtlib格式化字符串
 date: 2020-07-07 12:21:13
 categories:
-- CPP
+- C++
+tags:
+- filesystem
+
 ---
 
 在C++中格式化字符串的方法一直是一个备受争议的话题，无论是`printf`系列函数还是Stream IO都有各自的优缺点。本篇文章直接略过这两种方法，将目光放到fmtlib这个第三方库中，虽然是第三方库，但是C++20标准会引入该库的一部分特性。

@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-04-19 06:29:04+00:00
 layout: post
 slug: '%e8%ae%b0vc6%e4%b8%adstl%e7%9a%84map%e7%9a%84%e4%b8%80%e5%a4%84bug'
@@ -9,6 +8,9 @@ wordpress_id: 222
 categories:
 - Debugging
 - Tips
+tags:
+- cpp
+
 ---
 
 今天和同事一起调了一个vc6.0中stl的map的一个bug。

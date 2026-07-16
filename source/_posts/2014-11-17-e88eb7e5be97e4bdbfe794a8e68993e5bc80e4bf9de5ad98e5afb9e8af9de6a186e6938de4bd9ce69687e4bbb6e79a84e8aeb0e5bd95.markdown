@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-11-17 15:32:46+00:00
 layout: post
 slug: '%e8%8e%b7%e5%be%97%e4%bd%bf%e7%94%a8%e6%89%93%e5%bc%80%e4%bf%9d%e5%ad%98%e5%af%b9%e8%af%9d%e6%a1%86%e6%93%8d%e4%bd%9c%e6%96%87%e4%bb%b6%e7%9a%84%e8%ae%b0%e5%bd%95'
@@ -8,6 +7,9 @@ title: 获得使用打开保存对话框操作文件的记录
 wordpress_id: 491
 categories:
 - Tips
+tags:
+- filesystem
+
 ---
 
 今天无意中看到了HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU这个键值的用途，虽然感觉没啥实际用途，但是也挺有趣的，于是写了个小程序读取它。这个键值的意义非常明确，就是记录打开保存对话框的最近操作的文件的PIDL。所以我们可以通过PIDL来获得文件路径，就这么简单，确实没啥特别的实际用途吧，就当娱乐了。枚举的效果如下：

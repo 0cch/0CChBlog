@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2015-05-18 12:30:35+00:00
 layout: post
 slug: windows-8-spellchecking-api
@@ -8,6 +7,9 @@ title: Windows 8 SpellChecking API
 wordpress_id: 558
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 在Windows 8下，多了一套很有趣的API，SpellChecking，这套API的作用也是一目了然，是做拼写检查的。这么有趣的一套API怎么能不写个程序玩玩呢，于是我写了个小程序，看了看对英文拼写检查的效果，如图。

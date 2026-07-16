@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-07-19 16:58:51+00:00
 layout: post
 slug: '%e5%85%b3%e4%ba%8ejsoncpp%e7%9a%84%e4%b8%ad%e6%96%87%e7%bc%96%e7%a0%81%e9%97%ae%e9%a2%98'
@@ -8,6 +7,9 @@ title: 关于JsonCpp的中文编码问题
 wordpress_id: 283
 categories:
 - Tips
+tags:
+- cpp
+
 ---
 
 最近工作中用到了jsoncpp来解析json文件。但是遇到了一个这样的问题，如果json代码中有中文，并且用“\u594E\u6258\u65AF”这样的方式表示，那么jsoncpp解析的时候，就会把他转换成UTF-8。到这一步还是OK的，然后我就试图把这段中文写回文件，问题就来了，jsoncpp不会把中文转换为“\u594E\u6258\u65AF”这样的形式在存储，而是直接存储为UTF-8格式的文件。如图所示：

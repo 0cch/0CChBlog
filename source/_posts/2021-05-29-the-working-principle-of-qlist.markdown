@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'the working principle of qlist'
 title: QList 的工作原理和运行效率浅析
 date: 2021-05-29 17:34:16
 categories:
-- CPP
+- C++
+tags:
+- qt
+
 ---
 
 我们知道Qt为了在一些没有STL的环境中运作，开发了一套相对完整的容器。大部分Qt的容器我们都能够招到对应STL容器，例如`QVector`对应`std::vector`, `QMap`对应`std::map`，不过这其中也有一些特例，例如`QList`在STL中就没有应该的容器，`std::list`对应的Qt容器实际上是`QLinkedList`。所以在使用`QList`的时候请务必弄清楚这一点，否则可能会导致程序的运行效率的低下，让我们先看一份代码：

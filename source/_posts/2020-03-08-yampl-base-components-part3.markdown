@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'yampl base components part3'
 title: YAMPL的基础组件(3)
 date: 2020-03-08 22:23:33
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 ## 逻辑运算符元函数

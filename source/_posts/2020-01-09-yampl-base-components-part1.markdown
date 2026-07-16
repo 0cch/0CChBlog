@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'yampl base components part1'
 title: YAMPL的基础组件(1)
 date: 2020-01-09 12:15:47
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 从本篇开始，我们将开始进入轻量级C++模板元编程库YAMPL(Yet Another MPL)的编写环节。不过，在深入探索元编程的序列和算法之前，有一些基础工作必须完成，比如定义命名空间、定义整型常量包装类模板，编写包装类的算数和逻辑运算元函数、编写用于调试的类型打印元函数等等。在完成了这些基础组件后，序列和算法的编写工作将会变得非常高效和有趣。

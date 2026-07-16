@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-04-20 16:26:16+00:00
 layout: post
 slug: '%e4%b8%80%e4%b8%aa%e6%9f%a5%e6%89%be%e6%8c%87%e5%ae%9a%e6%a0%88%e5%9b%9e%e6%ba%af%e7%ac%a6%e5%8f%b7%e5%b9%b6%e6%89%a7%e8%a1%8c%e5%91%bd%e4%bb%a4%e7%9a%84windbg%e8%84%9a%e6%9c%ac'
@@ -8,6 +7,9 @@ title: 一个查找指定栈回溯符号并执行命令的Windbg脚本
 wordpress_id: 440
 categories:
 - Debugging
+tags:
+- windbg
+
 ---
 
 这是自己没事在家调试程序的一个小需求。

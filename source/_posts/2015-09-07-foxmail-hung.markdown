@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2015-09-07 23:06:45+00:00
 layout: post
 slug: 'foxmail-hung'
 title: Foxmail无法响应
 categories:
-- debugging
+- Debugging
+tags:
+- debug
+
 ---
 
 Foxmail是一款不错的邮件客户端软件，小巧实用，我在公司就是用的它。早上一如既往的先打开Foxmail，然后去倒杯水，回来发现Foxmail还在收取邮件的状态，“这也太慢了”，我心想。用鼠标点了点，出现了程序挂起的特征，标题栏上显示无法响应，程序界面变白。经验告诉我挂起的问题70%都还是比较容易调的，好吧，就让我看看这是怎么回事。

@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'virtual function calls in constructors'
 title: 关于构造函数中调用虚函数
 date: 2022-07-03 10:38:00
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 

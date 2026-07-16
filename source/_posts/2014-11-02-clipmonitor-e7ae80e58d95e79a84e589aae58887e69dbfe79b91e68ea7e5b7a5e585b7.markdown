@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-11-02 12:55:57+00:00
 layout: post
 slug: clipmonitor-%e7%ae%80%e5%8d%95%e7%9a%84%e5%89%aa%e5%88%87%e6%9d%bf%e7%9b%91%e6%8e%a7%e5%b7%a5%e5%85%b7
@@ -8,6 +7,9 @@ title: ClipMonitor 简单的剪切板监控工具
 wordpress_id: 479
 categories:
 - Tips
+tags:
+- tool
+
 ---
 
 周末花了点时间写了个剪切板监控工具，他会记录剪切板里面的数据，并且支持用HEX和TEXT对数据进行分析。

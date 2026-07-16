@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-04-13 15:34:49+00:00
 layout: post
 slug: windows-8-1%e4%b8%ad%e8%8e%b7%e5%be%97%e7%b3%bb%e7%bb%9f%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af%e7%9a%84%e6%96%b9%e6%b3%95
@@ -8,6 +7,9 @@ title: Windows 8.1中获得系统版本信息的方法
 wordpress_id: 433
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 在Windows 8.1之前的系统版本上，我们一直可以使用 [GetVersionEx](http://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx) 这个函数来获取当前系统的MajorVersion和MinorVersion。但是当Windows系统来到8.1时代，这个API似乎就不好用了。如果在Windows 8.1上调用这个函数，我们更有可能获得的版本号是Windows 8的版本6.2，而不是我们想要的6.3。在MSDN上提供了这样一段说明：

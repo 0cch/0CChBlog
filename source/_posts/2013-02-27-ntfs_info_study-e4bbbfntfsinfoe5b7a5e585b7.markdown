@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-02-27 16:00:25+00:00
 layout: post
 slug: ntfs_info_study-%e4%bb%bfntfsinfo%e5%b7%a5%e5%85%b7
@@ -8,6 +7,10 @@ title: ntfs_info_study —— 仿NtfsInfo工具
 wordpress_id: 169
 categories:
 - NTInternals
+tags:
+- ntfs
+- tool
+
 ---
 
 ntfs_info_study 这个工具可以显示ntfs卷的一些信息。主要也是学习NtfsInfo的功能，而仿造的一个小工具。ntfs_info_study能显示的信息包括卷大小，扇区数量，簇数量，扇区字节数，簇字节数，主文件表每条记录字节数以及主文件表的一些信息。当然它还可以显示部分NTFS系统文件的信息，例如：$Volume。

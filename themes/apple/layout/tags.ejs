@@ -1,0 +1,8 @@
+<div class="tag-index">
+  <h1 class="page-title">Tags</h1>
+  <div class="tag-cloud">
+    <% site.tags.sort('-length').each(function(tag){ %>
+      <a href="<%- url_for(tag.path) %>" class="tag-cloud-link" style="font-size: <%= 0.8 + tag.length * 0.1 > 1.6 ? 1.6 : 0.8 + tag.length * 0.1 %>em">#<%= tag.name %></a>
+    <% }) %>
+  </div>
+</div>

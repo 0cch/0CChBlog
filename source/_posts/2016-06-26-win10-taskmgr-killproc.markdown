@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-06-26 11:09:30+00:00
 layout: post
 slug: 'win10-taskmgr-killproc'
 title: Windows 10 任务管理器结束任务流程
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 从Win8开始，任务管理已经悄然发生变化了，这篇文章要说的就是结束任务这一个功能。以Win10的任务管理器为主来说明，没有了从窗口关闭进程的标签。取而代之的是一个区分前台和后台程序的进程树。通过这个界面结束进程也不再像以前一样调用User32的EndTask(https://msdn.microsoft.com/en-us/library/windows/desktop/ms633492(v=vs.85).aspx)，而是重新规划了一套逻辑。

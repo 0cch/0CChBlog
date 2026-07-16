@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'tokenlinkedtoken tip2'
 title: 关于TokenLinkedToken的一点记录2
 date: 2018-09-24 20:20:32
 categories:
 - Tips
+tags:
+- security
+
 ---
 
 ### 内核原理

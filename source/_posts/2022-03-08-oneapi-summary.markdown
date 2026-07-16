@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'oneapi summary'
 title: oneAPI 组件简介
 date: 2022-03-08 08:00:31
 categories:
 - Tips
+tags:
+- sycl
+
 ---
 
 在oneAPI的一系列的产品中，我首先要介绍的是DPC和它的编译器，因为这部分内容十分有趣。我们都知道，一个程序运行效率高低，跟语言本身和他的编译器是息息相关的，比如我们不能指望python的程序在算法和运行环境相同的情况下跑过C和C的程序。

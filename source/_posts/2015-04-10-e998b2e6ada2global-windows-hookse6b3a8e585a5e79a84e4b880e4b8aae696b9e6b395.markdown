@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2015-04-10 16:56:02+00:00
 layout: post
 slug: '%e9%98%b2%e6%ad%a2global-windows-hooks%e6%b3%a8%e5%85%a5%e7%9a%84%e4%b8%80%e4%b8%aa%e6%96%b9%e6%b3%95'
@@ -9,6 +8,9 @@ wordpress_id: 543
 categories:
 - NTInternals
 - Tips
+tags:
+- windows
+
 ---
 
 我们都知道SetWindowsHookEx可以设置全局钩子，让自己的dll注入到有窗口的进程中去。注入原理就不再赘述了，网上资料很多，简单看一下调用堆栈方便我们说明怎么去防注入。  

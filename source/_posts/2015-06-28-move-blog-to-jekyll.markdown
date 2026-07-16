@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2015-06-28 22:29:37+00:00
 layout: post
 slug: 'move-blog-to-jekyll'
 title: 将blog迁移到了jekyll
 categories:
 - Tips
+tags:
+- blog
+
 ---
 
 上周终于下定决心把blog从[wordpress](http://0cch.net)转到[jekyll](http://0cch.com)，不是因为wordpress臃肿，也不是因为jekyll的更加Geek，纯粹是因为穷。我一直都觉得wordpress是一个非常伟大的blog程序，虽然臃肿了点，但确实功能强大操作简单，对于我这种懒人和对前端代码完全不熟的程序员来说，wordpress确实是一个非常好的选择。但是问题就出在了webhost上，我使用的webhost刚刚买的时候是50多刀一年，之后每年涨价，今年续费看了下需要100刀左右，这个确实让我心中无数的羊驼奔腾了起来。于是就决定把blog搬离这个地方。

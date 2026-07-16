@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'How-does-the-debugger-match-the-symbol-file'
 title: 调试器是怎么匹配程序的符号文件的
 date: 2017-09-18 14:31:32
 categories:
 - Debugging
+tags:
+- debug
+
 ---
 
 微软的天才软件工程师们设计的PE（Portable Executable）文件数据结构有极强的扩展性和兼容性。我们关心的符号文件信息存储在PE结构中，一个叫做Debug Directory的节里。

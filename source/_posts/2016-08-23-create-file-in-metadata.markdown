@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-08-23 11:58:00+00:00
 layout: post
 slug: 'create-file-in-metadata'
 title: 在NTFS元文件目录里创建文件
 categories:
 - Tips
+tags:
+- ntfs
+
 ---
 
 说到Rootkit就不能提到他的文件隐藏，Rootkit隐藏文件的方式千奇百怪，这里说其中一个通过NTFS元文件目录无法被普通程序显示的特性隐藏文件的方法。

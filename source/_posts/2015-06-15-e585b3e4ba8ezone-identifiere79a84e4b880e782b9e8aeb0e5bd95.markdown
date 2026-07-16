@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2015-06-15 08:07:03+00:00
 layout: post
 slug: '%e5%85%b3%e4%ba%8ezone-identifier%e7%9a%84%e4%b8%80%e7%82%b9%e8%ae%b0%e5%bd%95'
@@ -9,6 +8,9 @@ wordpress_id: 562
 categories:
 - NTInternals
 - Tips
+tags:
+- os
+
 ---
 
 自从Windows XP SP2开始，微软对文件加入了Zone.Identifier的数据流，所以这个也不算什么新东西了，最近偶然有机会研究了下所以就记录了下来。

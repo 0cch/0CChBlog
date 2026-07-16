@@ -1,0 +1,15 @@
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-info">
+      <p>&copy; <%= date(Date.now(), 'YYYY') %> <%= config.author || config.title %>. All rights reserved.</p>
+      <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a></p>
+    </div>
+    <% if (theme.social){ %>
+    <div class="footer-social">
+      <% for (var name in theme.social){ %>
+        <a href="<%- theme.social[name] %>" target="_blank" rel="noopener" class="social-link"><%= name %></a>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+</footer>

@@ -1,11 +1,13 @@
 ---
 author: cradiator
-comments: true
 date: 2011-06-10 02:17:00+00:00
 layout: post
 slug: reactos-freeldr%e7%a3%81%e7%9b%98%e5%8f%8a%e6%96%87%e4%bb%b6%e7%ae%a1%e7%90%862
 title: ReactOS-Freeldr磁盘及文件管理2
 wordpress_id: 46
+tags:
+- reactos
+
 ---
 
   

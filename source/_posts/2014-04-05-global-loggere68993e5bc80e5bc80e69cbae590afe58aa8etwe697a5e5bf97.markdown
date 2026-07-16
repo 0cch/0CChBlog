@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-04-05 02:49:44+00:00
 layout: post
 slug: global-logger%e6%89%93%e5%bc%80%e5%bc%80%e6%9c%ba%e5%90%af%e5%8a%a8etw%e6%97%a5%e5%bf%97
@@ -8,6 +7,9 @@ title: Global Logger打开开机启动ETW日志
 wordpress_id: 422
 categories:
 - Tips
+tags:
+- etw
+
 ---
 
 在我看来XP确实应该寿终正寝了，因为确实在很多机制方面不如新的系统，比如ETW。而微软的XPERF也没有能在XP上直接安装的。当然，老版本的XPERF还能在XP上运行，只是监控能力有限，到了新版本的XPERF，在XP上就运行不了了。但是，XP却在中国还活的好好的，所以优化其性能必不可少。于是，在没有XPERF支持的情况下，要做到开启ETW日志，我们就需要微软提供的Global Logger机制，打开开机启动的Trace Session。

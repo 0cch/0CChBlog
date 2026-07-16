@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: '0cchext plugin update 1.0.19.1'
 title: 0cchext插件更新 1.0.19.1
 date: 2018-11-26 22:05:21
 categories:
 - Tips
+tags:
+- windbg
+
 ---
 
 最近把windbg插件0cchext升级到1.0.19.1，完善了autocmd命令，并且增加了accessmask，oledata和cppexcr命令。

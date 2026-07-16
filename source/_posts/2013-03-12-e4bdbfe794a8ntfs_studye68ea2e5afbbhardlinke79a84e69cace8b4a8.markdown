@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-03-12 13:26:45+00:00
 layout: post
 slug: '%e4%bd%bf%e7%94%a8ntfs_study%e6%8e%a2%e5%af%bbhardlink%e7%9a%84%e6%9c%ac%e8%b4%a8'
@@ -8,6 +7,9 @@ title: 使用ntfs_study探寻hardlink的本质
 wordpress_id: 179
 categories:
 - NTInternals
+tags:
+- ntfs
+
 ---
 
 在推出[ntfs_study的博文](http://0cch.net/wordpress/?p=117)中，我谈到过要用一些例子来简单介绍这个工具的用法，本文就算是这个工具的使用介绍以及hardlink在ntfs文件系统底层的简单探讨。

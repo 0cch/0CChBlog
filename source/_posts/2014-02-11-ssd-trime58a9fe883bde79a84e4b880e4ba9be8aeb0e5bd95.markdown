@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-02-11 15:39:35+00:00
 layout: post
 slug: ssd-trim%e5%8a%9f%e8%83%bd%e7%9a%84%e4%b8%80%e4%ba%9b%e8%ae%b0%e5%bd%95
@@ -8,6 +7,9 @@ title: SSD TRIM功能的一些记录
 wordpress_id: 404
 categories:
 - Tips
+tags:
+- ssd
+
 ---
 
 如今SSD越来越普及了，本来就想了解下关于SSD的一些情况，正好工作中有机会接触这一块的东西，很幸运。这里先记录一些已知知识，方便以后自己查阅。

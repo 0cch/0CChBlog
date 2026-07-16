@@ -1,0 +1,16 @@
+<%- js('js/main') %>
+<% if (theme.search){ %>
+<%- js('js/search') %>
+<script>
+  var SEARCH_URL = '<%- url_for("/search.xml") %>';
+</script>
+<% } %>
+<% if (theme.math && page.math !== false){ %>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+<% } %>

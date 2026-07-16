@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2015-08-27 12:04:23+00:00
 layout: post
 slug: '3-interesting-API'
 title: 介绍三个有趣的API
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 ####PickIconDlg

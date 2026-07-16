@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-05-17 16:16:56+00:00
 layout: post
 slug: 'win8-shell-long-filename'
 title: Windows 8 Shell API对于长路径文件名的支持
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 在Windows 8之前，Shell API对于长路径的文件名的支持并不理想。比如PathAppend这个函数，函数规定pszPath，也就是第一个参数，它的buffer大小必须要能够容纳MAX_PATH个字符。第二个参数pszMore也不能超过MAX_PATH的长度。这样的API不仅不能满足我们对长文件路径需求，同时也可能让我们的软件由于字符串检查不严格出现严重BUG和漏洞。

@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-01-18 02:19:28+00:00
 layout: post
 slug: '%e4%b8%80%e7%82%b9%e6%9c%89%e5%85%b3ntdll%e4%b8%ad%e6%8f%90%e4%be%9b%e7%9a%84bitmap%e7%b3%bb%e5%88%97%e5%87%bd%e6%95%b0'
@@ -8,6 +7,9 @@ title: 一点有关Ntdll中提供的bitmap系列函数
 wordpress_id: 399
 categories:
 - Tips
+tags:
+- ntinternals
+
 ---
 
 我们都知道STL中提供了一个bitset类，但是在我真正操作有关文件系统的时候，发现这个类提供的功能并不能满足我的需求。幸运的是Ntdll中提供了一套操作bitmap的API。于是我抽了点时间把这几个API总结了一下，写成了一个类。这个类只是简单的对Ntdll的bitmap相关API做很浅的封装，没啥好说的。要说的是这套bitmap的API用起来确实很方便。

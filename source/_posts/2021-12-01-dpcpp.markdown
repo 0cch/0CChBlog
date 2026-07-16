@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'dpc++ with moderncpp'
 title: DPC++中的现代C++语言特性
 date: 2021-12-01 08:24:18
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 # Ⅰ DPC++简介

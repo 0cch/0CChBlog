@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'metaprogramming metafunction part1'
 title: 元函数和序列(1)
 date: 2019-11-11 22:18:37
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 元函数简单来说就是一种可以在编译期调用的函数，它操作的对象一定是编译期可以确定的，比如类型和常量。元函数也是模板元编程中最基础的组成部分，甚至代码中的选择和循环等控制流都是由元函数来完成。而序列则进一步释放了元函数的威力，我们可以通过元函数为序列提供丰富的算法以解决各种实际问题。

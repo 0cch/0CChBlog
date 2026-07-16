@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-07-18 03:17:48+00:00
 layout: post
 slug: '%e4%bd%bf%e7%94%a8atltrace%e6%89%93%e9%80%a0%e8%bd%bb%e9%87%8f%e7%ba%a7debug-log'
@@ -9,6 +8,9 @@ wordpress_id: 457
 categories:
 - Debugging
 - Tips
+tags:
+- debug
+
 ---
 
 众所周知，Debug Log是非常好的调试手段。所以我经常也尝试各种各样的第三方Log库。Log库分很多类型，例如可以给服务器使用的功能完备Log，也有轻量级的Log库，只是为Debug所设计。作为客户端开发，我还是比较喜欢后者这种Log库。不过使用第三方库有一个这样的麻烦事，走到哪你都得下一个，然后添加到自己的代码里。对于Log这样的功能，几乎所有程序都是需要的，使用的极其频繁。所以我就想找到一种方法，它可以使用SDK现有功能，来完成一个轻量级Log的功能。对我来说，不需要这个Log有多么高效，完备，唯一需要的就是方便，拿来就可以用。

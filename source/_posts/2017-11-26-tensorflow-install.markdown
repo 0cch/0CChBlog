@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'tensorflow-install'
 title: TensorFlow pip安装（非GPU版）
 date: 2017-11-26 17:11:10
 categories:
-- DeepLearner
+- DeepLearning
+tags:
+- tensorflow
+
 ---
 
 TensorFlow安装有很多种方法，其中用dock安装是最方便的方式，源代码编译是最麻烦但是最能切合自己机器CPU的方法，当然了，你也可以用Anacaonda安装（一个科学计算的工具合集，以后有机会再介绍）。不过这次，我将介绍使用pip安装的方法。我个人认为这种方法其实是众多方法中最简单方便的方法了（系统基于ubuntu 16.04）。

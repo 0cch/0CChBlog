@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-07-05 17:40:28+00:00
 layout: post
 slug: '%e8%b0%83%e8%af%95%e6%8c%82%e6%ad%bb%e7%9a%84explorer'
@@ -8,6 +7,9 @@ title: 调试挂死的Explorer
 wordpress_id: 279
 categories:
 - Debugging
+tags:
+- debug
+
 ---
 
 一个同事前几天告诉我说，他的explorer.exe总是挂死，不知道是什么情况导致的。于是我让他下次挂死的时候抓个dump我。抓Dump的工具很多，例如用Win7的TaskMgr，sysinternals的Procexp，或者Windbg本身。不过考虑到explorer挂死了，操作桌面起来不方便，所以最好选择能够自动检测挂死并且抓住dump的工具。这里比较推荐的是sysinternals的Procdump以及我开发的[proc_dump_study](http://0cch.net/wordpress/?p=208)（带UI）。

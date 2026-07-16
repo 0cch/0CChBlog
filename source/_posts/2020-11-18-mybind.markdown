@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'mybind'
 title: 实现一个类似std::bind的功能
 date: 2020-11-18 17:38:46
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 前两天有朋友问我`std::bind`是如何实现的，对照STL讲述原理后朋友表示还是很难理解，这可以理解，因为STL涉及到的东西太多，很难清晰的将核心部分显式出来。为了解释清楚这个问题，我自己实现了一个bind功能。当然了，比`std::bind`要简单非常非常多，缺少很多有用的特性，但是也能展示bind的核心原理了。

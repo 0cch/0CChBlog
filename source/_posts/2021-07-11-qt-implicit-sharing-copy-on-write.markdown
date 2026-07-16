@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'Qt Implicit Sharing and Copy-On-Write'
 title: Qt的隐式共享和写时拷贝
 date: 2021-07-11 18:18:12
 categories:
-- CPP
+- C++
+tags:
+- qt
+
 ---
 
 不得不说Qt为了提高代码的运行效率做了很多伟大的工作，引入隐式共享和写时拷贝技术就是其中之一。该技术十分值得我们学习，一方面是因为它也可以运用到我们的代码中提高代码的运行效率，另一方面我们在理解其原理之后才能够更加高效的使用Qt。

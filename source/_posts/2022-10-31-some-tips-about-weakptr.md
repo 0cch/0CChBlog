@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'some tips about weak_ptr'
 title: 关于std::weak_ptr使用的理解
 date: 2022-10-31 01:05:30
 categories:
 - C++
+tags:
+- cpp
+
 ---
 
 周末时候和朋友聊了一下C++的智能指针，突然发现虽然智能指针进入C++11标准库已经有十多年了，但是我们对部分细节的理解还是比较局限，以`std::weak_ptr`为例，很多人的理解只是停留在避免`std::shared_ptr`出现相互引用，导致对象无法析构，内存无法释放的问题。  

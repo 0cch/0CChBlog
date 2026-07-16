@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'qt event windbg script'
 title: windbg监听QT事件
 date: 2019-05-29 14:18:58
 categories:
 - Tips
+tags:
+- windbg
+- qt
+
 ---
 
 Windows平台下做过界面开发的程序员肯定知道窗口界面是由消息驱动的。为了能方便的调试窗口消息循环，Windows提供了spy++这样的工具帮助我们监控消息。但是Windows的消息在QT的程序上可能只有部分有用。所以我们还需要一个监控QT窗口事件的工具，不过可惜的是我并没有找到这样现成的工具。于是我用Windbg的断点命令写了一个。

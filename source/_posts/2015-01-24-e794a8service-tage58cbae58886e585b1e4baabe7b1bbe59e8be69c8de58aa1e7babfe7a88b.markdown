@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2015-01-24 14:29:31+00:00
 layout: post
 slug: '%e7%94%a8service-tag%e5%8c%ba%e5%88%86%e5%85%b1%e4%ba%ab%e7%b1%bb%e5%9e%8b%e6%9c%8d%e5%8a%a1%e7%ba%bf%e7%a8%8b'
@@ -9,6 +8,9 @@ wordpress_id: 513
 categories:
 - Debugging
 - Tips
+tags:
+- windows
+
 ---
 
 Windows中有一种共享类型的服务，这种服务的特点是，他们可能同时有多个不同服务运行在同一个进程内。这些服务通常都是一些dll，他们被加载到宿主进程内运行，这个宿主进程我们见到最多的就是svchost了，如下图所示：

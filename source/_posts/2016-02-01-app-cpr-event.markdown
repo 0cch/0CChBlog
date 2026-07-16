@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-02-01 21:15:3+00:00
 layout: post
 slug: 'app-cpr-event'
 title: 调试器最早的中断应用程序的方法
 categories:
-- debugging
+- Debugging
+tags:
+- debug
+
 ---
 
 这篇Blog分享一个Windbg的小技巧，就是让被调试程序更早的中断到调试器。熟悉Windbg的朋友都知道，用调试器运行程序，默认情况下都会中断到ntdll!LdrpDoDebuggerBreak。但是有时候我们会想去调试程序加载的过程，这个时候就需要我们更早的中断下来。那么这里就用利用到调试器最早接受到的调试事件了。CREATE_PROCESS_DEBUG_EVENT，这个调试事件是创建进程的时候进程发给调试器的，在这个时候，你甚至连ntdll都没有完成加载，这也导致ntdll的符号无法加载，很多有用的功能用不上。但幸运的是，虽然ntdll没有完成加载，但是已经加载到了内存，另外我们可以用手动加载符号的方法，把符号文件加载到ntdll的内存上去。

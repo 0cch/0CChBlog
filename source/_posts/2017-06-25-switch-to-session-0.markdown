@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2017-06-25 21:48:24+00:00
 layout: post
 slug: 'switch-to-session-0'
 title: 切换到session 0
 categories:
 - Tips
+tags:
+- windows
+
 ---
 
 这是一个小技巧，可以帮助我们从session 1切换到session 0，并且获得system权限。有了system权限，可以做一些admin做不了的事情，具体哪些事情大伙可以自己挖掘。

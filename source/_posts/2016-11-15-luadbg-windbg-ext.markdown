@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 date: 2016-11-15 10:50:37+00:00
 layout: post
 slug: 'luadbg-windbg-ext'
 title: windbg的lua脚本扩展luadbg
 categories:
 - Debugging
+tags:
+- windbg
+- lua
+
 ---
 
 2012年的时候，我在blog上写到过开发了一个windbg的lua扩展[dbglua](/debugging/2012/08/16/dbglua-ef-bc-8c-e8-ae-a9lua-e8-84-9a-e6-9c-ac-e4-b9-9f-e8-83-bd-e6-8e-a7-e5-88-b6windbg-e8-bf-9b-e8-a1-8c-e8-b0-83-e8-af-95.html)，当时觉得windbg的原生脚本语法太奇怪了，而且太不容易使用。现在来看，依旧如此，只不过我已经很熟悉这个原生脚本了。而这个lua扩展反倒是没什么用，因为用起来也不太方便，比如访问结构体。

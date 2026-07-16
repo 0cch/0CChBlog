@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-06-12 17:55:03+00:00
 layout: post
 slug: etwlogview-%e5%ae%9e%e6%97%b6%e6%9f%a5%e7%9c%8betw%e7%9a%84%e5%b7%a5%e5%85%b7
@@ -8,6 +7,10 @@ title: EtwLogView —— 实时查看ETW的工具
 wordpress_id: 265
 categories:
 - Debugging
+tags:
+- etw
+- tool
+
 ---
 
 最近玩XPerf玩的比较多，也经常和cradiator([blog](http://sysdbg.com))讨论xperf和etw的话题。上周吃饭的时候就讨论到，貌似没找到一款实时记录查看etw的工具。当时我的观点是，只是看etw的原始记录很难分析出什么东西，必须配合很细工具，例如xperfview。这样才能有效的发挥出etw的威力，所以实时工具用处不大。而cradiator认为，除了这些常规的用法外，如果能实时记录查看etw的信息，那么把etw当作平时的log输出方式也是不错的选择。这样的好处就是，不需要额外的加入log机制，使用etw就足够强大，其次如果遇上了问题，这些etw的记录又可以作为event，帮助xperfview的分析。然后这家伙就怂恿我写一个:-)

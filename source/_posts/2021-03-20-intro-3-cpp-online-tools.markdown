@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'intro 3 cpp online tools'
 title: C++在线工具
 date: 2021-03-20 16:15:53
 categories:
-- CPP
+- C++
+tags:
+- cpp
+- tool
+
 ---
 
 这篇博客打算介绍4个C++在线工具，当手头没有设备或者没有开发环境的时候可以用它们做一些研究性质的工作。

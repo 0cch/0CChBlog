@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2011-08-28 09:20:09+00:00
 layout: post
 slug: '%e4%b8%80%e4%bb%bd%e7%ae%80%e9%99%8b%e7%9a%84ntfs-parse%e4%bb%a3%e7%a0%81'

@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'metaprogramming metafunction part2'
 title: 元函数和序列(2)
 date: 2019-12-12 21:54:26
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 接着上一篇的话题

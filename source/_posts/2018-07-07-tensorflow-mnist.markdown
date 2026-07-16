@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'tensorflow mnist'
 title: tensorflow入门 —— mnist
 date: 2018-07-07 15:07:41
 categories:
-- machinelearning
+- MachineLearning
+tags:
+- tensorflow
+
 ---
 
 自从有tensorflow这样的平台工具横空出世，机器学习的代码编写逐渐变的平民化了。我们不需要太多的数学理论知识就能够完成一些机器学习的项目。比如在使用tensorflow的时候，我们只需要定义好损失函数，tensorflow会自动的帮我们完成反向传播改善参数。我们所需要做的就是合理利用tensorflow创建模型。

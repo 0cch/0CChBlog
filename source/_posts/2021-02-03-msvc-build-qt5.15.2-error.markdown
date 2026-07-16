@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'msvc build qt5.15.2 error'
 title: 解决vs2019编译qt5.15.2的错误
 date: 2021-02-03 11:37:28
 categories:
-- CPP
+- C++
+tags:
+- qt
+
 ---
 
 记录一下编译qt-everywhere-src-5.15.2中qtwebengine遇到的问题。

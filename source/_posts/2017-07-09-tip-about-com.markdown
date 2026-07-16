@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 date: 2017-07-09 11:28:15+00:00
 layout: post
 slug: 'tip-about-com'
 title: 调试COM的一个tip
 categories:
 - Tips
+tags:
+- debug
+- com
+
 ---
 
 最近遇到朋友的一个程序崩溃，原因是接口没有释放的时候调用了CoUninitialize，接着才释放接口。这个应该是个很明显的问题，但是朋友告诉我以前代码就是这个样子的，没有崩溃过，最近修改了部分代码但并不是这一块的。为了看看究竟什么回事，我把没有崩溃的程序抓了dump，看了COM的初始化引用计数：

@@ -1,0 +1,6 @@
+<% if (post.toc !== false){ var toc_list = toc(post.content, {list_number: false}); %>
+<% if (toc_list){ %>
+<div class="toc-title">Contents</div>
+<%- toc_list %>
+<% } %>
+<% } %>

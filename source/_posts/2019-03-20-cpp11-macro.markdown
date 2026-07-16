@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'cpp11 macro'
 title: C++11新增预定义的宏
 date: 2019-03-20 21:39:56
 categories:
 - Tips
+tags:
+- cpp
+
 ---
 C++11中新增了4个预定义的宏，他们分别为`__STDC__`，`__STDC_HOSTED__`，`__STDC_VERSION__`和`__STDC_ISO_10646__`。
 

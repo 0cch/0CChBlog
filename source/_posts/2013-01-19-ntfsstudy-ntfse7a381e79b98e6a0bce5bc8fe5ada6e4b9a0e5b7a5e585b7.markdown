@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-01-19 07:52:28+00:00
 layout: post
 slug: ntfsstudy-ntfs%e7%a3%81%e7%9b%98%e6%a0%bc%e5%bc%8f%e5%ad%a6%e4%b9%a0%e5%b7%a5%e5%85%b7
@@ -8,6 +7,10 @@ title: NtfsStudy —— ntfs磁盘格式学习工具
 wordpress_id: 117
 categories:
 - NTInternals
+tags:
+- ntfs
+- tool
+
 ---
 
 经过将近一个月业余时间的开发，终于完成了NtfsStudy这个小工具的第一版。

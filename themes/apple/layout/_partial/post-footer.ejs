@@ -1,0 +1,16 @@
+<footer class="post-footer">
+  <nav class="post-nav">
+    <% if (post.prev){ %>
+      <a class="post-nav-prev" href="<%- url_for(post.prev.path) %>">
+        <span class="post-nav-label">&larr; Previous</span>
+        <span class="post-nav-title"><%= post.prev.title %></span>
+      </a>
+    <% } %>
+    <% if (post.next){ %>
+      <a class="post-nav-next" href="<%- url_for(post.next.path) %>">
+        <span class="post-nav-label">Next &rarr;</span>
+        <span class="post-nav-title"><%= post.next.title %></span>
+      </a>
+    <% } %>
+  </nav>
+</footer>

@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-09-28 05:48:02+00:00
 layout: post
 slug: '%e8%a7%a3%e6%9e%90youku%e8%a7%86%e9%a2%91%e5%9c%b0%e5%9d%80%e7%9a%84python%e8%84%9a%e6%9c%ac'
@@ -8,6 +7,9 @@ title: 解析youku视频地址的python脚本
 wordpress_id: 359
 categories:
 - Tips
+tags:
+- python
+
 ---
 
 几个月前写的东西，偶然翻出来发现还能用，就贴出来吧。非专业python程序员，代码比较乱 :-(

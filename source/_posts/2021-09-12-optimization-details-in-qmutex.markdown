@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'Optimization details in QMutex'
 title: QMutex中的优化小细节
 date: 2021-09-12 19:46:53
 categories:
-- CPP
+- C++
+tags:
+- qt
+
 ---
 
 在这篇文章中，我们要讨论的并不是`QMutex`的原理或者是应该如何使用，而是`QMutex`中一个很少被提到的优化细节。

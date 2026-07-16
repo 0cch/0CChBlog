@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-02-23 00:55:58+00:00
 layout: post
 slug: 'delay-load-error'
 title: c06d007f异常的解决方法
 categories:
-- debugging
+- Debugging
+tags:
+- debug
+
 ---
 
 c06d007f这个异常通常是在PE的延迟加载dll的时候发生的，加载器找不到对应的dll就会抛出这个异常。如果我们对这个异常不熟悉，按照常规方式去找上下文，那么结果肯定会让你失望。例如3.2526.1373.0版本的libcef在XP上运行的情况。

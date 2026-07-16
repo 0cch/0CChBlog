@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2017-05-02 11:33:24+00:00
 layout: post
 slug: '0cchext-dttoc-command'
 title: 0cchext插件实用命令dttoc
 categories:
 - Debugging
+tags:
+- windbg
+
 ---
 
 最近给[0cchext](https://github.com/0cch/0cchext/releases/tag/1.0.16.3.55)添加了一个实用的逆向命令，dttoc，这个命令可以把dt命令输出的结构体转化为C的结构，方便我们做逆向还原工作。

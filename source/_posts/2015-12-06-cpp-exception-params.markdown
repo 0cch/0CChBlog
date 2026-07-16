@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2015-12-06 21:57:50+00:00
 layout: post
 slug: 'cpp-exception-params'
 title: C++异常的参数分析(0xE06D7363)
 categories:
-- debugging
+- Debugging
+tags:
+- cpp
+
 ---
 
 Visual C++ 的编译器用0xE06D7363表示C++异常。 0xE06D7363表示的意思就是.msc。  

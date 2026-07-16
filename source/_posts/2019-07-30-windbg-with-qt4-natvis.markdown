@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'windbg with qt4.natvis'
 title: windbg使用qt4.natvis
 date: 2019-07-30 18:59:11
 categories:
 - Tips
+tags:
+- windbg
+- qt
+
 ---
 
 用windbg调试QT程序或者分析QT程序的dump是一件痛苦的事情，因为windbg缺少对QT基础数据的展示能力，比如：

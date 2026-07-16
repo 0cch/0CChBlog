@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'module ext'
 title: 补编-模块(C++20)
 date: 2021-11-02 13:24:45
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 >声明：这是一篇对《现代C++语言核心特性解析》中模块小节的补充，因为在我写模块的时间点实验环境并不理想，所以写的比较简单，也有读者提出了疑问，所以这里写一篇补充文来展示C++20中模块这个新特性。

@@ -1,0 +1,46 @@
+# Apple-style theme configuration
+
+# Navigation
+menu:
+  Home: /
+  Archives: /archives/
+  Categories: /categories/
+  Tags: /tags/
+  About: /about/
+
+# Site brand
+brand: 0CCh
+subtitle: Blog
+
+# Search
+search: true
+
+# Table of Contents
+toc: true
+
+# Dark mode
+dark_mode: true
+
+# Math rendering (MathJax 3)
+math: true
+
+# Sidebar widgets
+widgets:
+  - category
+  - tag
+  - recent_posts
+  - archive
+
+# Social links
+social:
+  GitHub: https://github.com/0cch
+
+# Post settings
+excerpt: true
+excerpt_length: 200
+date_format: YYYY-MM-DD
+
+# Misc
+favicon: /favicon.ico
+rss: /atom.xml
+google_analytics:

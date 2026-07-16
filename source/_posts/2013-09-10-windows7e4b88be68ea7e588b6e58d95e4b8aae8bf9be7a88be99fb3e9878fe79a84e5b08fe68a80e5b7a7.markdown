@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-09-10 12:05:47+00:00
 layout: post
 slug: windows7%e4%b8%8b%e6%8e%a7%e5%88%b6%e5%8d%95%e4%b8%aa%e8%bf%9b%e7%a8%8b%e9%9f%b3%e9%87%8f%e7%9a%84%e5%b0%8f%e6%8a%80%e5%b7%a7
@@ -8,6 +7,9 @@ title: Windows7下控制单个进程音量的小技巧
 wordpress_id: 334
 categories:
 - Tips
+tags:
+- process
+
 ---
 
 [![2013-09-10_200213](/uploads/2013/09/2013-09-10_200213.png)](/uploads/2013/09/2013-09-10_200213.png)

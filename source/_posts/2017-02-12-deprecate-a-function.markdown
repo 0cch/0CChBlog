@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2017-02-12 10:41:34+00:00
 layout: post
 slug: 'deprecate a function'
 title: 让编译器不推荐(deprecate)使用一个函数
 categories:
 - Tips
+tags:
+- cpp
+
 ---
 
 在开发一些公共库函数的时候，我们常常会对函数进行改写，这个时候我们会希望使用者用新的函数。为了提醒使用者，我们可以通过将函数声明为deprecated，这样编译器在编译的时候会抛出一个C4995或者C4996的警告。这个警告我们应该也经常看到过，比如使用strcpy，编译器会提示我们使用strcpy_s。  

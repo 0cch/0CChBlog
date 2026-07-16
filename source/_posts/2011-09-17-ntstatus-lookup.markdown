@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2011-09-17 14:39:26+00:00
 layout: post
 slug: ntstatus-lookup

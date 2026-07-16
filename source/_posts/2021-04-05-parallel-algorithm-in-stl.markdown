@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'parallel algorithm in STL'
 title: STL中并行算法
 date: 2021-04-05 11:04:49
 categories:
-- CPP
+- C++
+tags:
+- cpp
+- algorithm
+
 ---
 
 C++17标准的一个重大突破是让标准库中的部分算法支持了并行计算，这对于无处不在的多线程环境来说无疑是一个非常不错的消息。具体支持并行计算的算法可以参考提案文档[p0024r2](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0024r2.html#algorithms.parallel.overloads)。

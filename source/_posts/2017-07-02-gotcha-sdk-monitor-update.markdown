@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2017-07-02 15:56:54+00:00
 layout: post
 slug: 'gotcha-sdk-monitor-update'
 title: gotcha sdk 文件监控功能更新
 categories:
 - NTInternals
+tags:
+- gotcha
+
 ---
 
 在15年的一篇blog中，我介绍了gotcha sdk。{% post_link gotcha-sdk %}

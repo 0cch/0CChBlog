@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'use async with caution'
 title: 谨慎使用std::async
 date: 2022-05-02 20:09:08
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 `std::async`是C++11标准引入的函数模板，它用于异步执行某些任务，通常在单独的线程或者线程池中运行，它会返回一个`std::future`用于等待和获取异步执行的结果。

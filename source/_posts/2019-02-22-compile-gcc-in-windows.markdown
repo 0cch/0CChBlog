@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'compile gcc in windows'
 title: 在Windows中编译GCC
 date: 2019-02-22 19:00:12
 categories:
 - Tips
+tags:
+- gcc
+
 ---
 最近心血来潮想体验下C++2a的标准，但是mingw中的GCC最新版本是8.2。于是乎就产生了编译thunk下最新代码的想法。
 

@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'use std::span instead of array pointer to pass parameters'
 title: 使用std::span代替数组指针传参
 date: 2020-10-02 15:52:31
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 我们知道`std::string_view`可以创建`std::string`的一个视图，视图本身并不拥有实例，它只是保持视图映射的状态。在不修改实例的情况下，使用`std::string_view`会让字符串处理的性能大幅提升。实际上，对于那些连续的序列对象我们都可以创建这样一份视图，对于`std::vector`这样的对象可以提高某些操作中的性能，另外对原生数组可以提高其访问的安全性。

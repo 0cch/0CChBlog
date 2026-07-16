@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2014-03-01 15:06:06+00:00
 layout: post
 slug: '%e4%b8%80%e4%b8%aa%e6%9c%89%e6%84%8f%e6%80%9d%e7%9a%84warning-c4930'
@@ -8,6 +7,9 @@ title: 一个有意思的warning —— C4930
 wordpress_id: 413
 categories:
 - Tips
+tags:
+- cpp
+
 ---
 
 C4930是微软的C++编译器提示的一个警告，在维基百科中，把造成这种警告的语句描述成最让人为难的解析的语句。那么这里我们看看到底是有多么为难，这个可以帮助我们进一步了解C++和编译器。

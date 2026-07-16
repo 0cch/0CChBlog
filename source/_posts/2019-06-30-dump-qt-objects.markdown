@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'dump qt objects'
 title: Dump QT objects
 date: 2019-06-30 11:14:09
 categories:
 - Tips
+tags:
+- qt
+- memory
+
 ---
 
 在QT中，QObject有两个函数`dumpObjectInfo()`和`dumpObjectTree() `分别用于dump相关对象树形结构和相关的连接信息。不过这两个函数有个共同的问题，只能在debug模式下使用。因为在Release模式下，这两个函数不做任何事情：

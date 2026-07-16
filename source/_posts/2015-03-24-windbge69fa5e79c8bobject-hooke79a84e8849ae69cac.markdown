@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2015-03-24 02:08:18+00:00
 layout: post
 slug: windbg%e6%9f%a5%e7%9c%8bobject-hook%e7%9a%84%e8%84%9a%e6%9c%ac
@@ -8,6 +7,9 @@ title: Windbg查看Object Hook的脚本
 wordpress_id: 534
 categories:
 - Tips
+tags:
+- windbg
+
 ---
 
 学好Windbg，基本上可以代替很多工具，这次分享一个查看Object Hook的脚本：

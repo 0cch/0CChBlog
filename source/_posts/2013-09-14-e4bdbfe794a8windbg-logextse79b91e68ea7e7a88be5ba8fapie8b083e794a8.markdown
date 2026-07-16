@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-09-14 17:13:22+00:00
 layout: post
 slug: '%e4%bd%bf%e7%94%a8windbg-logexts%e7%9b%91%e6%8e%a7%e7%a8%8b%e5%ba%8fapi%e8%b0%83%e7%94%a8'
@@ -9,6 +8,9 @@ wordpress_id: 337
 categories:
 - Debugging
 - Tips
+tags:
+- windbg
+
 ---
 
 在我们调试BUG和逆向程序的时候，往往需要监控一些API的调用。这个时候我们可以借助调试器和第三方工具完成这样的任务。例如调试器可以下断点查看栈状态得到相关信息，或者使用第三方工具如API Monitor可以方便的监控API的调用。不过，这篇文章中想说的是另一个工具，Windbg的扩展程序Logexts.dll。闲话少说，我们先看一看监控的效果如何吧。

@@ -1,12 +1,15 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'Use Q_DECLARE_TYPEINFO to let Qt optimize the container algorithm'
 title: 使用Q_DECLARE_TYPEINFO让Qt优化容器算法
 date: 2021-06-15 11:39:02
 categories:
-- CPP
+- C++
+tags:
+- qt
+- algorithm
+
 ---
 
 如果需要使用Qt容器，那么使用`Q_DECLARE_TYPEINFO`让Qt了解容器内元素的类型特征是一个不错的做法。因为Qt可以通过识别`Q_DECLARE_TYPEINFO`给定的类型特征，在容器中采用不同的算法和内存模型以达到计算速度和内存使用上的优化。

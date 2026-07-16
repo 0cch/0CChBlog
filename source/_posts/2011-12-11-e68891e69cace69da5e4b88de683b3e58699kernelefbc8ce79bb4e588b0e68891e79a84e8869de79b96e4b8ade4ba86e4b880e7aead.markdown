@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2011-12-11 10:32:55+00:00
 layout: post
 slug: '%e6%88%91%e6%9c%ac%e6%9d%a5%e4%b8%8d%e6%83%b3%e5%86%99kernel%ef%bc%8c%e7%9b%b4%e5%88%b0%e6%88%91%e7%9a%84%e8%86%9d%e7%9b%96%e4%b8%ad%e4%ba%86%e4%b8%80%e7%ae%ad'

@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'yampl base components part2'
 title: YAMPL的基础组件(2)
 date: 2020-02-21 20:48:33
 categories:
-- CPP
+- C++
+tags:
+- cpp
+
 ---
 
 ## 整型转换等级

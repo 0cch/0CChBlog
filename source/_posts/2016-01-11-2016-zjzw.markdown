@@ -1,10 +1,12 @@
 ---
 author: admin
-comments: true
 date: 2016-01-11 12:22:08+00:00
 layout: post
 slug: '2016-zjzw'
 title: 总结和展望：转折的一年
+tags:
+- 总结
+
 ---
 
 过去的2015年应该是我工作和生活中的一个大转折。

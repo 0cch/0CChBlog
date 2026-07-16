@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'timesync python script'
 title: 一个时间同步脚本
 date: 2019-04-25 17:07:46
 categories:
 - Tips
+tags:
+- windbg
+
 ---
 
 家里有台电脑不知道为啥一直同步不了网络时间，每隔一段时间就慢个几分钟，于是在网上找了点资料和代码拼凑了一个用于Windows时间同步的python脚本。

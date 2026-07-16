@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'add the specified explorer menu to the program internal menu'
 title: 给程序内部菜单增加指定的explorer菜单
 date: 2018-12-02 21:05:12
 categories:
 - Tips
+tags:
+- misc
+
 ---
 
 为了将explorer的右键菜单项的某个菜单增加到我们程序内部的菜单，我们需要做以下几件事情：

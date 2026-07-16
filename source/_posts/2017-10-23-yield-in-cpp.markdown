@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'yield-in-cpp'
 title: C++20增加的生成器特性
 date: 2017-10-23 15:00:50
 categories:
 - Tips
+tags:
+- cpp
+
 ---
 
 不得不说，C++的语法真是越来越高级了，编译器为程序做的事情也是越来越多了。

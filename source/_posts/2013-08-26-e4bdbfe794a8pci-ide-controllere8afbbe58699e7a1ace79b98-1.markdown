@@ -1,6 +1,5 @@
 ---
 author: admin
-comments: true
 date: 2013-08-26 15:00:42+00:00
 layout: post
 slug: '%e4%bd%bf%e7%94%a8pci-ide-controller%e8%af%bb%e5%86%99%e7%a1%ac%e7%9b%98-1'
@@ -8,6 +7,9 @@ title: 使用PCI IDE Controller读写硬盘 – 1
 wordpress_id: 316
 categories:
 - MiniKernel
+tags:
+- os
+
 ---
 
 [![PIO_hd04](/uploads/2013/08/PIO_hd04.jpg)](/uploads/2013/08/PIO_hd04.jpg)

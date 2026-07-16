@@ -1,0 +1,8 @@
+<div class="widget widget-category">
+  <h3 class="widget-title">Categories</h3>
+  <ul class="widget-list">
+    <% site.categories.sort('-length').each(function(cat){ %>
+      <li><a href="<%- url_for(cat.path) %>"><%= cat.name %></a><span class="widget-count"><%= cat.length %></span></li>
+    <% }) %>
+  </ul>
+</div>

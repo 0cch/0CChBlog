@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2017-04-04 10:03:16+00:00
 layout: post
 slug: 'delphi exception'
 title: Delphi异常0EEDFADE
 categories:
 - Debugging
+tags:
+- debug
+
 ---
 
 0EEDFADE是Delphi内部异常代码，该异常通常有7个参数，我们用的上的是第二个参数，这个参数指向的是Exception的对象，通过这个对象，我们就可以查出异常的一些信息。

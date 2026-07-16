@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'use ccomptr in loops requires special attention'
 title: 在循环中使用CComPtr需要特别注意
 date: 2019-01-20 21:57:37
 categories:
 - Tips
+tags:
+- com
+
 ---
 CComPtr是ATL里提供给我们管理COM接口的智能指针类，使用它能够让我们无需关心接口的引用释放。例如：
 ``` c++

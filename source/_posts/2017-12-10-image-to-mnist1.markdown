@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 layout: post
 slug: 'image-to-mnist1'
 title: 将图片转化成mnist格式
 date: 2017-12-09 20:51:42
 categories:
-- DeepLearner
+- DeepLearning
+tags:
+- tensorflow
+
 ---
 
 利用mnist数据对数字符号进行识别基本上算是深度学习的Hello World了。在我学习这个“hello world”的过程中，多多少少有点不爽，原因是无论是训练数据还是测试数据，都是mnist准备好的，即使最后训练的数字识别率很高，我也没有什么参与感。其实，我特别想测试自己手写数字的识别率。

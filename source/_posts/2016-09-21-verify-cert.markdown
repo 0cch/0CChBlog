@@ -1,12 +1,14 @@
 ---
 author: admin
-comments: true
 date: 2016-09-21 12:22:50+00:00
 layout: post
 slug: 'verify-cert'
 title: 验证文件签名
 categories:
 - Tips
+tags:
+- filesystem
+
 ---
 
 Sysinternal(http://forum.sysinternals.com/howto-verify-the-digital-signature-of-a-file_topic19247.html)上有关于验证签名的代码，不过代码有点问题，他只能验证PE签名，无法验证文件签名，所以我这里稍作了点修改，记录一下
