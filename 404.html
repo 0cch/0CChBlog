@@ -1,27 +1,52 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>- ooops! -</title>
-<link rel="stylesheet" href="/404.css" type="text/css" media="all" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>- ooops! - ERROR 404</title>
+<link rel="stylesheet" href="404.css" type="text/css" media="all">
 </head>
 <body>
-<span class="neg">ERROR 404</span>
-<div class="text">
-<p>
-The page is missing or never was written. You can wait and<br />
-see if it becomes available again, or you can restart your computer.	
-</p>
-<p>
-* Send us an e-mail to notify this and try it later.<br />
+<div class="crt" aria-hidden="true"></div>
 
-* Press CTRL+ALT+DEL to restart your computer. You will<br />
- &nbsp; lose unsaved information in any programs that are running.
-</p>
-</div>
-Press any link to continue <blink>_</blink>
-<div class="menu">
-<a href="/index.html">index</a> | 
-<a href="/index.html">about</a> | 
-</div>
+<main class="bsod">
+  <header class="neg">ERROR 404</header>
 
+  <p class="lead">
+    The page is missing or never was written. You can wait and<br>
+    see if it becomes available again, or you can restart your computer.
+  </p>
+
+  <div class="text">
+    <p>
+      * Send us an e-mail to notify this and try it later.<br>
+      * Press CTRL+ALT+DEL to restart your computer. You will<br>
+      &nbsp; lose unsaved information in any programs that are running.
+    </p>
+    <p class="technical">
+      Technical information:<br>
+      *** STOP: 0x00000404 (0x00000000, 0x00000000, 0x00000000, 0x00000000)<br>
+      *** PAGE_NOT_FOUND
+    </p>
+  </div>
+
+  <p class="blink">Press any key to return home <span class="cursor">_</span></p>
+
+  <nav class="menu">
+    <a href="/index.html">index</a> |
+    <a href="/index.html">about</a>
+  </nav>
+</main>
+
+<script>
+  window.addEventListener("keydown", function () {
+    location.href = "/index.html";
+  });
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest("a")) {
+      location.href = "/index.html";
+    }
+  });
+</script>
 </body>
 </html>
