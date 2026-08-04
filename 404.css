@@ -1,40 +1,140 @@
-body {
-    background:#0000aa;
-    color:#ffffff;
-    font-family:courier;
-    font-size:12pt;
-    text-align:center;
-    margin:100px;
+:root {
+  --bsod-bg: #0000aa;
+  --bsod-fg: #ffffff;
+  --bsod-neg: #0000aa;
+  --bsod-blink: #ffff00;
 }
 
+* {
+  box-sizing: border-box;
+}
 
-blink {
-    color:yellow;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  background: var(--bsod-bg);
+  color: var(--bsod-fg);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12pt;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* 现代 CRT 扫描线覆盖层 */
+.crt {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.12) 0px,
+      rgba(0, 0, 0, 0.12) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  animation: crt-flicker 4s infinite steps(60);
+  z-index: 10;
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+.bsod {
+  position: relative;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  animation: bsod-in 0.6s ease-out;
+}
+
+@keyframes bsod-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .neg {
-    background:#fff;
-    color:#0000aa;
-    padding:2px 8px;
-    font-weight:bold;
+  display: inline-block;
+  background: var(--bsod-fg);
+  color: var(--bsod-neg);
+  padding: 2px 8px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.lead {
+  margin: 28px auto 12px;
+  max-width: 720px;
+  text-align: left;
 }
 
 .text {
-    margin: 0px auto;
-    width: 800px
+  margin: 0 auto;
+  max-width: 720px;
+  text-align: left;
 }
 
 p {
-    margin:30px 100px;
-    text-align:left;
+  margin: 16px 0;
+  line-height: 1.6;
 }
 
-a,a:hover {
-    color:inherit;
-    font:inherit;
+/* 老式蓝屏的技术信息 */
+.technical {
+  color: #d8d8ff;
+  font-size: 0.85em;
+}
+
+.blink {
+  margin-top: 40px;
+  color: var(--bsod-blink);
+  animation: blink 1s steps(1) infinite;
+}
+
+.cursor {
+  animation: blink 0.8s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }
 
 .menu {
-    text-align:center;
-    margin-top:50px;
+  margin-top: 44px;
+}
+
+a,
+a:hover {
+  color: inherit;
+  font: inherit;
+}
+
+/* 移动端适配：滚动 + 小屏字号 */
+@media (max-width: 720px) {
+  body {
+    font-size: 11pt;
+  }
+
+  .bsod {
+    padding: 40px 16px 60px;
+  }
+
+  .technical {
+    font-size: 0.9em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crt,
+  .blink,
+  .cursor {
+    animation: none;
+  }
 }
